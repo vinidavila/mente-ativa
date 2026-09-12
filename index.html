@@ -329,6 +329,38 @@
   <p class="ev">Toda passagem traz livro, capítulo, versículo e a origem do texto. Textos bíblicos: tradução de João Ferreira de Almeida (1911), domínio público, fornecidos por bible-api.com. Evidência: religiosidade/espiritualidade associa-se a menos depressão e ansiedade e mais sentido de vida em idosos (Coelho-Júnior 2022, 102 estudos, n=79.918) — associação, não tratamento.</p>
 </section>
 
+<!-- ===== PALAVRAS CRUZADAS ===== -->
+<section id="s-cruzadas">
+  <h2>Palavras cruzadas</h2>
+  <div class="themes" id="cwniv"><button class="on" onclick="cwNivel(0)">Fácil</button><button onclick="cwNivel(1)">Médio</button><button onclick="cwNivel(2)">Difícil</button><button onclick="cwNivel(3)">Muito difícil</button></div>
+  <div class="card" style="padding:10px">
+    <div id="cwgrid" style="display:grid;gap:2px;margin:0 auto;max-width:100%"></div>
+    <div class="card tone" id="cwdica" style="margin:10px 0 0;padding:12px"><p style="margin:0">Toque numa casa branca para ver a dica.</p></div>
+    <div class="row" style="justify-content:center;margin-top:8px"><button class="btn sec" onclick="cwLetra()">Revelar uma letra</button><button class="btn sec" onclick="cwVerificar()">Verificar</button><button class="btn" onclick="cwNovo()">Nova grade</button></div>
+    <p class="ev" id="cwstatus" style="margin:8px 0 0"></p>
+  </div>
+  <h3>Dicas</h3>
+  <div class="card"><b>Horizontais</b><div id="cwh"></div><b style="display:block;margin-top:10px">Verticais</b><div id="cwv"></div></div>
+  <p class="ev">Evidência: em CCL, cruzadas superaram jogos cognitivos digitais em cognição e função em 78 semanas (Devanand, NEJM Evidence 2022, RCT); no Bronx Aging Study, cruzadas atrasaram em 2,5 anos o declínio acelerado de memória (Pillai 2011).</p>
+</section>
+
+<!-- ===== QUEBRA-CABEÇA ===== -->
+<section id="s-quebra">
+  <h2>Quebra-cabeça</h2>
+  <p>Toque em uma peça e depois em outra: elas trocam de lugar. A imagem pequena mostra como deve ficar.</p>
+  <div class="themes" id="qbn"><button onclick="qbTam(2)">4 peças</button><button class="on" onclick="qbTam(3)">9 peças</button><button onclick="qbTam(4)">16 peças</button><button onclick="qbTam(5)">25 peças</button></div>
+  <div class="card" style="padding:10px">
+    <div style="display:flex;gap:10px;align-items:flex-start">
+      <div id="qbgrid" style="flex:1;display:grid;gap:3px;aspect-ratio:1;background:#1E2B2A;padding:3px;border-radius:12px"></div>
+      <div id="qbguia" style="width:28%;aspect-ratio:1;border-radius:10px;background:#DCE6DD center/cover;border:2px solid #8A7B5A"></div>
+    </div>
+    <p class="ev" id="qbstatus" style="margin:8px 0 0"></p>
+    <div class="row" style="justify-content:center;margin-top:8px"><button class="btn sec" onclick="qbFoto()">Trocar imagem</button><button class="btn" onclick="qbNovo()">Embaralhar</button></div>
+    <label class="btn sec" style="display:inline-block;cursor:pointer;margin-top:6px">📷 Usar uma foto minha<input type="file" accept="image/*" style="display:none" onchange="qbUpload(this.files[0])"></label>
+  </div>
+  <p class="ev">Evidência: quebra-cabeças recrutam percepção, rotação mental, memória de trabalho e raciocínio; a experiência de vida associa-se a melhor cognição visuoespacial, mas 30 dias de treino não mostraram ganho em RCT (Fissler 2018). Vale pelo convívio e pelas fotos de família.</p>
+</section>
+
 <!-- ===== NATUREZA ===== -->
 <section id="s-natureza">
   <h2 id="ntitulo">Plantas e animais</h2>
@@ -384,6 +416,8 @@
   <button class="big" onclick="go('damas')"><span class="ic">⚫</span><span>Damas<small>Contra o app, a dois, ou à distância</small></span></button>
   <button class="big" onclick="go('xadrez')"><span class="ic">♞</span><span>Xadrez<small>Três níveis, ou a dois</small></span></button>
   <button class="big" onclick="go('paciencia')"><span class="ic">🂡</span><span>Paciência<small>Toque na carta e o app a leva ao lugar certo</small></span></button>
+  <button class="big" onclick="go('quebra')"><span class="ic">🧩</span><span>Quebra-cabeça<small>Com as fotos da família ou da natureza; 4 a 25 peças</small></span></button>
+  <button class="big" onclick="go('cruzadas')"><span class="ic">🔤</span><span>Palavras cruzadas<small>Fácil, médio, difícil e muito difícil — sempre uma grade nova</small></span></button>
   <button class="big" onclick="go('semana')"><span class="ic">📅</span><span>Minha semana<small>Como variar as atividades nos dias</small></span></button>
 </section>
 
@@ -1238,7 +1272,7 @@ const TEMAS = {
 };
 let tema='plantas', open=[], pares=0, lock=false;
 
-const HUB={exercicio:'corpo',jogos:'corpo',damas:'corpo',xadrez:'corpo',paciencia:'corpo',semana:'corpo',
+const HUB={quebra:'corpo',cruzadas:'corpo',exercicio:'corpo',jogos:'corpo',damas:'corpo',xadrez:'corpo',paciencia:'corpo',semana:'corpo',
   historia:'descobrir',livro:'descobrir',filosofia:'descobrir',pintores:'descobrir',natureza:'descobrir',links:'descobrir',
   meutime:'gostos',musicafilmes:'gostos',cozinha:'gostos',interesses:'gostos',alimentacao:'gostos',meditacao:'gostos',fe:'gostos',
   familia:'fam',fotos:'fam',imagens:'fam','historia-minha':'fam'};
@@ -1794,6 +1828,90 @@ function pTap(c,i){
 }
 pNovo();
 
+/* ================= QUEBRA-CABEÇA (troca por toque; fotos da família ou imagens do app) ================= */
+const QB_IMGS=[ // imagens internas em SVG (sem direitos): paisagens simples
+ 'data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><rect width="400" height="400" fill="#8ED1C2"/><circle cx="300" cy="90" r="45" fill="#E8A317"/><path d="M0 260 L120 150 L220 250 L300 190 L400 270 V400 H0Z" fill="#2E7D4F"/><path d="M0 320 L100 280 L200 330 L400 300 V400 H0Z" fill="#5B7A62"/><rect x="60" y="300" width="60" height="50" fill="#F6E7C1"/><path d="M50 300 L90 265 L130 300Z" fill="#7A2E2E"/></svg>'),
+ 'data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><rect width="400" height="400" fill="#F6E7C1"/><circle cx="200" cy="200" r="120" fill="#E8A317"/><circle cx="200" cy="200" r="55" fill="#7A2E2E"/><g stroke="#2E7D4F" stroke-width="18" stroke-linecap="round"><path d="M200 320 V400"/><path d="M200 360 q-60 -20 -80 -60"/><path d="M200 380 q60 -20 80 -60"/></g></svg>'),
+ 'data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><rect width="400" height="400" fill="#2C5FA8"/><circle cx="80" cy="80" r="30" fill="#FBF7EE"/><path d="M0 300 Q100 260 200 300 T400 300 V400 H0Z" fill="#1E2B2A"/><path d="M120 300 L200 200 L280 300Z" fill="#F6E7C1"/><rect x="190" y="130" width="20" height="80" fill="#F6E7C1"/><circle cx="200" cy="120" r="14" fill="#E8A317"/></svg>'),
+];
+let QB={n:3,img:0,src:null,pecas:[],sel:null,mov:0};
+function qbTam(n){QB.n=n;document.querySelectorAll('#qbn button').forEach((b,i)=>b.classList.toggle('on',[2,3,4,5][i]===n));qbNovo();}
+function qbFoto(){const fam=(state.fotos||[]).map(f=>f.url);const todas=[...fam,...QB_IMGS];QB.img=(QB.img+1)%todas.length;QB.src=todas[QB.img];qbNovo();}
+function qbUpload(f){if(!f)return;QB.src=URL.createObjectURL(f);qbNovo();toast('Foto carregada. Boa montagem!');}
+function qbNovo(){const fam=(state.fotos||[]).map(f=>f.url);if(!QB.src)QB.src=fam[0]||QB_IMGS[0];const N=QB.n*QB.n;
+  do{QB.pecas=[...Array(N).keys()].sort(()=>Math.random()-.5);}while(QB.pecas.every((v,i)=>v===i));QB.sel=null;QB.mov=0;qbRender();}
+function qbRender(){const n=QB.n,el=document.getElementById('qbgrid');el.style.gridTemplateColumns=`repeat(${n},1fr)`;document.getElementById('qbguia').style.backgroundImage=`url('${QB.src}')`;
+  el.innerHTML=QB.pecas.map((p,i)=>{const r=Math.floor(p/n),c=p%n;return `<div onclick="qbTap(${i})" style="background:url('${QB.src}') ${n>1?(c*100/(n-1)):0}% ${n>1?(r*100/(n-1)):0}% / ${n*100}% ${n*100}%;border-radius:6px;outline:${QB.sel===i?'4px solid #E8A317':'none'};outline-offset:-4px;cursor:pointer;${p===i?'':'filter:brightness(.95)'}"></div>`;}).join('');
+  const certas=QB.pecas.filter((v,i)=>v===i).length;document.getElementById('qbstatus').textContent=`${certas} de ${n*n} peças no lugar · ${QB.mov} trocas`;
+  if(certas===n*n&&QB.mov>0){toast('Quebra-cabeça completo!');falar('Parabéns! Você montou o quebra-cabeça.');state.done.add('mente');prog();const f=(state.fotos||[]).find(x=>x.url===QB.src);if(f&&(f.quem||f.legenda))setTimeout(()=>toast((f.quem||'')+' — '+(f.legenda||'')),1500);}}
+function qbTap(i){if(QB.sel===null){QB.sel=i;qbRender();return;}if(QB.sel===i){QB.sel=null;qbRender();return;}
+  [QB.pecas[QB.sel],QB.pecas[i]]=[QB.pecas[i],QB.pecas[QB.sel]];QB.sel=null;QB.mov++;qbRender();}
+qbNovo();
+
+/* ================= PALAVRAS CRUZADAS — gerador próprio, 4 níveis ================= */
+const CW_PAL={
+ 0:[['SOL','Astro que ilumina o dia'],['PÃO','Vai na mesa do café'],['MAR','Água salgada sem fim'],['CASA','Onde a gente mora'],['GATO','Mia e ronrona'],['BOLA','Redonda, do futebol'],['MESA','Móvel de comer'],['LUA','Brilha à noite'],['CHÁ','Bebida quente de ervas'],['PÉ','Fica no fim da perna'],['RIO','Água doce que corre'],['ARROZ','Companheiro do feijão'],['CAFÉ','Bebida preta da manhã'],['LEITE','Branco, vem da vaca'],['AVÓ','Mãe da mãe'],['FLOR','Nasce no jardim e cheira bem'],['CÃO','Melhor amigo do homem'],['OVO','A galinha põe'],['SAL','Tempero branco'],['FOGO','Queima e esquenta'],['ÁGUA','Mata a sede'],['MÃE','Quem nos deu à luz'],['DEDO','Cinco em cada mão'],['CAMA','Onde se dorme'],['PATO','Ave que nada e faz quá'],['UVA','Fruta do vinho'],['BANANA','Fruta amarela de cacho'],['JANELA','Deixa a luz entrar na casa'],['CHAVE','Abre a porta'],['SAPATO','Vai no pé']],
+ 1:[['CEBOLA','Faz chorar ao cortar'],['ESCADA','Serve para subir'],['RELÓGIO','Marca as horas'],['GALINHA','Ave que cisca e põe ovos'],['PANELA','Cozinha-se nela'],['COLHER','Talher de sopa'],['IGREJA','Casa de oração'],['BICICLETA','Duas rodas e pedal'],['FEIJÃO','Preto ou carioca, todo dia'],['MANGA','Fruta do mangueira'],['CANETA','Escreve com tinta'],['BALÃO','Sobe em festa junina'],['VIOLÃO','Instrumento de cordas de serenata'],['FAROL','Luz que guia os navios'],['MÉDICO','Cuida da saúde'],['TAPETE','Fica no chão da sala'],['ESPELHO','Mostra o seu rosto'],['CAMINHO','Por onde se anda'],['PIPOCA','Milho que estoura'],['GOIABA','Fruta de fazer doce'],['CAVALO','Animal de sela'],['SAMBA','Ritmo do carnaval'],['NEVOEIRO','Névoa densa da manhã'],['REMÉDIO','Toma-se para sarar'],['TESOURA','Corta papel e pano'],['VASSOURA','Varre a casa'],['LAMPARINA','Luz a querosene de antigamente'],['FOGÃO','Onde se cozinha'],['AGULHA','Costura com linha'],['PALHAÇO','Faz rir no circo']],
+ 2:[['ORQUESTRA','Muitos músicos tocando juntos'],['ALFAIATE','Faz ternos sob medida'],['PANTANAL','Bioma das águas em Mato Grosso'],['CANDEEIRO','Lamparina antiga de parede'],['REBANHO','Conjunto de gado'],['SERENATA','Canção sob a janela da amada'],['CATEDRAL','Igreja principal da diocese'],['LAVOURA','Terra plantada'],['ALQUEIRE','Medida antiga de terra'],['BOTICÁRIO','Antigo farmacêutico'],['ARADO','Ferramenta de revolver a terra'],['GERAÇÃO','Avós, pais e filhos: três delas'],['MARCHADOR','Cavalo mineiro de andar macio'],['CANJICA','Doce de milho branco'],['ARAUCÁRIA','Pinheiro do Sul'],['CARRUAGEM','Veículo puxado a cavalos'],['TELEGRAMA','Mensagem urgente de antigamente'],['ESTAÇÃO','Onde o trem para'],['VITROLA','Tocava discos'],['FERREIRO','Trabalha o ferro na forja'],['PROFECIA','Previsão de um profeta'],['PENICILINA','Primeiro antibiótico'],['QUARESMEIRA','Árvore de flor roxa'],['SERTÃO','Interior seco do Nordeste'],['LINOTIPO','Máquina antiga de jornal'],['CATAVENTO','Gira com o vento no campo'],['MORINGA','Pote de barro que gela a água'],['SABIÁ','Ave símbolo do Brasil'],['GARIMPO','Onde se busca ouro'],['ENGENHO','Moía a cana']],
+ 3:[['SINCERIDADE','Qualidade de quem não mente'],['EFÊMERO','Que dura pouco'],['CLEPSIDRA','Relógio de água dos antigos'],['PARCIMÔNIA','Economia, moderação'],['RESILIÊNCIA','Capacidade de se recuperar'],['ASTROLÁBIO','Instrumento antigo de navegação'],['METRÓPOLE','Cidade grande e principal'],['EPICURO','Filósofo dos prazeres simples'],['BACHIANAS','Obras de Villa-Lobos'],['ALDEBARÃ','Estrela do Touro'],['LOGARITMO','Expoente na matemática'],['QUIMERA','Sonho impossível; monstro mitológico'],['SINESTESIA','Mistura de sentidos, como ouvir cores'],['PROSÓDIA','Entonação da fala'],['HERÁCLITO','"Ninguém se banha duas vezes no mesmo rio"'],['ANACRONISMO','Erro de época'],['PALIMPSESTO','Pergaminho raspado e reescrito'],['MELANCOLIA','Tristeza profunda e vaga'],['SAUDADE','Só existe em português'],['CIRCUNSPECTO','Prudente, reservado'],['ZÊNITE','Ponto mais alto do céu'],['ABÓBADA','Teto em arco das igrejas'],['CARTOGRAFIA','Arte de fazer mapas'],['ARQUÉTIPO','Modelo original, para Jung'],['DIALÉTICA','Arte do diálogo e da contradição'],['TAUTOLOGIA','Repetir a mesma ideia com outras palavras'],['UBIQUIDADE','Estar em todo lugar'],['VERNÁCULO','Língua própria de um país'],['PLEONASMO','"Subir para cima"'],['ESTOICISMO','Filosofia de Sêneca e Epicteto']],
+};
+const CW_TAM=[9,11,13,15], CW_N=[6,8,10,12];
+const cwNorm=w=>w.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/Ç/g,'C').toUpperCase();
+let CW={niv:0,g:[],sol:[],N:9,pal:[],sel:null,dir:'h',fim:false};
+function cwNivel(n){CW.niv=n;document.querySelectorAll('#cwniv button').forEach((b,i)=>b.classList.toggle('on',i===n));cwNovo();}
+/* gerador: coloca a 1ª palavra no centro e tenta cruzar as demais; repete várias vezes e fica com a melhor grade */
+function cwGerar(){
+  const N=CW_TAM[CW.niv],lista=[...CW_PAL[CW.niv]].sort(()=>Math.random()-.5).slice(0,CW_N[CW.niv]+6);
+  let melhor=null;
+  for(let tent=0;tent<40;tent++){
+    const g=Array.from({length:N},()=>Array(N).fill(null)),pal=[];const ordem=[...lista].sort(()=>Math.random()-.5);
+    const cabe=(w,r,c,dr,dc)=>{if(r<0||c<0||r+dr*(w.length-1)>=N||c+dc*(w.length-1)>=N)return false;
+      const br=r-dr,bc=c-dc,ar=r+dr*w.length,ac=c+dc*w.length;if((br>=0&&bc>=0&&g[br]&&g[br][bc])||(ar<N&&ac<N&&g[ar]&&g[ar][ac]))return false;let cruz=0;
+      for(let i=0;i<w.length;i++){const rr=r+dr*i,cc=c+dc*i,x=g[rr][cc];if(x){if(x!==w[i])return false;cruz++;}
+        else{ // vizinhos laterais devem estar vazios (evita palavras coladas)
+          const n1=dr?g[rr][cc-1]:g[rr-1]&&g[rr-1][cc],n2=dr?g[rr][cc+1]:g[rr+1]&&g[rr+1][cc];if(n1||n2)return false;}}
+      return cruz;};
+    const poe=(w,r,c,dr,dc,item)=>{for(let i=0;i<w.length;i++)g[r+dr*i][c+dc*i]=w[i];pal.push({w,r,c,dr,dc,dica:item[1],orig:item[0]});};
+    const w0=cwNorm(ordem[0][0]);poe(w0,Math.floor(N/2),Math.floor((N-w0.length)/2),0,1,ordem[0]);
+    for(const item of ordem.slice(1)){const w=cwNorm(item[0]);let ops=[];
+      for(const p of pal){for(let i=0;i<p.w.length;i++)for(let j=0;j<w.length;j++){if(p.w[i]!==w[j])continue;const dr=p.dr?0:1,dc=p.dc?0:1;const r=p.r+p.dr*i-dr*j,c=p.c+p.dc*i-dc*j;const k=cabe(w,r,c,dr,dc);if(k)ops.push({r,c,dr,dc,k});}}
+      if(ops.length){const o=ops[Math.floor(Math.random()*ops.length)];poe(w,o.r,o.c,o.dr,o.dc,item);}
+      if(pal.length>=CW_N[CW.niv])break;}
+    if(!melhor||pal.length>melhor.pal.length)melhor={g,pal};
+    if(melhor.pal.length>=CW_N[CW.niv])break;}
+  return {N,...melhor};
+}
+function cwNovo(){const m=cwGerar();CW.N=m.N;CW.sol=m.g;CW.pal=m.pal;CW.g=m.g.map(r=>r.map(x=>x?'':null));CW.sel=null;CW.fim=false;
+  // numeração
+  let n=1;CW.pal.sort((a,b)=>a.r-b.r||a.c-b.c);const num={};CW.pal.forEach(p=>{const k=p.r+','+p.c;if(!num[k])num[k]=n++;p.n=num[k];});CW.num=num;cwRender();}
+function cwRender(){
+  const N=CW.N,el=document.getElementById('cwgrid');el.style.gridTemplateColumns=`repeat(${N},1fr)`;el.style.maxWidth=(N*34)+'px';
+  let h='';for(let r=0;r<N;r++)for(let c=0;c<N;c++){const v=CW.g[r][c];
+    if(v===null){h+=`<div style="aspect-ratio:1;background:#1E2B2A;border-radius:3px"></div>`;continue;}
+    const selP=CW.sel&&cwPalavraEm(CW.sel.r,CW.sel.c,CW.dir),inSel=selP&&cwPertence(selP,r,c),isSel=CW.sel&&CW.sel.r===r&&CW.sel.c===c,num=CW.num[r+','+c];
+    h+=`<div onclick="cwTap(${r},${c})" style="aspect-ratio:1;background:${isSel?'#E8A317':inSel?'#FFF3D6':'#fff'};border:1px solid #8A7B5A;border-radius:3px;position:relative;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.15rem;color:${CW.err&&CW.err[r+','+c]?'#B0161A':'#1E2B2A'};cursor:pointer">${num?`<span style="position:absolute;top:0;left:2px;font-size:.55rem;font-weight:400">${num}</span>`:''}${v||''}</div>`;}
+  el.innerHTML=h;
+  const hz=CW.pal.filter(p=>p.dc),vt=CW.pal.filter(p=>p.dr);
+  document.getElementById('cwh').innerHTML=hz.map(p=>`<div class="link" style="padding:8px 0;cursor:pointer" onclick="CW.sel={r:${p.r},c:${p.c}};CW.dir='h';cwRender()"><b>${p.n}.</b> ${p.dica} <span class="ev">(${p.w.length} letras)</span></div>`).join('');
+  document.getElementById('cwv').innerHTML=vt.map(p=>`<div class="link" style="padding:8px 0;cursor:pointer" onclick="CW.sel={r:${p.r},c:${p.c}};CW.dir='v';cwRender()"><b>${p.n}.</b> ${p.dica} <span class="ev">(${p.w.length} letras)</span></div>`).join('');
+  const sp=CW.sel&&cwPalavraEm(CW.sel.r,CW.sel.c,CW.dir);
+  document.getElementById('cwdica').innerHTML=sp?`<p style="margin:0;font-size:1.15rem"><b>${sp.n}. ${sp.dc?'Horizontal':'Vertical'}:</b> ${sp.dica} <span class="ev">(${sp.w.length} letras)</span></p><div class="row" style="margin-top:8px"><input id="cwin" class="hin" maxlength="1" style="width:70px;text-align:center;font-size:1.5rem;text-transform:uppercase" placeholder="?" oninput="cwDigita(this.value)"><button class="btn sec" onclick="cwApagar()">⌫</button><button class="btn sec" onclick="CW.dir=CW.dir==='h'?'v':'h';cwRender()">↔ Trocar direção</button></div>`:'<p style="margin:0">Toque numa casa branca para ver a dica.</p>';
+  const cheio=CW.g.every((row,r)=>row.every((v,c)=>v===null||v));document.getElementById('cwstatus').textContent=`Nível ${['fácil','médio','difícil','muito difícil'][CW.niv]} · ${CW.pal.length} palavras${cheio?' · grade completa — toque em Verificar':''}`;
+  if(sp){const inp=document.getElementById('cwin');if(inp)setTimeout(()=>inp.focus(),50);}
+}
+function cwPalavraEm(r,c,dir){return CW.pal.find(p=>(dir==='h'?p.dc:p.dr)&&cwPertence(p,r,c))||CW.pal.find(p=>cwPertence(p,r,c));}
+function cwPertence(p,r,c){for(let i=0;i<p.w.length;i++)if(p.r+p.dr*i===r&&p.c+p.dc*i===c)return true;return false;}
+function cwTap(r,c){if(CW.sel&&CW.sel.r===r&&CW.sel.c===c)CW.dir=CW.dir==='h'?'v':'h';CW.sel={r,c};const p=cwPalavraEm(r,c,CW.dir);if(p)CW.dir=p.dc?'h':'v';CW.err=null;cwRender();}
+function cwDigita(v){if(!CW.sel)return;const ch=cwNorm(v).replace(/[^A-Z]/g,'').slice(-1);if(!ch)return;const {r,c}=CW.sel;CW.g[r][c]=ch;
+  const p=cwPalavraEm(r,c,CW.dir);if(p){const i=(CW.dir==='h')?c-p.c:r-p.r;if(i<p.w.length-1)CW.sel={r:p.r+p.dr*(i+1),c:p.c+p.dc*(i+1)};}CW.err=null;cwRender();}
+function cwApagar(){if(!CW.sel)return;const {r,c}=CW.sel;if(CW.g[r][c])CW.g[r][c]='';else{const p=cwPalavraEm(r,c,CW.dir);if(p){const i=(CW.dir==='h')?c-p.c:r-p.r;if(i>0){CW.sel={r:p.r+p.dr*(i-1),c:p.c+p.dc*(i-1)};CW.g[CW.sel.r][CW.sel.c]='';}}}cwRender();}
+function cwLetra(){const p=CW.sel&&cwPalavraEm(CW.sel.r,CW.sel.c,CW.dir);if(!p)return toast('Toque numa palavra primeiro.');
+  for(let i=0;i<p.w.length;i++){const r=p.r+p.dr*i,c=p.c+p.dc*i;if(CW.g[r][c]!==CW.sol[r][c]){CW.g[r][c]=CW.sol[r][c];CW.sel={r,c};cwRender();return;}}toast('Esta palavra já está certa!');}
+function cwVerificar(){let err={},ne=0,vaz=0;for(let r=0;r<CW.N;r++)for(let c=0;c<CW.N;c++){if(CW.sol[r][c]===null)continue;if(!CW.g[r][c])vaz++;else if(CW.g[r][c]!==CW.sol[r][c]){err[r+','+c]=1;ne++;}}
+  CW.err=err;cwRender();if(!ne&&!vaz){toast('Parabéns! Cruzada completa.');falar('Parabéns! Você completou a palavra cruzada.');state.done.add('mente');prog();}
+  else toast(ne?`${ne} letra${ne>1?'s':''} em vermelho para corrigir.`:`Faltam ${vaz} casas.`);}
+cwNovo();
+
 /* ================= EQUILÍBRIO MENTAL — 10 estágios × 5 aulas ================= */
 const MD_EST=[
  {t:'Respirar',min:2,intro:'Sente-se confortável, pés no chão, mãos no colo. Feche os olhos ou olhe para um ponto no chão.',
@@ -2063,7 +2181,7 @@ function tamRender(){
     <svg viewBox="0 0 ${W} ${H}" style="width:100%;background:#FBF7EE;border-radius:16px"><defs><filter id="sombraChip" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="2" flood-opacity=".3"/></filter></defs>${svg}</svg>
     <p style="margin:8px 0 0;font-size:1.05rem">Esta porção é ${txt}. Equivale a <b>${palmas<0.75?'menos de uma palma':(palmas<1.35?'cerca de uma palma':'cerca de '+palmas.toFixed(1).replace('.',',')+' palmas')}</b> de uma mão média.</p>
     <p class="ev" style="margin:4px 0 0">Estimativa por densidade e espessura típicas do alimento (NUT-9; frutas pela tabela CEAGESP). Na tela, o tamanho é real quando a régua mede 30 cm.</p>
-    <div class="row"><button class="btn sec" onclick="falar(this,'${(it.nome+', '+it.medida+'. Esta porção é '+txt+'. Equivale a '+(palmas<0.75?'menos de uma palma':(palmas<1.35?'cerca de uma palma':'cerca de '+palmas.toFixed(1).replace('.',',')+' palmas'))+' da mão.').replace(/'/g,'')}')">🔊 Ouvir</button><button class="btn sec" onclick="TAM.nome=null;tamRender()">Fechar</button></div>`;
+    <div class="row"><button class="btn sec" onclick="falar(this,['${(it.nome+', '+it.medida+'.').replace(/'/g,'')}','${('Esta porção é '+txt+'. Equivale a '+(palmas<0.75?'menos de uma palma':(palmas<1.35?'cerca de uma palma':'cerca de '+palmas.toFixed(1).replace('.',',')+' palmas'))+' da mão.').replace(/'/g,'')}'])">🔊 Ouvir</button><button class="btn sec" onclick="TAM.nome=null;tamRender()">Fechar</button></div>`;
 }
 
 
@@ -2107,6 +2225,7 @@ function saAplicar(){
 
 function alAbrir(si){AL_SEL=AL_SEL===si?null:si;alRender();}
 function alTrocar(si,idx,nome){AL.d.refeicoes[AL.r].setores[si].itens[idx]=nome;AL_SEL=null;alRender();toast('Prato atualizado.');}
+function alFala(){const r=AL.d.refeicoes[AL.r];const T=[r.n+'.'];r.setores.forEach(st=>{T.push(AL_SET[st.k].rot+':');st.itens.forEach(n=>{const it=alItem(n);T.push(it.nome+', '+it.medida+'.');});});T.push(r.dica);return T;}
 function alRender(){
   const d=AL.d,r=d.refeicoes[AL.r];
   document.getElementById('alorigem').innerHTML=`<p style="margin:0">${d.origem}</p>`;
@@ -2119,7 +2238,7 @@ function alRender(){
     escolha=`<div class="card tone" style="margin:8px 0"><p style="margin:0 0 6px"><b>${S.rot}:</b> escolha o que vai no lugar de "${alItem(st.itens[idx]).nome}"</p><div class="row">${opcoes.map(x=>`<button class="btn sec" style="min-height:48px;padding:6px 12px;font-size:.95rem" onclick="alTrocar(${AL_SEL},${idx},'${x[0].replace(/^\S+\s/,'').replace(/'/g,"\\'")}')">${x[0]}</button>`).join('')}</div><button class="btn sec" style="margin-top:8px" onclick="AL_SEL=null;alRender()">Cancelar</button></div>`;}
   document.getElementById('alcard').innerHTML=`<h3 style="margin:0">${r.n} <span class="ev">· ${r.h}</span></h3><p class="ev" style="margin:2px 0 6px">Toque numa parte do prato ou em "Trocar" para escolher outro alimento do mesmo grupo.</p>${alPrato(r)}${escolha}${legenda}
     <p style="background:#FFF3D6;border-radius:12px;padding:10px;margin:8px 0 0">${r.dica}</p>
-    <div class="row"><button class="btn sec" onclick="falar(this,'${(r.n+'. '+r.setores.map(st=>AL_SET[st.k].rot+': '+st.itens.map(n=>{const it=alItem(n);return it.nome+', '+it.medida;}).join('; ')).join('. ')+'. '+r.dica).replace(/'/g,'')}')">🔊 Ouvir</button></div>`;
+    <div class="row"><button class="btn sec" onclick="falar(this,alFala())">🔊 Ouvir</button></div>`;
   document.getElementById('alagua').textContent=d.agua.txt;
   document.getElementById('alcopos').innerHTML=Array.from({length:d.agua.copos},(_,i)=>`<button class="btn sec" style="min-height:52px;padding:6px 12px;font-size:1.4rem;background:${i<AL.copos?'#8ED1C2':'#DCE6DD'}" onclick="AL.copos=${i+1};alRender()">🥤</button>`).join('')+`<span class="ev" style="align-self:center;margin-left:6px">${AL.copos} de ${d.agua.copos} hoje</span>`;
   document.getElementById('algrupos').innerHTML=Object.keys(d.subs).map(g=>`<button class="${g===AL.g?'on':''}" onclick="AL.g='${g}';alRender()">${g}</button>`).join('');
@@ -2183,15 +2302,19 @@ function melhorVoz(){
 async function hashTexto(t){const b=new TextEncoder().encode(t);const h=await crypto.subtle.digest('SHA-1',b);return [...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,'0')).join('').slice(0,16);}
 /* falar(botão, texto) ou falar(texto). Toque de novo no mesmo botão = parar. Usa MP3 pré-gravado (voz neural) quando existe; senão, a voz do aparelho frase a frase. */
 async function falar(a,b){
-  const btn=(a&&a.nodeType===1)?a:null, t=String(btn?b:a);
+  const btn=(a&&a.nodeType===1)?a:null, bruto=btn?b:a;
   if(btn&&VOZ.btn===btn){vozParar();return;}
   vozParar();
   if(btn){VOZ.btn=btn;VOZ.rotulo=btn.textContent;btn.textContent='⏹ Parar';btn.classList.add('falando');}
-  const fim=()=>{if(VOZ.btn===btn)vozParar();};
-  // 1) áudio pré-gravado
-  if(AUDIO_IDX){const k=await hashTexto(t.replace(/\s+/g,' ').trim());const f=AUDIO_IDX[k];
-    if(f){const au=new Audio('audio/'+f);VOZ.audio=au;au.onended=fim;au.onerror=()=>{VOZ.audio=null;falarTTS(t,fim);};au.play().catch(()=>{VOZ.audio=null;falarTTS(t,fim);});return;}}
-  falarTTS(t,fim);
+  const trechos=(Array.isArray(bruto)?bruto:[bruto]).map(x=>String(x).replace(/\s+/g,' ').trim()).filter(Boolean);
+  const meuBtn=btn, fim=()=>{if(VOZ.btn===meuBtn)vozParar();};
+  const cancelado=()=>btn?VOZ.btn!==meuBtn:false;
+  let i=0;
+  const prox=async()=>{ if(cancelado())return; const t=trechos[i++]; if(!t){fim();return;}
+    if(AUDIO_IDX){const k=await hashTexto(t);const f=AUDIO_IDX[k];
+      if(f){const au=new Audio('audio/'+f);VOZ.audio=au;au.onended=()=>setTimeout(prox,250);au.onerror=()=>{VOZ.audio=null;falarTTS(t,()=>setTimeout(prox,250));};au.play().catch(()=>{VOZ.audio=null;falarTTS(t,()=>setTimeout(prox,250));});return;}}
+    falarTTS(t,()=>setTimeout(prox,250)); };
+  prox();
 }
 function falarTTS(t,fim){
   if(!('speechSynthesis' in window)){toast('Este aparelho não tem leitura em voz alta.');fim();return;}
