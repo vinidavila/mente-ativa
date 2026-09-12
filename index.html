@@ -94,7 +94,7 @@
 <section id="s-hoje" class="on">
   <div class="card" style="background:var(--ink);color:#fff">
     <p id="frase" style="font-size:1.25rem;margin:0;line-height:1.4"></p>
-    <button class="btn sec" style="margin-top:10px;min-height:44px;padding:6px 14px;font-size:.95rem" onclick="falar(this,document.getElementById('frase').textContent)">🔊 Ouvir</button>
+    <button class="btn sec" style="margin-top:10px;min-height:44px;padding:6px 14px;font-size:.95rem" onclick="falar(this,FRASES[Math.floor(Date.now()/86400000)%FRASES.length][0])">🔊 Ouvir</button>
     <p id="fraseautor" style="margin:8px 0 0;color:#B9C8C2;font-size:.9rem"></p>
   </div>
   <div class="card tone" id="agentecard">
@@ -255,6 +255,12 @@
     <button class="btn" onclick="famResumo()">Enviar meu dia pelo WhatsApp</button>
   </div>
   <div class="card">
+    <h3 style="margin:0 0 6px">Voz do aplicativo</h3>
+    <p class="ev" style="margin:0 0 8px">Escolha a voz que soar mais natural neste aparelho. Vozes "de rede" do Google costumam ser as melhores; em Configurações do Android → Conversão de texto em voz → Google → é possível baixar vozes de alta qualidade em Português (Brasil).</p>
+    <div id="vozlista" class="row"></div>
+    <button class="btn sec" style="margin-top:6px" onclick="vozLista()">Atualizar lista de vozes</button>
+  </div>
+  <div class="card">
     <h3 style="margin:0 0 6px">Deixar um recado (para o familiar ou cuidador)</h3>
     <p class="ev" style="margin:0 0 8px">O recado aparece na tela inicial da próxima vez que o app abrir.</p>
     <input id="rec-quem" class="hin" placeholder="Quem está mandando? (ex.: Pedro, seu neto)">
@@ -342,7 +348,7 @@
   <p>Escolha um tema. Uma descoberta por vez, com o ano.</p>
   <div class="themes" id="ctemas"></div>
   <div class="card" id="ccard"></div>
-  <div class="row" style="justify-content:center"><button class="btn sec" onclick="falar(this,document.getElementById('ccard').textContent)">🔊 Ouvir</button></div>
+  <div class="row" style="justify-content:center"><button class="btn sec" onclick="falar(this,cFala())">🔊 Ouvir</button></div>
   <div class="row" style="justify-content:space-between"><button class="btn sec" onclick="cNav(-1)">Anterior</button><button class="btn" onclick="cNav(1)">Próxima</button></div>
   <p class="ev">Fatos amplamente documentados; na versão final cada item deve trazer sua fonte (enciclopédia ou museu).</p>
 </section>
@@ -353,7 +359,7 @@
   <p>Uma ideia por vez. Leia, pense um pouco, e responda à pergunta do fim — não há resposta errada.</p>
   <div class="themes" id="filoniveis"></div>
   <div class="card" id="filocard"></div>
-  <div class="row" style="justify-content:center"><button class="btn sec" onclick="falar(this,document.getElementById('filocard').textContent)">🔊 Ouvir</button></div>
+  <div class="row" style="justify-content:center"><button class="btn sec" onclick="falar(this,filoFala())">🔊 Ouvir</button></div>
   <div class="row" style="justify-content:space-between"><button class="btn sec" onclick="filoNav(-1)">Anterior</button><button class="btn" onclick="filoNav(1)">Próxima ideia</button></div>
 </section>
 
@@ -1550,6 +1556,7 @@ let C={tema:'Construção',i:0};
 document.getElementById('ctemas').innerHTML=Object.keys(CONQ).map(t=>`<button class="${t===C.tema?'on':''}" onclick="cSet('${t.replace(/'/g,"\\'")}')">${t}</button>`).join('');
 function cSet(t){C.tema=t;C.i=0;document.querySelectorAll('#ctemas button').forEach(b=>b.classList.toggle('on',b.textContent===t));cRender();}
 function cNav(d){const L=CONQ[C.tema].length;C.i=(C.i+d+L)%L;cRender();}
+function cFala(){const [ano,txt]=CONQ[C.tema][C.i];return (ano<0?`Em ${-ano} antes de Cristo. `:`Em ${ano}. `)+txt;}
 function cRender(){const [ano,txt]=CONQ[C.tema][C.i];const y=new Date().getFullYear();const lab=ano<0?`${-ano} a.C.`:ano;const ha=ano>0?` · há ${y-ano} anos`:` · há cerca de ${Math.round((y-ano)/1000)} mil anos`;
   document.getElementById('ccard').innerHTML=`<p class="ev" style="margin:0">${C.tema} · ${C.i+1} de ${CONQ[C.tema].length}</p><p style="font-size:1.6rem;font-weight:700;margin:4px 0">${lab}<span class="ev" style="font-weight:400">${ha}</span></p><p style="font-size:1.15rem;margin:0">${txt}</p>`;}
 cRender();
@@ -1580,6 +1587,7 @@ let filoN='Básico', filoI=0;
 document.getElementById('filoniveis').innerHTML=Object.keys(FILO).map(n=>`<button class="${n===filoN?'on':''}" onclick="filoSet('${n}')">${n}</button>`).join('');
 function filoSet(n){filoN=n;filoI=0;document.querySelectorAll('#filoniveis button').forEach(b=>b.classList.toggle('on',b.textContent===n));filoRender();}
 function filoNav(d){const L=FILO[filoN].length;filoI=(filoI+d+L)%L;filoRender();}
+function filoFala(){const f=FILO[filoN][filoI];return `${f[0]}. ${f[1]} Para pensar: ${f[2]}`;}
 function filoRender(){const f=FILO[filoN][filoI];document.getElementById('filocard').innerHTML=`<p class="ev" style="margin:0">${filoN} · ${filoI+1} de ${FILO[filoN].length}</p><h3 style="margin:6px 0">${f[0]}</h3><p style="font-size:1.1rem">${f[1]}</p><p style="background:#FFF3D6;border-radius:12px;padding:12px;font-size:1.05rem"><b>Para pensar:</b> ${f[2]}</p>`;}
 filoRender();
 
@@ -2162,20 +2170,45 @@ function normalizaFala(t){
   t=t.replace(/\s*·\s*/g,', ').replace(/\s*→\s*/g,', depois ').replace(/\s*\(([^)]*)\)/g,', $1,').replace(/\s*[""]\s*/g,' ').replace(/\s{2,}/g,' ').replace(/,\s*,/g,',');
   return t.trim();
 }
-let VOZ={btn:null,rotulo:''};
-function vozParar(){ if('speechSynthesis' in window)speechSynthesis.cancel(); if(VOZ.btn){VOZ.btn.textContent=VOZ.rotulo;VOZ.btn.classList.remove('falando');} VOZ.btn=null; }
-/* falar(botão, texto) ou falar(texto). Toque de novo no mesmo botão = parar. Enquanto fala, o botão vira "⏹ Parar". */
-function falar(a,b){
-  const btn=(a&&a.nodeType===1)?a:null, t=btn?b:a;
-  if(!('speechSynthesis' in window)){toast('Este aparelho não tem leitura em voz alta.');return;}
-  if(btn&&VOZ.btn===btn){vozParar();return;}          // mesmo botão: parar
-  vozParar();
-  const u=new SpeechSynthesisUtterance(normalizaFala(t).slice(0,4000));u.lang='pt-BR';u.rate=0.9;
-  const vs=speechSynthesis.getVoices();const v=vs.find(v=>/pt[-_]br/i.test(v.lang))||vs.find(v=>/brasil|brazil/i.test(v.name))||vs.find(v=>/^pt/i.test(v.lang));if(v)u.voice=v;
-  if(btn){VOZ.btn=btn;VOZ.rotulo=btn.textContent;btn.textContent='⏹ Parar';btn.classList.add('falando');}
-  u.onend=u.onerror=()=>{if(VOZ.btn===btn)vozParar();};
-  speechSynthesis.speak(u);
+let VOZ={btn:null,rotulo:'',voz:null,fila:[],audio:null};
+let AUDIO_IDX=null; fetch('audio/index.json').then(r=>r.ok?r.json():null).then(j=>{AUDIO_IDX=j;}).catch(()=>{});
+function vozParar(){ if('speechSynthesis' in window)speechSynthesis.cancel(); VOZ.fila=[]; if(VOZ.audio){VOZ.audio.pause();VOZ.audio=null;} if(VOZ.btn){VOZ.btn.textContent=VOZ.rotulo;VOZ.btn.classList.remove('falando');} VOZ.btn=null; }
+/* escolha da voz: 1) escolhida pela família; 2) pt-BR "de rede"/natural; 3) pt-BR local; 4) qualquer português */
+function melhorVoz(){
+  const vs=('speechSynthesis' in window)?speechSynthesis.getVoices():[];if(!vs.length)return null;
+  if(VOZ.voz){const v=vs.find(v=>v.name===VOZ.voz);if(v)return v;}
+  const br=vs.filter(v=>/pt[-_]br/i.test(v.lang)||/brasil|brazil/i.test(v.name));
+  return br.find(v=>/network|natural|neural|wavenet|premium|enhanced/i.test(v.name))||br.find(v=>!v.localService)||br[0]||vs.find(v=>/^pt/i.test(v.lang))||null;
 }
+async function hashTexto(t){const b=new TextEncoder().encode(t);const h=await crypto.subtle.digest('SHA-1',b);return [...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,'0')).join('').slice(0,16);}
+/* falar(botão, texto) ou falar(texto). Toque de novo no mesmo botão = parar. Usa MP3 pré-gravado (voz neural) quando existe; senão, a voz do aparelho frase a frase. */
+async function falar(a,b){
+  const btn=(a&&a.nodeType===1)?a:null, t=String(btn?b:a);
+  if(btn&&VOZ.btn===btn){vozParar();return;}
+  vozParar();
+  if(btn){VOZ.btn=btn;VOZ.rotulo=btn.textContent;btn.textContent='⏹ Parar';btn.classList.add('falando');}
+  const fim=()=>{if(VOZ.btn===btn)vozParar();};
+  // 1) áudio pré-gravado
+  if(AUDIO_IDX){const k=await hashTexto(t.replace(/\s+/g,' ').trim());const f=AUDIO_IDX[k];
+    if(f){const au=new Audio('audio/'+f);VOZ.audio=au;au.onended=fim;au.onerror=()=>{VOZ.audio=null;falarTTS(t,fim);};au.play().catch(()=>{VOZ.audio=null;falarTTS(t,fim);});return;}}
+  falarTTS(t,fim);
+}
+function falarTTS(t,fim){
+  if(!('speechSynthesis' in window)){toast('Este aparelho não tem leitura em voz alta.');fim();return;}
+  const texto=normalizaFala(t).slice(0,6000);
+  // frase a frase, com pausa curta entre elas: soa menos corrido
+  VOZ.fila=texto.split(/(?<=[.!?;:])\s+/).filter(x=>x.trim());
+  const v=melhorVoz();
+  const prox=()=>{const f=VOZ.fila.shift();if(!f){fim();return;}
+    const u=new SpeechSynthesisUtterance(f);u.lang='pt-BR';u.rate=0.92;u.pitch=1.0;if(v)u.voice=v;
+    u.onend=()=>setTimeout(prox,/[.!?]$/.test(f)?350:150);u.onerror=()=>setTimeout(prox,100);speechSynthesis.speak(u);};
+  prox();
+}
+if('speechSynthesis' in window)speechSynthesis.onvoiceschanged=()=>{};
+function vozLista(){const el=document.getElementById('vozlista');if(!el)return;const vs=('speechSynthesis' in window)?speechSynthesis.getVoices().filter(v=>/^pt/i.test(v.lang)):[];
+  if(!vs.length){el.innerHTML='<span class="ev">Nenhuma voz em português encontrada ainda. Toque em "Atualizar".</span>';return;}
+  const atual=melhorVoz();el.innerHTML=vs.map(v=>`<button class="btn ${atual&&atual.name===v.name?'':'sec'}" style="min-height:48px;padding:8px 12px;font-size:.9rem" onclick="VOZ.voz='${v.name.replace(/'/g,'')}';vozLista();falar('Olá! Eu sou a voz do Mente Ativa. Bom dia, tudo bem com você?')">${v.name.replace(/Google |Microsoft /,'')}${/network/i.test(v.name)?' ★':''}</button>`).join('');}
+if('speechSynthesis' in window){speechSynthesis.onvoiceschanged=vozLista;setTimeout(vozLista,800);}
 function ouvirResposta(){
   const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R){toast('Este navegador não reconhece voz. No Android funciona.');return;}
   const r=new R();r.lang='pt-BR';r.maxAlternatives=3;toast('Pode falar: "sim" ou "ainda não"');
