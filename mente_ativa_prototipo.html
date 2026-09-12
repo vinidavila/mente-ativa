@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#1E2B2A">
+<title>Mente Ativa — protótipo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#E9F0EA;      /* sálvia clara: baixo brilho, alto conforto */
+    --ink:#1E2B2A;     /* verde-tinta: contraste 12:1 sobre bg */
+    --card:#FFFFFF;
+    --sun:#E8A317;     /* calêndula: ação principal */
+    --sea:#2C5FA8;     /* cobalto: links e secundário */
+    --mute:#5B6B68;
+    --ok:#2E7D4F;
+    --r:22px;
+    font-size:20px;    /* base grande para presbiopia */
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,Arial,sans-serif;line-height:1.45}
+  body{padding-bottom:110px;max-width:560px;margin:0 auto}
+  header{padding:22px 20px 8px}
+  header h1{font-size:1.7rem;margin:0;letter-spacing:-.01em}
+  header p{margin:4px 0 0;color:var(--mute);font-size:.95rem}
+  main{padding:0 16px}
+  section{display:none}
+  section.on{display:block}
+  h2{font-size:1.35rem;margin:22px 0 10px}
+  h3{font-size:1.1rem;margin:16px 0 6px}
+  .card{background:var(--card);border-radius:var(--r);padding:18px;margin:12px 0;box-shadow:0 2px 0 rgba(30,43,42,.08)}
+  .card.tone{background:#F6E7C1}
+  .big{display:flex;align-items:center;gap:14px;width:100%;border:0;background:var(--card);color:var(--ink);border-radius:var(--r);padding:20px 18px;font:inherit;font-size:1.15rem;text-align:left;box-shadow:0 2px 0 rgba(30,43,42,.08);margin:10px 0;cursor:pointer;min-height:76px}
+  .big .ic{font-size:2rem;width:48px;text-align:center;flex:none}
+  .big small{display:block;color:var(--mute);font-size:.9rem;font-weight:400}
+  .big:active{transform:scale(.99)}
+  .big:focus-visible,.btn:focus-visible,nav button:focus-visible{outline:4px solid var(--sea);outline-offset:2px}
+  .btn{border:0;border-radius:999px;background:var(--sun);color:var(--ink);font:inherit;font-weight:700;font-size:1.05rem;padding:14px 22px;cursor:pointer;min-height:56px}
+  .btn.sec{background:#DCE6DD}
+  .btn.blue{background:var(--sea);color:#fff}
+  .btn:disabled{opacity:.5}
+  .row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  a{color:var(--sea);word-break:break-word}
+  .link{display:block;padding:14px 0;border-bottom:1px solid #D5DED7;text-decoration:none}
+  .link:last-child{border-bottom:0}
+  .link b{display:block;color:var(--ink)}
+  .link span{color:var(--mute);font-size:.9rem}
+  .tag{display:inline-block;background:#DCE6DD;border-radius:8px;padding:2px 8px;font-size:.8rem;color:var(--mute);margin-right:6px}
+  .ev{font-size:.85rem;color:var(--mute);margin-top:8px}
+  /* navegação inferior: 5 itens, ícones grandes */
+  nav{position:fixed;bottom:0;left:0;right:0;background:var(--ink);display:flex;justify-content:space-around;padding:8px 4px 14px;max-width:560px;margin:0 auto;border-radius:var(--r) var(--r) 0 0}
+  nav button{background:none;border:0;color:#B9C8C2;font:inherit;font-size:.75rem;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 8px;border-radius:14px;cursor:pointer;min-width:60px}
+  nav button .ic{font-size:1.6rem}
+  nav button.on{color:#fff;background:rgba(255,255,255,.12)}
+  /* jogo da memória */
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .tile{aspect-ratio:1;border-radius:16px;background:var(--sea);border:0;font-size:2.2rem;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center;transition:transform .15s}
+  .tile.open{background:#fff;color:var(--ink);transform:rotateY(0)}
+  .tile.done{background:#DDF0E3;color:var(--ok)}
+  .themes{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}
+  .themes button{flex:none;border:2px solid transparent;background:#fff;border-radius:999px;padding:10px 16px;font:inherit;font-size:1rem;cursor:pointer}
+  .themes button.on{border-color:var(--sun);background:#FFF3D6}
+  /* galeria */
+  .gal{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .pic{border-radius:16px;aspect-ratio:4/3;display:flex;align-items:flex-end;padding:10px;color:#fff;font-weight:700;text-shadow:0 1px 4px #000;cursor:pointer;border:0;font:inherit;background-size:cover}
+  .pic.on{outline:5px solid var(--sun)}
+  .stage{border-radius:var(--r);aspect-ratio:16/9;background:#1E2B2A;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;text-align:center;padding:16px}
+  /* semana */
+  .day{display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:start;padding:10px 0;border-bottom:1px solid #D5DED7}
+  .day b{font-size:1.1rem}
+  .day.today{background:#FFF3D6;border-radius:14px;padding:10px}
+  .prog{height:12px;background:#DCE6DD;border-radius:9px;overflow:hidden}
+  .prog i{display:block;height:100%;background:var(--ok);width:0}
+  .toast{position:fixed;left:50%;bottom:120px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:14px;font-size:1rem;display:none;max-width:90%}
+  .hin{width:100%;font:inherit;font-size:1.1rem;padding:12px;border-radius:12px;border:2px solid #D5DED7}
+</style>
+</head>
+<body>
+<header>
+  <h1 id="greet">Bom dia</h1>
+  <p id="datehdr"></p>
+</header>
+
+<div id="backbar" style="display:none;padding:4px 16px 0"><button class="btn sec" id="backbtn" style="min-height:48px;padding:8px 18px">← Voltar</button></div>
+<main>
+<!-- ===== HOJE ===== -->
+<section id="s-hoje" class="on">
+  <div class="card" style="background:var(--ink);color:#fff">
+    <p id="frase" style="font-size:1.25rem;margin:0;line-height:1.4"></p>
+    <button class="btn sec" style="margin-top:10px;min-height:44px;padding:6px 14px;font-size:.95rem" onclick="falar(document.getElementById('frase').textContent)">🔊 Ouvir</button>
+    <p id="fraseautor" style="margin:8px 0 0;color:#B9C8C2;font-size:.9rem"></p>
+  </div>
+  <div class="card tone" id="agentecard">
+    <p style="margin:0 0 10px;font-size:1.1rem" id="agentefala"></p>
+    <div class="row" id="agenteopts"></div>
+    <div class="row"><button class="btn sec" style="min-height:44px;padding:6px 14px;font-size:.95rem" onclick="falar(document.getElementById('agentefala').textContent)">🔊 Ouvir</button><button class="btn sec" style="min-height:44px;padding:6px 14px;font-size:.95rem" onclick="ouvirResposta()">🎤 Responder falando</button></div>
+  </div>
+  <div class="card tone">
+    <h2 style="margin-top:0">Seu plano de hoje</h2>
+    <div id="plano"></div>
+    <div class="prog" style="margin-top:12px"><i id="bar"></i></div>
+    <p class="ev" id="progtxt"></p>
+  </div>
+  <div class="card" id="hist-convite" style="display:none"></div>
+  <div class="card" id="recado" style="display:none"></div>
+  <div class="card" id="fotodia" style="display:none"></div>
+  <div class="card" id="semana-sug"></div>
+  <div class="row" style="justify-content:center;margin:14px 0"><button class="btn" onclick="go('corpo')">🚶 Mover e jogar</button><button class="btn" onclick="go('descobrir')">🔭 Descobrir</button></div>
+</section>
+
+<!-- ===== DAMAS ===== -->
+<section id="s-damas">
+  <h2>Damas</h2>
+  <div class="themes" id="dmodos">
+    <button class="on" onclick="dModo('app')">Contra o app</button>
+    <button onclick="dModo('dois')">A dois, no mesmo celular</button>
+    <button onclick="dModo('longe')">Com alguém à distância</button>
+  </div>
+  <div class="themes" id="dniveis">
+    <button onclick="dNivel(1)">Fácil</button><button class="on" onclick="dNivel(3)">Médio</button><button onclick="dNivel(5)">Difícil</button>
+  </div>
+  <div class="card" id="dlonge" style="display:none">
+    <p style="margin:0 0 8px">Convide alguém: o convite abre no WhatsApp. Vocês jogam ouvindo um ao outro pela chamada de voz.</p>
+    <div class="row"><button class="btn" onclick="dConvite()">Convidar pelo WhatsApp</button></div>
+    <p class="ev">Neste protótipo o convite envia o link do app. Na versão Android, a mesa é sincronizada em tempo real (Firebase) e a chamada de voz acontece no WhatsApp em paralelo.</p>
+  </div>
+  <div class="card" style="padding:12px">
+    <p id="dstatus" style="margin:0 0 10px;font-size:1.1rem;text-align:center">Você joga com as brancas. Toque em uma peça.</p>
+    <div id="dboard" style="display:grid;grid-template-columns:repeat(8,1fr);gap:0;border:4px solid #1E2B2A;border-radius:10px;overflow:hidden;aspect-ratio:1;transition:transform .5s"></div>
+    <div class="row" style="justify-content:center;margin-top:12px"><button class="btn sec" onclick="dDesfazer()">Desfazer</button><button class="btn" onclick="dNovo()">Novo jogo</button></div>
+  </div>
+  <p class="ev">Regras das damas brasileiras: captura obrigatória, peça come para frente e para trás, dama anda várias casas. (Regra da captura máxima omitida para simplificar.) Evidência: jogadores regulares de tabuleiro tiveram risco de demência 15% menor em 20 anos (Paquid, BMJ Open 2013) — associação, não causa.</p>
+</section>
+
+<!-- ===== XADREZ ===== -->
+<section id="s-xadrez">
+  <h2>Xadrez</h2>
+  <div class="themes" id="xmodos"><button class="on" onclick="xModo('app')">Contra o app</button><button onclick="xModo('dois')">A dois, no mesmo celular</button></div>
+  <div class="themes" id="xniveis"><button onclick="xNivel(1)">Fácil</button><button class="on" onclick="xNivel(2)">Médio</button><button onclick="xNivel(3)">Difícil</button></div>
+  <div class="card" style="padding:12px">
+    <p id="xstatus" style="margin:0 0 10px;font-size:1.1rem;text-align:center">Você joga com as brancas. Toque em uma peça.</p>
+    <div id="xboard" style="display:grid;grid-template-columns:repeat(8,1fr);border:4px solid #1E2B2A;border-radius:10px;overflow:hidden;aspect-ratio:1;transition:transform .5s"></div>
+    <div class="row" style="justify-content:center;margin-top:12px"><button class="btn sec" onclick="xDesfazer()">Desfazer</button><button class="btn" onclick="xNovo()">Novo jogo</button></div>
+  </div>
+  <p class="ev">Ao tocar numa peça, as casas possíveis ficam amarelas; o app avisa xeque e não deixa jogada ilegal. Nível Fácil erra de propósito às vezes. Evidência: jogos de tabuleiro (Paquid, BMJ Open 2013; HR 0,85) — associação.</p>
+</section>
+
+<!-- ===== PACIÊNCIA ===== -->
+<section id="s-paciencia">
+  <h2>Paciência</h2>
+  <p>Toque em uma carta: o app a leva para o melhor lugar. Toque no monte para virar uma carta.</p>
+  <div class="card" style="padding:10px;background:#2E7D4F">
+    <div id="ptopo" style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:10px"></div>
+    <div id="pmesa" style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;align-items:start;min-height:260px"></div>
+  </div>
+  <div class="row" style="justify-content:space-between;align-items:center">
+    <span id="pinfo" class="ev" style="margin:0"></span>
+    <button class="btn" onclick="pNovo()">Novo jogo</button>
+  </div>
+  <p class="ev">O app registra o tempo médio por jogada e o tempo de conclusão — métricas que o grupo de Gielis (KU Leuven) usou como marcadores digitais de cognição na Paciência Klondike. Servem para acompanhamento, não para diagnóstico.</p>
+</section>
+
+<!-- ===== MEU TIME ===== -->
+<section id="s-meutime">
+  <h2>Meu time</h2>
+  <div class="themes" id="tesporte"><button class="on" onclick="tEsporte('futebol')">Futebol</button><button onclick="tEsporte('volei')">Vôlei</button></div>
+  <div id="tescolha"></div>
+  <div id="tconteudo"></div>
+  <p class="ev">Notícias: Google Notícias (RSS por nome do time) e página do time no ge. Vídeos: busca no YouTube com o nome do time e do jogo. Evidência: reminiscência esportiva melhora humor, convívio e qualidade de vida (Carone 2016; Clemson TRJ 2020) — não a cognição.</p>
+</section>
+
+<!-- ===== MÚSICA E FILMES ===== -->
+<section id="s-musicafilmes">
+  <h2>Música e filmes</h2>
+  <h3>Qual é o seu estilo musical?</h3>
+  <div class="themes" id="mestilos"></div>
+  <div id="mconteudo"></div>
+  <h3>Filmes com música e dança</h3>
+  <div class="card" id="mfilmes"></div>
+  <h3>Filmes premiados para quem tem mais de 50</h3>
+  <p class="ev" style="margin-top:0">Vencedores do prêmio Movies for Grownups, da AARP (EUA), que premia filmes feitos por e para pessoas 50+.</p>
+  <div class="card" id="maarp"></div>
+  <p class="ev">Os links abrem a busca no YouTube (trailer, cenas) e no JustWatch (onde assistir no Brasil). Não encontrei lista de filmes recomendados por entidade brasileira (SBGG, ABRAz) com os critérios exigidos.</p>
+</section>
+
+<!-- ===== MEU LIVRO ===== -->
+<section id="s-livro">
+  <h2 id="ltitulo">Meu livro</h2>
+  <div class="card tone" id="lstatus"></div>
+  <div class="row" style="justify-content:space-between;align-items:center">
+    <span><button class="btn sec" style="min-height:44px;padding:6px 14px" onclick="falar(document.getElementById('ltexto').textContent)">🔊 Ouvir o capítulo</button> <button class="btn sec" style="min-height:44px;padding:6px 14px" onclick="speechSynthesis.cancel()">⏹</button></span>
+    <span><button class="btn sec" style="min-height:44px;padding:6px 16px" onclick="lFonte(-2)">A−</button> <button class="btn sec" style="min-height:44px;padding:6px 16px" onclick="lFonte(2)">A+</button></span>
+  </div>
+  <div class="card" id="ltexto" style="font-size:22px;line-height:1.6;font-family:Georgia,'Times New Roman',serif;white-space:pre-wrap"></div>
+  <div class="row" style="justify-content:center" id="lacoes"></div>
+  <div id="lreler"></div>
+  <p class="ev">"O Alienista", Machado de Assis (1882), domínio público. Texto completo em dominiopublico.gov.br ou pt.wikisource.org. Evidência: leitura e atividades de letramento associam-se a menor risco de demência (Verghese 2003, NEJM; coorte australiana 2023) — associação, não causa.</p>
+</section>
+
+<!-- ===== MINHA HISTÓRIA ===== -->
+<section id="s-historia-minha">
+  <h2>Minha história</h2>
+  <p>Responda o que quiser. O app usa isso para escolher o que mostrar a você.</p>
+  <div class="card">
+    <label style="display:block;margin:6px 0 4px">Como quer ser chamado?</label><input id="h-nome" class="hin" placeholder="Ex.: Seu João, Dona Maria">
+    <label style="display:block;margin:14px 0 4px">Qual foi sua profissão?</label>
+    <div class="themes" id="h-prof"></div><input id="h-prof-txt" class="hin" placeholder="ou escreva aqui">
+    <label style="display:block;margin:14px 0 4px">Onde cresceu?</label><input id="h-cidade" class="hin" placeholder="Cidade e estado">
+    <label style="display:block;margin:14px 0 4px">O que você fazia muito bem?</label><input id="h-bem" class="hin" placeholder="Ex.: cozinhar, consertar carro, cantar, plantar">
+    <label style="display:block;margin:14px 0 4px">Com quem mora?</label>
+    <div class="themes" id="h-mora"></div>
+    <div class="row" style="justify-content:center;margin-top:16px"><button class="btn" onclick="hSalvar()">Guardar</button></div>
+  </div>
+  <p class="ev">Atividades ligadas à identidade e às habilidades da pessoa são as que ela mantém (Tierney & Beattie 2020; Wu 2023, NHATS).</p>
+</section>
+
+<!-- ===== FOTOS DA FAMÍLIA ===== -->
+<section id="s-fotos">
+  <h2>Fotos da família</h2>
+  <div class="card">
+    <p style="margin:0 0 8px">Um familiar coloca as fotos e escreve quem está nela e quando foi. O app mostra uma por dia.</p>
+    <label class="btn sec" style="display:inline-block;cursor:pointer">📷 Escolher fotos<input type="file" accept="image/*" multiple style="display:none" onchange="fAdd(this.files)"></label>
+  </div>
+  <div id="flista"></div>
+  <p class="ev">Reminiscência com material pessoal: efeito pequeno e consistente em qualidade de vida, cognição e humor (Woods et al., Cochrane 2018, 22 ensaios). No app Android as fotos ficam no aparelho; o familiar envia pelo painel do cuidador.</p>
+</section>
+
+<!-- ===== MOVER O CORPO ===== -->
+<section id="s-exercicio">
+  <h2>Mover o corpo</h2>
+  <div class="card tone" id="exseg"><p style="margin:0">Fique perto de uma cadeira ou parede para se apoiar. Pare se sentir dor no peito, tontura ou falta de ar. Se estiver em dúvida, faça tudo sentado.</p></div>
+  <div class="card" id="exnivel" style="display:none">
+    <div id="exnivel-fechado"><p style="margin:0 0 8px">Seus exercícios de hoje foram escolhidos para o seu nível. <span class="ev">Só o(a) filho(a) responsável altera o nível, com a senha.</span></p><button class="btn sec" onclick="pinAbrir(()=>{document.getElementById('exnivel-fechado').style.display='none';document.getElementById('exnivel-aberto').style.display='block';})">🔒 Área da família</button></div>
+    <div id="exnivel-aberto" style="display:none"><p class="ev" style="margin:0 0 6px">Nível funcional (Vivifrail) — orientado pelo médico, definido pelo(a) filho(a) responsável</p><div class="themes" id="exniveis"></div><p class="ev" id="exnivtxt" style="margin:6px 0 0"></p><button class="btn sec" style="margin-top:8px" onclick="document.getElementById('exnivel-fechado').style.display='block';document.getElementById('exnivel-aberto').style.display='none'">Fechar área da família</button></div>
+  </div>
+  <div class="card" id="excard"></div>
+  <div class="row" style="justify-content:space-between"><button class="btn sec" onclick="exNav(-1)">Anterior</button><button class="btn" id="exbtn" onclick="exStart()">Começar</button><button class="btn sec" onclick="exNav(1)">Próximo</button></div>
+  <div class="row" style="justify-content:center"><button class="btn sec" id="exerrobtn" style="display:none" onclick="exErro()">Mostrar erro comum</button><button class="btn sec" onclick="falar(document.getElementById('excard').textContent)">🔊 Ouvir</button></div>
+  <p class="ev">Baseado no programa Otago (força e equilíbrio; reduz quedas em idosos, Campbell 1997/Sherrington 2019) e no Cognicise do NCGG (Japão): tarefa cognitiva durante o movimento.</p>
+</section>
+
+<!-- ===== FAMÍLIA ===== -->
+<section id="s-familia">
+  <h2>Família</h2>
+  <div class="card">
+    <h3 style="margin:0 0 6px">Contar como foi meu dia</h3>
+    <p style="margin:0 0 8px">Envia pelo WhatsApp um resumo do que você fez hoje para quem você escolher.</p>
+    <button class="btn" onclick="famResumo()">Enviar meu dia pelo WhatsApp</button>
+  </div>
+  <div class="card">
+    <h3 style="margin:0 0 6px">Deixar um recado (para o familiar ou cuidador)</h3>
+    <p class="ev" style="margin:0 0 8px">O recado aparece na tela inicial da próxima vez que o app abrir.</p>
+    <input id="rec-quem" class="hin" placeholder="Quem está mandando? (ex.: Pedro, seu neto)">
+    <input id="rec-txt" class="hin" style="margin-top:6px" placeholder="Escreva o recado…">
+    <div class="row" style="margin-top:8px"><button class="btn" onclick="recSalvar()">Guardar recado</button><button class="btn sec" id="recgrav" onclick="recGravar()">🎤 Gravar áudio</button></div>
+  </div>
+  <p class="ev">No app Android, o familiar manda o recado pelo próprio WhatsApp para um número do app (ou pelo painel do cuidador) e ele toca na abertura; o resumo do dia sai automaticamente. Evidência: apoio social e formato "misto" (app + pessoa) são determinantes de adesão de idosos a apps (Innovation in Aging 2023).</p>
+</section>
+
+<!-- ===== COZINHA ===== -->
+<section id="s-cozinha">
+  <h2>Cozinha</h2>
+  <div class="themes" id="rlista"></div>
+  <div class="card" id="rcard"></div>
+  <div class="row" style="justify-content:space-between"><button class="btn sec" onclick="rNav(-1)">Anterior</button><button class="btn" id="rbtn" onclick="rTimer()">Relógio</button><button class="btn sec" onclick="rNav(1)">Próximo</button></div>
+  <p class="ev">Cozinhar é atividade instrumental, cognitivamente exigente e com propósito — o perfil associado a engajamento significativo em idosos (coorte 2026; Tierney & Beattie 2020). Receitas simples, sem fritura em óleo quente.</p>
+</section>
+
+<!-- ===== NATUREZA ===== -->
+<section id="s-natureza">
+  <h2 id="ntitulo">Plantas e animais</h2>
+  <div id="ncats" class="row"></div>
+  <input id="nbusca" placeholder="Procurar pelo nome…" style="width:100%;font:inherit;font-size:1.1rem;padding:14px;border-radius:14px;border:2px solid #D5DED7;margin:6px 0" oninput="nLista()">
+  <div id="nlista"></div>
+  <div id="nficha" style="display:none"></div>
+</section>
+
+<!-- ===== VOCÊ SABIA (história das descobertas) ===== -->
+<section id="s-historia">
+  <h2>Você sabia?</h2>
+  <div class="card" id="hoje-historia"></div>
+  <div class="row" style="justify-content:center"><button class="btn" onclick="novaCuriosidade()">Outra curiosidade</button></div>
+  <div class="card" id="curiosidade"></div>
+  <h2>O que o ser humano foi capaz de fazer</h2>
+  <p>Escolha um tema. Uma descoberta por vez, com o ano.</p>
+  <div class="themes" id="ctemas"></div>
+  <div class="card" id="ccard"></div>
+  <div class="row" style="justify-content:center"><button class="btn sec" onclick="falar(document.getElementById('ccard').textContent)">🔊 Ouvir</button></div>
+  <div class="row" style="justify-content:space-between"><button class="btn sec" onclick="cNav(-1)">Anterior</button><button class="btn" onclick="cNav(1)">Próxima</button></div>
+  <p class="ev">Fatos amplamente documentados; na versão final cada item deve trazer sua fonte (enciclopédia ou museu).</p>
+</section>
+
+<!-- ===== FILOSOFIA ===== -->
+<section id="s-filosofia">
+  <h2>Filosofia</h2>
+  <p>Uma ideia por vez. Leia, pense um pouco, e responda à pergunta do fim — não há resposta errada.</p>
+  <div class="themes" id="filoniveis"></div>
+  <div class="card" id="filocard"></div>
+  <div class="row" style="justify-content:center"><button class="btn sec" onclick="falar(document.getElementById('filocard').textContent)">🔊 Ouvir</button></div>
+  <div class="row" style="justify-content:space-between"><button class="btn sec" onclick="filoNav(-1)">Anterior</button><button class="btn" onclick="filoNav(1)">Próxima ideia</button></div>
+</section>
+
+<!-- ===== PINTORES ===== -->
+<section id="s-pintores">
+  <h2>Traços dos pintores</h2>
+  <p>Toque em um nome e veja o pincel se mover no estilo daquele mestre.</p>
+  <div class="themes" id="pintorlist"></div>
+  <div class="card">
+    <svg id="tela" viewBox="0 0 400 260" width="100%" style="background:#FBF7EE;border-radius:16px"></svg>
+    <p id="pintortxt" style="margin:12px 0 0"></p>
+    <div class="row" style="justify-content:center"><button class="btn" onclick="pintar()">Pintar de novo</button></div>
+  </div>
+</section>
+
+
+<!-- ===== HUB: CORPO E MENTE ===== -->
+<section id="s-corpo">
+  <h2>Corpo e mente</h2>
+  <button class="big" onclick="go('exercicio')"><span class="ic">🚶</span><span>Mover o corpo<small>10 minutos guiados, com relógio</small></span></button>
+  <button class="big" onclick="go('jogos')"><span class="ic">🃏</span><span>Jogo da memória e números<small>Com o tema que você gosta</small></span></button>
+  <button class="big" onclick="go('damas')"><span class="ic">⚫</span><span>Damas<small>Contra o app, a dois, ou à distância</small></span></button>
+  <button class="big" onclick="go('xadrez')"><span class="ic">♞</span><span>Xadrez<small>Três níveis, ou a dois</small></span></button>
+  <button class="big" onclick="go('paciencia')"><span class="ic">🂡</span><span>Paciência<small>Toque na carta e o app a leva ao lugar certo</small></span></button>
+  <button class="big" onclick="go('semana')"><span class="ic">📅</span><span>Minha semana<small>Como variar as atividades nos dias</small></span></button>
+</section>
+
+<!-- ===== HUB: DESCOBRIR ===== -->
+<section id="s-descobrir">
+  <h2>Descobrir</h2>
+  <button class="big" onclick="go('historia')"><span class="ic">🔭</span><span>Você sabia?<small>Descobertas, datas e o que o ser humano construiu</small></span></button>
+  <button class="big" onclick="go('livro')"><span class="ic">📖</span><span>Meu livro<small>Um capítulo curto, três vezes por semana</small></span></button>
+  <button class="big" onclick="go('filosofia')"><span class="ic">🏛️</span><span>Filosofia<small>Do básico ao avançado, uma ideia por vez</small></span></button>
+  <button class="big" onclick="go('pintores')"><span class="ic">🖌️</span><span>Traços dos pintores<small>O pincel se movendo no estilo de cada mestre</small></span></button>
+  <button class="big" onclick="go('natureza')"><span class="ic">🌳</span><span>Plantas e animais<small>Árvores, flores, cães, gatos, gado, cavalos e aves</small></span></button>
+  <button class="big" onclick="go('links')"><span class="ic">📚</span><span>Fontes confiáveis<small>Sociedades e estudos que embasam o app</small></span></button>
+</section>
+
+<!-- ===== HUB: MEUS GOSTOS ===== -->
+<section id="s-gostos">
+  <h2>Meus gostos</h2>
+  <button class="big" onclick="go('meutime')"><span class="ic">⚽</span><span>Meu time<small>Notícias do dia, jogos antigos e vídeos</small></span></button>
+  <button class="big" onclick="go('musicafilmes')"><span class="ic">🎬</span><span>Música e filmes<small>Seu estilo, filmes com música e dança, premiados</small></span></button>
+  <button class="big" onclick="go('cozinha')"><span class="ic">🍲</span><span>Cozinha<small>A receita da semana, passo a passo</small></span></button>
+  <button class="big" onclick="go('interesses')"><span class="ic">🌱</span><span>Meus interesses<small>Livros, plantas, animais, carros, música — com links</small></span></button>
+</section>
+
+<!-- ===== HUB: FAMÍLIA ===== -->
+<section id="s-fam">
+  <h2>Família</h2>
+  <button class="big" onclick="go('familia')"><span class="ic">💌</span><span>Recados<small>Receber e mandar notícias do seu dia</small></span></button>
+  <button class="big" onclick="go('fotos')"><span class="ic">🖼️</span><span>Fotos da família<small>Uma lembrança por dia</small></span></button>
+  <button class="big" onclick="go('imagens')"><span class="ic">📺</span><span>Imagens na TV<small>Escolha uma imagem e envie para a televisão</small></span></button>
+  <button class="big" onclick="go('historia-minha')"><span class="ic">🪪</span><span>Minha história<small>Quem você é: profissão, cidade, gostos</small></span></button>
+</section>
+
+<!-- ===== JOGOS ===== -->
+<section id="s-jogos">
+  <h2>Jogo da memória</h2>
+  <p>Escolha um tema e encontre os pares.</p>
+  <div class="themes" id="themes"></div>
+  <div class="card">
+    <div class="row" style="justify-content:space-between;align-items:center">
+      <span id="score">Pares: 0 / 8</span>
+      <button class="btn sec" onclick="newGame()">Novo jogo</button>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+  <h2>Sequência de números</h2>
+  <p>Observe os números que aparecem e repita na ordem. A sequência cresce a cada acerto.</p>
+  <div class="card">
+    <div class="stage" id="seqstage" style="aspect-ratio:auto;min-height:90px;font-size:2.4rem">Toque em Começar</div>
+    <div class="row" style="justify-content:center;margin-top:12px">
+      <button class="btn" onclick="seqStart()">Começar</button>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(3,1fr);margin-top:10px" id="pad"></div>
+    <p class="ev" id="seqinfo">Recorde: <span id="seqbest">0</span> números</p>
+  </div>
+  <p class="ev">Evidência: treino de velocidade/raciocínio manteve efeito por 10 anos no estudo ACTIVE (Rebok 2014, JAGS). Treino computadorizado isolado tem efeito pequeno e incerto (Cochrane, Gates 2020) — por isso o app combina jogos com exercício, música, convívio e interesses.</p>
+</section>
+
+<!-- ===== INTERESSES ===== -->
+<section id="s-interesses">
+  <h2>Meus interesses</h2>
+  <p>Escolha o que gosta. O app usa isso para montar o plano e os temas dos jogos.</p>
+  <div id="intlist"></div>
+</section>
+
+<!-- ===== IMAGENS ===== -->
+<section id="s-imagens">
+  <h2>Imagens para ver na TV</h2>
+  <p>Toque em uma imagem e depois em <b>Enviar para a TV</b>.</p>
+  <div class="stage" id="stage">Nenhuma imagem escolhida</div>
+  <div class="row" style="justify-content:center">
+    <button class="btn blue" id="castbtn" onclick="castTV()" disabled>📺 Enviar para a TV</button>
+    <button class="btn sec" onclick="shareImg()">Compartilhar</button>
+  </div>
+  <div class="gal" id="gal"></div>
+  <p class="ev">No app Android nativo este botão usa o Google Cast (Chromecast/Android TV) ou o espelhamento Miracast do sistema. Bluetooth não transmite imagem para TV (banda insuficiente); serve apenas para áudio.</p>
+</section>
+
+<!-- ===== SEMANA ===== -->
+<section id="s-semana">
+  <h2>Minha semana</h2>
+  <p>Cada dia mistura corpo, mente e convívio, como nos estudos FINGER e U.S. POINTER.</p>
+  <div class="card" id="week"></div>
+  <h2>Por que assim?</h2>
+  <div class="card">
+    <p><b>Mover-se</b> — atividade física: recomendação forte da OMS (2019; 2ª ed. 2026).</p>
+    <p><b>Dançar e cantar</b> — dança melhorou cognição global e memória em metanálises de ensaios (Yuan 2022; Wu 2023).</p>
+    <p><b>Jogos e leitura</b> — leitura, jogos de tabuleiro/cartas e instrumento musical associados a menor risco de demência (Verghese 2003 NEJM; Lee 2018 JAMA Psychiatry).</p>
+    <p><b>Plantas</b> — horticultura ≥2x/semana melhorou cognição em idosos com demência (metanálise 2024).</p>
+    <p><b>Animais</b> — ter cão ou gato associou-se a declínio mais lento (ELSA 2023; SHARE 2025), sobretudo em quem mora só.</p>
+    <p><b>Convívio</b> — isolamento social é um dos 14 fatores modificáveis (Lancet 2024).</p>
+  </div>
+</section>
+
+<!-- ===== SAIBA MAIS (links) ===== -->
+<section id="s-links">
+  <h2>Fontes confiáveis</h2>
+  <div class="card" id="links"></div>
+</section>
+</main>
+<nav>
+  <button class="on" data-s="hoje" onclick="go('hoje')"><span class="ic">🏠</span>Hoje</button>
+  <button data-s="corpo" onclick="go('corpo')"><span class="ic">🚶</span>Corpo</button>
+  <button data-s="descobrir" onclick="go('descobrir')"><span class="ic">🔭</span>Descobrir</button>
+  <button data-s="gostos" onclick="go('gostos')"><span class="ic">⭐</span>Gostos</button>
+  <button data-s="fam" onclick="go('fam')"><span class="ic">💌</span>Família</button>
+</nav>
+
+
+<div class="toast" id="toast"></div>
+<div id="pin" style="display:none;position:fixed;inset:0;background:rgba(30,43,42,.85);z-index:50;align-items:center;justify-content:center;padding:20px">
+  <div class="card" style="width:100%;max-width:360px;text-align:center">
+    <h3 id="pintit" style="margin:0 0 4px">Senha da família</h3><p class="ev" id="pinsub" style="margin:0 0 10px"></p>
+    <div id="pindots" style="font-size:2rem;letter-spacing:12px;min-height:44px">····</div>
+    <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:8px" id="pinpad"></div>
+    <button class="btn sec" style="margin-top:10px" onclick="pinFechar()">Cancelar</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+<script src="exercicios/rig.js"></script>
+<script src="exercicios/exercicios.js"></script>
+<script>
+/* ---------- estado (em memória; no app nativo usar SQLite/Room) ---------- */
+const state = { likes: new Set(['plantas','musica']), done: new Set(), best: 0, traduzir: true };
+
+/* ---------- tradução automática de páginas em outra língua ----------
+   Reescreve a URL para o proxy do Google Tradutor (translate.goog): a página abre inteira em português,
+   com layout preservado. Sites já em português passam direto. No app Android nativo, abrir a URL
+   resultante em WebView ou Chrome Custom Tab; fallback: barra "Traduzir" nativa do Chrome. */
+const JA_PT = ['.br','.pt','alzheimerportugal.org'];
+function trUrl(u){
+  if(!state.traduzir) return u;
+  try{
+    const x = new URL(u);
+    if(JA_PT.some(s=>x.hostname.endsWith(s))) return u;
+    if(/\.pdf$/i.test(x.pathname)) return u;              // PDF não é traduzido pelo proxy
+    const host = x.hostname.replace(/-/g,'--').replace(/\./g,'-') + '.translate.goog';
+    const sep = x.search ? '&' : '?';
+    return `https://${host}${x.pathname}${x.search}${sep}_x_tr_sl=auto&_x_tr_tl=pt&_x_tr_hl=pt-BR&_x_tr_pto=wapp`;
+  }catch(e){ return u; }
+}
+function toggleTrad(){ state.traduzir=!state.traduzir; renderInt(); renderFontes(); toast(state.traduzir?'Páginas abrirão em português':'Páginas abrirão no idioma original'); }
+function tradBtn(){ return `<button class="btn ${state.traduzir?'':'sec'}" style="width:100%;margin:6px 0 4px" onclick="toggleTrad()">${state.traduzir?'🌐 Abrindo páginas em português ✓':'🌐 Abrir páginas em português'}</button>`; }
+
+/* ---------- temas de interesse + links curados (fontes oficiais/científicas) ---------- */
+const INTERESSES = [
+  {id:'livros', ic:'📚', nome:'Livros e leitura', links:[
+    ['MEC Livros — biblioteca digital gratuita (8 mil títulos)','https://meclivros.mec.gov.br/','Gov. Federal'],
+    ['Portal Domínio Público (MEC)','http://www.dominiopublico.gov.br','Gov. Federal'],
+    ['Biblioteca Digital Luso-Brasileira (Biblioteca Nacional)','https://bdlb.bn.gov.br/','Biblioteca Nacional'],
+    ['Project Gutenberg — clássicos em vários idiomas','https://www.gutenberg.org/catalog/','Sem cadastro'],
+  ]},
+  {id:'plantas', ic:'🌿', nome:'Plantas e jardim', links:[
+    ['Ideias de atividades: jardinagem e plantas em casa','https://www.alzheimers.org.uk/get-support/living-with-dementia/activity-ideas-dementia','Alzheimer\'s Society (Reino Unido)'],
+    ['Jardinagem adaptada para quem tem Alzheimer','https://www.nia.nih.gov/health/alzheimers-caregiving/adapting-activities-people-alzheimers-disease','NIA / NIH (EUA)'],
+  ]},
+  {id:'animais', ic:'🐶', nome:'Cães e gatos', links:[
+    ['Ter cão ou gato e declínio cognitivo — estudo ELSA (JAMA Netw Open 2023)','https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2813138','Estudo'],
+    ['Cuidar de animais como atividade (NIA)','https://www.nia.nih.gov/health/alzheimers-caregiving/adapting-activities-people-alzheimers-disease','NIA / NIH'],
+  ]},
+  {id:'carros', ic:'🚗', nome:'Carros e máquinas', links:[
+    ['Montar, consertar, "quebrar a cabeça" com objetos — Alzheimer\'s Association','https://www.alz.org/getmedia/a0cad4dd-c291-4e59-8be0-524004d42ef4/healthy-habits-brain-infographic-english-alzheimers-association.pdf','10 hábitos'],
+  ]},
+  {id:'musica', ic:'🎵', nome:'Música e dança', links:[
+    ['Ideias musicais para conversa e memórias','https://www.alzheimers.org.uk/get-support/publications-and-factsheets/dementia-together/musical-ideas-prompt-conversation-memories-dementia','Alzheimer\'s Society'],
+    ['Atividades para demência: cantar, Playlist for Life','https://www.nhs.uk/conditions/dementia/living-with-dementia/activities/','NHS (Reino Unido)'],
+  ]},
+  {id:'artes', ic:'🎨', nome:'Artes e trabalhos manuais', links:[
+    ['Pintar, tocar, tricotar, escrever — ideias','https://www.alzheimers.org.uk/get-support/living-with-dementia/activity-ideas-dementia','Alzheimer\'s Society'],
+  ]},
+  {id:'esportes', ic:'⚽', nome:'Futebol, vôlei e esportes', links:[
+    ['Atividade física: recomendação forte da OMS','https://www.frontiersin.org/journals/neurology/articles/10.3389/fneur.2021.765584/full','OMS (resumo)'],
+  ]},
+];
+
+const FONTES = [
+  ['Lancet Commission 2024 — 14 fatores modificáveis','https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(24)01296-0/abstract'],
+  ['OMS — redução de risco de declínio cognitivo (resumo das diretrizes)','https://www.frontiersin.org/journals/neurology/articles/10.3389/fneur.2021.765584/full'],
+  ['U.S. POINTER — JAMA 2025','https://jamanetwork.com/journals/jama/fullarticle/2837046'],
+  ['FINGER — seguimento de 11 anos','https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12726459/'],
+  ['ACTIVE — 10 anos (JAGS 2014)','https://agsjournals.onlinelibrary.wiley.com/doi/10.1111/jgs.12607'],
+  ['Cochrane — treino cognitivo computadorizado','https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD012277.pub3/full'],
+  ['Dança e cognição no CCL — metanálise','https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9553227/'],
+  ['Horticultura em idosos com demência — metanálise','https://pubmed.ncbi.nlm.nih.gov/39275900/'],
+  ['Leitura, jogos e instrumento — NEJM 2003','https://www.nejm.org/doi/full/10.1056/NEJMoa022252'],
+  ['Alzheimer\'s Association — 10 hábitos','https://www.alz.org/getmedia/a0cad4dd-c291-4e59-8be0-524004d42ef4/healthy-habits-brain-infographic-english-alzheimers-association.pdf'],
+];
+
+/* ---------- jogo da memória: emojis por tema (no app nativo, fotos reais) ---------- */
+const TEMAS = {
+  futebol:['⚽','🥅','🏆','👟','🏟️','🧤','🎽','🚩'],
+  volei:['🏐','🏖️','🤾','🏆','🎽','☀️','🥇','🙌'],
+  plantas:['🌹','🌻','🌵','🍀','🌷','🌴','🍋','🌺'],
+  animais:['🐶','🐱','🐦','🐠','🐢','🐰','🐴','🐝'],
+  carros:['🚗','🚜','🚚','🏍️','🚲','✈️','🚂','⛵'],
+  musica:['🎸','🎹','🎺','🥁','🎻','🎤','🎷','🪗'],
+  cozinha:['🍞','🥘','☕','🍇','🧀','🍅','🥗','🍰'],
+};
+let tema='plantas', open=[], pares=0, lock=false;
+
+const HUB={exercicio:'corpo',jogos:'corpo',damas:'corpo',xadrez:'corpo',paciencia:'corpo',semana:'corpo',
+  historia:'descobrir',livro:'descobrir',filosofia:'descobrir',pintores:'descobrir',natureza:'descobrir',links:'descobrir',
+  meutime:'gostos',musicafilmes:'gostos',cozinha:'gostos',interesses:'gostos',
+  familia:'fam',fotos:'fam',imagens:'fam','historia-minha':'fam'};
+function go(s){
+  document.querySelectorAll('section').forEach(x=>x.classList.remove('on'));
+  document.getElementById('s-'+s).classList.add('on');
+  const hub=HUB[s]||s;
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.s===hub));
+  const bb=document.getElementById('backbar');bb.style.display=HUB[s]?'block':'none';document.getElementById('backbtn').onclick=()=>go(hub);
+  speechSynthesis&&speechSynthesis.cancel&&speechSynthesis.cancel();
+  window.scrollTo(0,0);
+}
+function toast(t){const e=document.getElementById('toast');e.textContent=t;e.style.display='block';setTimeout(()=>e.style.display='none',2600)}
+
+/* ---------- cabeçalho ---------- */
+(function(){
+  const h=new Date().getHours();
+  document.getElementById('greet').textContent = h<12?'Bom dia':h<18?'Boa tarde':'Boa noite';
+  document.getElementById('datehdr').textContent = new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});
+})();
+
+/* ---------- plano semanal: rotação de domínios ---------- */
+const SEMANA = [
+  ['Dom','Convívio: almoço em família ou ligação por vídeo; 20 min de caminhada'],
+  ['Seg','Corpo: caminhada 30 min · Mente: jogo da memória · Interesse do dia'],
+  ['Ter','Dança ou música: 3 canções cantando ou dançando · Ler 15 min'],
+  ['Qua','Corpo: fortalecimento em cadeira 20 min · Sequência de números · Plantas/animais'],
+  ['Qui','Convívio: grupo, igreja, vizinhos · Jogo de cartas ou dominó com alguém'],
+  ['Sex','Corpo: caminhada 30 min · Aprender algo novo (receita, música, palavra)'],
+  ['Sáb','Fora de casa: feira, parque, museu · Fotos na TV e conversa sobre elas'],
+];
+(function(){
+  const t=new Date().getDay();
+  document.getElementById('week').innerHTML = SEMANA.map((d,i)=>`<div class="day ${i===t?'today':''}"><b>${d[0]}</b><span>${d[1]}</span></div>`).join('');
+  const hoje=[
+    ['mover','🚶','Mover o corpo 30 min (caminhar, dançar, jardim)'],
+    ['mente','🃏','Um jogo do app (memória ou números)'],
+    ['gosto','⭐','Algo que você gosta: '+[...state.likes].map(id=>INTERESSES.find(x=>x.id===id).nome.toLowerCase()).join(' ou ')],
+    ['gente','💬','Conversar com alguém (pessoalmente ou por vídeo)'],
+  ];
+  document.getElementById('plano').innerHTML = hoje.map(h=>`<button class="big" style="margin:8px 0;min-height:64px" id="t-${h[0]}" onclick="done('${h[0]}')"><span class="ic">${h[1]}</span><span>${h[2]}</span></button>`).join('');
+  prog();
+})();
+function done(k){ state.done.has(k)?state.done.delete(k):state.done.add(k); const b=document.getElementById('t-'+k); b.style.background=state.done.has(k)?'#DDF0E3':'#fff'; prog(); }
+function prog(){ const p=state.done.size/4*100; document.getElementById('bar').style.width=p+'%'; document.getElementById('progtxt').textContent = state.done.size===4?'Dia completo. Muito bem!':`${state.done.size} de 4 atividades feitas`; }
+
+/* ---------- interesses ---------- */
+function renderInt(){
+  document.getElementById('intlist').innerHTML = tradBtn() + INTERESSES.map(i=>`
+    <div class="card">
+      <button class="big" style="margin:0;box-shadow:none;padding:6px 0;background:${state.likes.has(i.id)?'#FFF3D6':'#fff'}" onclick="toggleLike('${i.id}')">
+        <span class="ic">${i.ic}</span><span>${i.nome}<small>${state.likes.has(i.id)?'Você gosta ✓ — toque para remover':'Toque para marcar que gosta'}</small></span></button>
+      ${i.links.map(l=>`<a class="link" href="${trUrl(l[1])}" target="_blank" rel="noopener"><b>${l[0]}</b><span>${l[2]}${state.traduzir&&trUrl(l[1])!==l[1]?' · traduzido':''}</span></a>`).join('')}
+    </div>`).join('');
+}
+function toggleLike(id){ state.likes.has(id)?state.likes.delete(id):state.likes.add(id); renderInt(); }
+function renderFontes(){
+  document.getElementById('links').innerHTML = tradBtn() + FONTES.map(l=>`<a class="link" href="${trUrl(l[1])}" target="_blank" rel="noopener"><b>${l[0]}</b><span>${new URL(l[1]).hostname}${state.traduzir&&trUrl(l[1])!==l[1]?' · traduzido':''}</span></a>`).join('');
+}
+renderInt(); renderFontes();
+
+/* ---------- jogo da memória ---------- */
+document.getElementById('themes').innerHTML = Object.keys(TEMAS).map(t=>`<button class="${t===tema?'on':''}" onclick="setTema('${t}')">${t[0].toUpperCase()+t.slice(1)}</button>`).join('');
+function setTema(t){tema=t;document.querySelectorAll('.themes button').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase()===t));newGame();}
+function newGame(){
+  pares=0;open=[];lock=false;document.getElementById('score').textContent='Pares: 0 / 8';
+  const cards=[...TEMAS[tema],...TEMAS[tema]].sort(()=>Math.random()-.5);
+  document.getElementById('grid').innerHTML = cards.map((c,i)=>`<button class="tile" data-v="${c}" onclick="flip(this)" aria-label="carta ${i+1}">?</button>`).join('');
+}
+function flip(el){
+  if(lock||el.classList.contains('open')||el.classList.contains('done'))return;
+  el.classList.add('open');el.textContent=el.dataset.v;open.push(el);
+  if(open.length===2){
+    lock=true;
+    const [a,b]=open;
+    setTimeout(()=>{
+      if(a.dataset.v===b.dataset.v){a.classList.add('done');b.classList.add('done');pares++;document.getElementById('score').textContent=`Pares: ${pares} / 8`;if(pares===8){toast('Parabéns! Você completou o jogo.');state.done.add('mente');const t=document.getElementById('t-mente');if(t)t.style.background='#DDF0E3';prog();}}
+      else{a.classList.remove('open');b.classList.remove('open');a.textContent='?';b.textContent='?';}
+      open=[];lock=false;
+    },900);
+  }
+}
+newGame();
+
+/* ---------- sequência de números ---------- */
+let seq=[],pos=0,playing=false;
+document.getElementById('pad').innerHTML=[1,2,3,4,5,6,7,8,9].map(n=>`<button class="tile" style="font-size:1.8rem;aspect-ratio:2/1" onclick="seqPress(${n})">${n}</button>`).join('');
+function seqStart(){seq=[];nextRound();}
+function nextRound(){
+  seq.push(1+Math.floor(Math.random()*9));pos=0;playing=false;
+  const st=document.getElementById('seqstage');let i=0;
+  st.textContent='Observe…';
+  const iv=setInterval(()=>{ if(i<seq.length){st.textContent=seq[i];i++;} else {clearInterval(iv);st.textContent='Sua vez';playing=true;} },1000);
+}
+function seqPress(n){
+  if(!playing)return;
+  if(n===seq[pos]){pos++; if(pos===seq.length){playing=false;state.best=Math.max(state.best,seq.length);document.getElementById('seqbest').textContent=state.best;document.getElementById('seqstage').textContent='Certo! '+seq.length+' números';setTimeout(nextRound,1200);}}
+  else{playing=false;document.getElementById('seqstage').textContent='Foi '+seq.join(' ')+'. Toque em Começar para tentar de novo';}
+}
+
+/* ---------- galeria + envio para TV ---------- */
+/* Fotos reais entram no app nativo (acervos com licença livre, ex.: Wikimedia Commons). Aqui: cartões ilustrativos. */
+const FOTOS=[
+  ['Cachoeira','linear-gradient(160deg,#2C5FA8,#8ED1C2)'],
+  ['Campo de girassóis','linear-gradient(160deg,#E8A317,#F6E7C1)'],
+  ['Cão no parque','linear-gradient(160deg,#2E7D4F,#B9E3C6)'],
+  ['Carro antigo','linear-gradient(160deg,#7A2E2E,#E6B8A2)'],
+  ['Estádio ao pôr do sol','linear-gradient(160deg,#4B2E7A,#F0A868)'],
+  ['Orquestra','linear-gradient(160deg,#1E2B2A,#8FA8A3)'],
+];
+let sel=null;
+document.getElementById('gal').innerHTML=FOTOS.map((f,i)=>`<button class="pic" style="background:${f[1]}" onclick="pick(${i})">${f[0]}</button>`).join('');
+function pick(i){sel=i;document.querySelectorAll('.pic').forEach((p,j)=>p.classList.toggle('on',j===i));const s=document.getElementById('stage');s.style.background=FOTOS[i][1];s.textContent=FOTOS[i][0];document.getElementById('castbtn').disabled=false;}
+async function castTV(){
+  /* Camadas de transmissão, da melhor para a mais simples:
+     1) App nativo: Google Cast SDK (Chromecast / Android TV / Google TV) — envia URL da imagem para o receptor.
+     2) Android: MediaRouter/Miracast (espelhar tela) — intent ACTION_CAST_SETTINGS.
+     3) Web: Presentation API (abre a imagem em uma tela secundária / Chromecast). */
+  if('presentation' in navigator && navigator.presentation && window.PresentationRequest){
+    try{ const req=new PresentationRequest(location.href+'#tv'); const conn=await req.start(); conn.send(JSON.stringify({img:sel})); toast('Enviando para a TV…'); return; }catch(e){}
+  }
+  toast('Neste protótipo web a TV não está disponível. No app Android o botão abre a lista de TVs (Chromecast / espelhar tela).');
+}
+async function shareImg(){
+  if(navigator.share){try{await navigator.share({title:'Mente Ativa',text:sel!==null?FOTOS[sel][0]:'Imagem',url:location.href});}catch(e){}}
+  else toast('Compartilhamento não disponível neste navegador.');
+}
+/* modo receptor (#tv): mostra a imagem em tela cheia */
+if(location.hash==='#tv'){document.body.innerHTML='<div id="tvs" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:4rem;background:#000">Aguardando…</div>';
+  navigator.presentation?.receiver?.connectionList.then(l=>{const h=c=>c.addEventListener('message',m=>{const d=JSON.parse(m.data);const e=document.getElementById('tvs');e.style.background=FOTOS[d.img][1];e.textContent=FOTOS[d.img][0];});l.connections.forEach(h);l.addEventListener('connectionavailable',e=>h(e.connection));});}
+
+/* ================= FRASE DO DIA (curtas, simples; autores em domínio público ou frases próprias) ================= */
+const FRASES=[
+  ['Não é porque as coisas são difíceis que não ousamos; é porque não ousamos que elas são difíceis.','Sêneca'],
+  ['Um dia bem vivido já é uma vitória.','Mente Ativa'],
+  ['A felicidade da sua vida depende da qualidade dos seus pensamentos.','Marco Aurélio'],
+  ['Comece onde você está, use o que você tem, faça o que você pode.','Mente Ativa'],
+  ['Conhece-te a ti mesmo.','Inscrição no templo de Delfos'],
+  ['O sol nasce para todos; hoje ele nasceu para você.','Mente Ativa'],
+  ['Não são as coisas que nos perturbam, mas a opinião que temos sobre elas.','Epicteto'],
+  ['Cada passo pequeno conta. Dê um hoje.','Mente Ativa'],
+  ['A vida é curta, mas cabe muita coisa nela.','Mente Ativa'],
+  ['Quem tem um porquê enfrenta quase qualquer como.','Nietzsche'],
+  ['Sorria: é o exercício mais barato que existe.','Mente Ativa'],
+  ['A paciência é amarga, mas seu fruto é doce.','Rousseau'],
+  ['Ninguém se banha duas vezes no mesmo rio.','Heráclito'],
+  ['Ligue para alguém hoje. Uma voz amiga faz bem ao coração e à cabeça.','Mente Ativa'],
+];
+(function(){ const d=Math.floor(Date.now()/86400000)%FRASES.length; document.getElementById('frase').textContent='“'+FRASES[d][0]+'”'; document.getElementById('fraseautor').textContent='— '+FRASES[d][1]; })();
+
+/* ================= AGENTE DE CHECK-IN (por botões; sem texto livre) ================= */
+const ELOGIOS=['Você está indo muito bem.','Que bom! Isso faz diferença.','Excelente. Continue assim.','Muito bem. Seu cérebro agradece.'];
+const ROTEIRO=[
+  {p:'Bom te ver por aqui. Conseguiu fazer sua caminhada hoje?', sim:'Ótimo! O corpo em movimento é o melhor remédio para a memória.', nao:'Tudo bem. Que tal 10 minutos até a esquina depois de fechar o app? Pode ser agora ou mais tarde.', k:'mover'},
+  {p:'Conversou com alguém hoje, pessoalmente ou por telefone?', sim:'Que bom. Conversar exercita a cabeça e faz bem ao coração.', nao:'Pense em alguém que gostaria de ouvir sua voz. Uma ligação curta já vale.', k:'gente'},
+  {p:'Tomou um pouco de sol e viu o céu hoje?', sim:'Maravilha. Luz do dia ajuda o sono e o humor.', nao:'Se puder, fique alguns minutos na janela ou no quintal. O sol é de graça.', k:null},
+  {p:'Fez algo que gosta hoje — música, plantas, um livro?', sim:'Isso é viver bem. Continue.', nao:'Escolha uma coisa pequena e gostosa para fazer hoje. Vale a pena.', k:'gosto'},
+];
+let ag=0;
+function agente(){
+  const c=document.getElementById('agentefala'), o=document.getElementById('agenteopts');
+  if(ag>=ROTEIRO.length){ c.textContent='Por hoje é isso. Não fique muito tempo na tela: viva a vida, tome sol, converse com alguém, sorria. Até amanhã!'; o.innerHTML=''; return; }
+  c.textContent=ROTEIRO[ag].p;
+  o.innerHTML=`<button class="btn" onclick="agResp(true)">Sim</button><button class="btn sec" onclick="agResp(false)">Ainda não</button>`;
+}
+function agResp(s){
+  const r=ROTEIRO[ag]; const c=document.getElementById('agentefala');
+  c.textContent=(s?ELOGIOS[Math.floor(Math.random()*ELOGIOS.length)]+' '+r.sim:r.nao);
+  if(s&&r.k){state.done.add(r.k);const t=document.getElementById('t-'+r.k);if(t)t.style.background='#DDF0E3';prog();}
+  document.getElementById('agenteopts').innerHTML=`<button class="btn sec" onclick="ag++;agente()">Continuar</button>`;
+}
+agente();
+/* lembrete de tempo de tela: após 15 min de uso contínuo */
+setTimeout(()=>{ if(!document.hidden) toast('Já ficou um bom tempo na tela. Que tal levantar, beber água e olhar pela janela?'); },15*60*1000);
+
+/* ================= VOCÊ SABIA? (descobertas e datas) ================= */
+/* [mês(1-12), ano, texto] — fatos amplamente documentados; no app final, cada item deve trazer fonte. */
+const HIST=[
+  [1,1610,'Galileu apontou uma luneta para Júpiter e viu quatro luas girando em volta dele. Nem tudo girava em torno da Terra.'],
+  [2,1809,'Nasceu Charles Darwin, que mais tarde explicaria como as espécies mudam ao longo do tempo.'],
+  [3,1876,'Alexander Graham Bell fez a primeira ligação telefônica: “Sr. Watson, venha cá.”'],
+  [4,1953,'Watson e Crick descreveram a dupla hélice do DNA — o desenho da vida.'],
+  [4,1960,'Brasília foi inaugurada como capital do Brasil.'],
+  [5,1888,'A Lei Áurea aboliu a escravidão no Brasil.'],
+  [6,1908,'Chegava ao Brasil o navio Kasato Maru, com os primeiros imigrantes japoneses.'],
+  [7,1969,'Neil Armstrong e Buzz Aldrin caminharam na Lua. Meio bilhão de pessoas assistiram pela TV.'],
+  [7,1885,'Louis Pasteur aplicou pela primeira vez a vacina contra a raiva em um menino mordido por um cão.'],
+  [8,1774,'Joseph Priestley isolou o oxigênio em laboratório. Ninguém sabia ainda que era o ar que nos mantém vivos.'],
+  [9,1822,'Dom Pedro proclamou a independência do Brasil às margens do Ipiranga.'],
+  [9,1928,'Alexander Fleming notou um mofo que matava bactérias na sua placa: era a penicilina.'],
+  [10,1906,'Santos Dumont voou com o 14-bis em Paris, diante de uma multidão.'],
+  [11,1895,'Wilhelm Röntgen descobriu os raios X e fotografou os ossos da mão da esposa.'],
+  [11,1889,'O Brasil deixou de ser império e virou república.'],
+  [12,1903,'Os irmãos Wright fizeram o primeiro voo motorizado controlado, em Kitty Hawk.'],
+  [12,1901,'Marconi recebeu o primeiro sinal de rádio atravessando o Atlântico.'],
+];
+const CURIOS=[
+  'O cérebro adulto continua formando novas conexões a vida inteira. Aprender algo novo hoje muda fisicamente o seu cérebro.',
+  'Os primeiros humanos modernos surgiram na África há cerca de 300 mil anos.',
+  'A roda foi inventada há cerca de 5.500 anos — primeiro para fazer cerâmica, depois para carroças.',
+  'A escrita surgiu na Mesopotâmia há uns 5 mil anos, para anotar contas de cereais e gado.',
+  'Os óculos foram inventados na Itália por volta de 1290. Antes disso, quem enxergava mal simplesmente enxergava mal.',
+  'A vacina contra a varíola (1796) foi a primeira da história. A doença foi erradicada do mundo em 1980.',
+  'Uma pessoa de 70 anos hoje já viveu a chegada da TV, do homem à Lua, do computador pessoal e do celular.',
+  'O coração bate cerca de 100 mil vezes por dia. Caminhar deixa cada batida mais eficiente.',
+];
+(function(){
+  const m=new Date().getMonth()+1, y=new Date().getFullYear();
+  const cand=HIST.filter(h=>h[0]===m); const h=cand.length?cand[Math.floor(Math.random()*cand.length)]:HIST[Math.floor(Math.random()*HIST.length)];
+  document.getElementById('hoje-historia').innerHTML=`<p class="ev" style="margin:0">Neste mês, há ${y-h[1]} anos (${h[1]})</p><p style="font-size:1.2rem;margin:6px 0 0">${h[2]}</p>`;
+  novaCuriosidade();
+})();
+
+/* ================= O QUE O SER HUMANO FOI CAPAZ DE FAZER (curiosidades por tema) ================= */
+const CONQ={
+ 'Construção':[
+  [-2560,'As pirâmides de Gizé foram erguidas com mais de 2 milhões de blocos de pedra, sem guindaste nem roda de carga. Foram a construção mais alta do mundo por quase 4 mil anos.'],
+  [126,'O Panteão, em Roma, tem uma cúpula de concreto de 43 metros que até hoje é a maior do mundo sem ferro dentro. Os romanos inventaram um concreto que endurece na água.'],
+  [1867,'Um jardineiro francês, Joseph Monier, pôs arame dentro de vasos de cimento para não quebrarem. Nascia o concreto armado, que sustenta quase todo prédio moderno.'],
+  [1889,'A Torre Eiffel, de 324 metros, foi montada em 2 anos com 18 mil peças de ferro e 2,5 milhões de rebites. Era para ser desmontada 20 anos depois.'],
+  [1931,'O Empire State, em Nova York, com 102 andares, foi construído em apenas 410 dias — quase 4 andares e meio por semana.'],
+  [1960,'Brasília foi erguida no meio do cerrado em cerca de 41 meses, com projeto de Lúcio Costa e Oscar Niemeyer.'],
+  [1974,'A ponte Rio-Niterói tem 13 quilômetros sobre a Baía de Guanabara. Por décadas foi a maior ponte do Hemisfério Sul.'],
+  [1984,'A usina de Itaipu, entre Brasil e Paraguai, começou a gerar energia. O concreto usado daria para construir 210 estádios do Maracanã.'],
+  [2010,'O Burj Khalifa, em Dubai, chegou a 828 metros — mais que o dobro do Empire State. Os elevadores sobem 10 metros por segundo.'],
+ ],
+ 'Medicina':[
+  [1796,'Edward Jenner aplicou a primeira vacina, contra a varíola, usando o pus de vacas doentes. Daí vem a palavra "vacina". A varíola foi eliminada do mundo em 1980.'],
+  [1846,'Em Boston, o dentista William Morton fez a primeira cirurgia com anestesia por éter. Antes disso, operar era sinônimo de dor e pressa.'],
+  [1867,'Joseph Lister começou a limpar feridas e instrumentos com ácido fênico. A mortalidade após cirurgias caiu pela metade. Era o começo da antissepsia.'],
+  [1895,'Wilhelm Röntgen descobriu os raios X e, em semanas, médicos do mundo inteiro já viam ossos sem cortar a pele.'],
+  [1903,'Oswaldo Cruz combateu a febre amarela no Rio de Janeiro caçando mosquitos casa por casa. Em três anos a doença sumiu da cidade.'],
+  [1909,'Carlos Chagas, em Lassance (MG), descobriu sozinho a doença, o parasita e o inseto transmissor — caso único na história da medicina.'],
+  [1921,'Banting e Best isolaram a insulina em Toronto. Crianças com diabetes, que morriam em meses, voltaram a viver.'],
+  [1928,'Alexander Fleming viu que um mofo matava bactérias na placa: a penicilina. Ela só virou remédio para todos na Segunda Guerra.'],
+  [1958,'O primeiro marca-passo foi implantado em uma pessoa, na Suécia. Durou poucas horas; o paciente, Arne Larsson, viveu até os 86 anos trocando 26 aparelhos.'],
+  [1967,'Christiaan Barnard fez o primeiro transplante de coração, na África do Sul. Meses depois, o Brasil fez o seu, com o Dr. Zerbini em São Paulo.'],
+ ],
+ 'O que a guerra trouxe à medicina':[
+  [1797,'Na era de Napoleão, o cirurgião Larrey criou as "ambulâncias voadoras": carroças rápidas que buscavam feridos no campo. Nasceu a ambulância.'],
+  [1854,'Na Guerra da Crimeia, Florence Nightingale reduziu as mortes no hospital lavando, ventilando e organizando. Fundou a enfermagem moderna.'],
+  [1914,'Na Primeira Guerra, descobriu-se que o citrato impede o sangue de coagular. Surgiram os primeiros bancos de sangue.'],
+  [1917,'Harold Gillies reconstruiu rostos de soldados feridos e criou a cirurgia plástica moderna.'],
+  [1943,'A Segunda Guerra transformou a penicilina de curiosidade de laboratório em remédio produzido aos milhões. No Dia D, já havia doses para os feridos.'],
+  [1945,'O engenheiro Percy Spencer, trabalhando com radar, notou que uma barra de chocolate derreteu no bolso. Inventou o forno de micro-ondas.'],
+  [1950,'Na Guerra da Coreia, helicópteros passaram a levar feridos ao hospital em minutos. É o modelo dos resgates aéreos de hoje.'],
+  [1950,'O sonar dos submarinos deu origem ao ultrassom médico — o mesmo que mostra o bebê na barriga da mãe.'],
+ ],
+ 'Espaço':[
+  [1957,'O Sputnik, uma esfera de 58 cm, foi o primeiro objeto humano em órbita. Fazia "bip-bip" que qualquer rádio captava.'],
+  [1961,'Yuri Gagarin deu uma volta na Terra em 108 minutos e disse: "A Terra é azul".'],
+  [1969,'Neil Armstrong pisou na Lua. O computador da nave tinha menos memória que um cartão de crédito com chip.'],
+  [1977,'A sonda Voyager 1 partiu com um disco de ouro com músicas e sons da Terra. Ainda transmite, a mais de 24 bilhões de quilômetros.'],
+  [1990,'O telescópio Hubble foi lançado e mostrou que o universo tem bilhões de galáxias — e que está se expandindo cada vez mais rápido.'],
+  [1997,'O pequeno robô Sojourner andou sobre Marte, do tamanho de um forno de micro-ondas.'],
+  [1998,'Começou a montagem da Estação Espacial Internacional. Desde 2000 sempre há alguém morando no espaço.'],
+  [2006,'Marcos Pontes foi o primeiro brasileiro no espaço, com 8 dias na Estação Espacial.'],
+  [2021,'O telescópio James Webb foi lançado. Vê a luz de galáxias que nasceram poucas centenas de milhões de anos após o Big Bang.'],
+ ],
+ 'Tecnologia':[
+  [1844,'Samuel Morse enviou a primeira mensagem por telégrafo entre Washington e Baltimore. Pela primeira vez uma mensagem viajou mais rápido que um cavalo.'],
+  [1876,'Graham Bell fez a primeira ligação telefônica. No Brasil, D. Pedro II testou o aparelho no mesmo ano e encomendou linhas para o Rio.'],
+  [1879,'Thomas Edison acendeu a lâmpada elétrica que durava mais de 13 horas. Testou milhares de materiais até achar o filamento certo.'],
+  [1901,'Marconi captou um sinal de rádio atravessando o Atlântico. Diziam ser impossível por causa da curvatura da Terra.'],
+  [1950,'A TV chegou ao Brasil: a TV Tupi, de Assis Chateaubriand, em São Paulo. Havia menos de 200 aparelhos na cidade.'],
+  [1947,'Três cientistas inventaram o transistor, do tamanho de uma unha. Hoje um celular tem bilhões deles.'],
+  [1946,'O ENIAC, primeiro grande computador eletrônico, pesava 30 toneladas e ocupava uma sala. Fazia 5 mil contas por segundo; seu celular faz bilhões.'],
+  [1973,'Martin Cooper fez a primeira ligação de um celular, na rua, em Nova York. O aparelho pesava mais de um quilo.'],
+  [1989,'Tim Berners-Lee inventou a World Wide Web e a deu de graça ao mundo. Sem cobrar nada.'],
+  [2007,'Chegou o primeiro smartphone com tela de toque para todos. Em 15 anos, mais de metade da humanidade passou a ter um.'],
+ ],
+ 'Automóveis e transporte':[
+  [1886,'Karl Benz patenteou o primeiro automóvel a gasolina, com três rodas. Sua esposa Bertha fez a primeira viagem longa, de 100 km, sem avisá-lo.'],
+  [1900,'Nos Estados Unidos havia mais carros elétricos e a vapor do que a gasolina. O elétrico só voltou a vencer 120 anos depois.'],
+  [1906,'Santos Dumont voou com o 14-bis em Paris, decolando por conta própria diante de uma multidão.'],
+  [1913,'Henry Ford criou a linha de montagem em movimento. O tempo para fazer um carro caiu de 12 horas para 93 minutos.'],
+  [1959,'A Volvo inventou o cinto de segurança de três pontos e abriu a patente para todas as marcas. Salvou mais de um milhão de vidas.'],
+  [1959,'O Fusca começou a ser fabricado no Brasil, em São Bernardo do Campo. Foram mais de 3 milhões até 1996.'],
+  [1979,'O Brasil lançou o primeiro carro a álcool do mundo produzido em série, o Fiat 147. Em 2003 veio o motor flex.'],
+  [1964,'O trem-bala japonês estreou a 210 km/h entre Tóquio e Osaka. Hoje passa de 300 km/h e nunca teve um passageiro morto em acidente.'],
+ ],
+ 'Fazendas e máquinas':[
+  [1831,'Cyrus McCormick inventou a ceifadeira puxada por cavalos. Um homem passou a colher em um dia o que antes levava uma semana.'],
+  [1917,'O trator Fordson, barato e leve, começou a substituir bois e cavalos nas fazendas. Em 20 anos, os cavalos quase sumiram das lavouras americanas.'],
+  [1948,'Frank Zybach inventou a irrigação por pivô central — os grandes círculos verdes que se veem do avião.'],
+  [1970,'Norman Borlaug ganhou o Nobel da Paz por criar trigo que rendia o dobro. A "Revolução Verde" salvou centenas de milhões da fome.'],
+  [1973,'A Embrapa foi criada. Seus cientistas descobriram como corrigir o solo ácido do cerrado com calcário — e o cerrado virou celeiro do mundo.'],
+  [1990,'A soja adaptada ao clima tropical pela Embrapa tornou o Brasil o maior exportador do grão do planeta.'],
+  [2000,'Tratores passaram a ter GPS e a dirigir sozinhos na reta, com erro de 2 centímetros. Drones fotografam a lavoura e apontam onde falta adubo.'],
+  [2020,'Colheitadeiras modernas colhem, separam e medem a produtividade metro a metro, mandando os dados para o celular do fazendeiro.'],
+ ],
+ 'Artes e tintas':[
+  [-17000,'Nas cavernas de Lascaux, na França, pessoas pintaram cavalos e touros com carvão e terra colorida. Na Serra da Capivara, no Piauí, há pinturas com mais de 10 mil anos.'],
+  [-2500,'Os egípcios criaram o "azul egípcio", a primeira tinta feita em laboratório da história: areia, cobre e sal aquecidos.'],
+  [1420,'Os irmãos Van Eyck aperfeiçoaram a tinta a óleo. Secava devagar, permitia corrigir e deu brilho novo à pintura.'],
+  [1704,'Por acidente, em Berlim, surgiu o azul da Prússia — o primeiro pigmento moderno, barato e forte. Antes, azul era caro como ouro.'],
+  [1826,'Nicéphore Niépce fez a primeira fotografia, com 8 horas de exposição.'],
+  [1841,'O pintor americano John Rand inventou o tubo de tinta de metal. Os impressionistas puderam sair do ateliê e pintar ao ar livre.'],
+  [1770,'Aleijadinho, filho de um português e de uma escravizada, esculpiu os profetas de Congonhas mesmo com as mãos deformadas pela doença.'],
+  [1922,'A Semana de Arte Moderna, em São Paulo, chocou o público e mudou a arte brasileira. Tarsila, Anita Malfatti e Di Cavalcanti estavam lá.'],
+  [1956,'Os painéis "Guerra e Paz", de Portinari, com 14 metros de altura, foram instalados na ONU em Nova York.'],
+ ],
+ 'Objetos do dia a dia':[
+  [1290,'Os óculos foram inventados na Itália. Pela primeira vez, quem enxergava mal podia continuar lendo e trabalhando depois dos 40.'],
+  [1913,'O zíper prático foi patenteado por Gideon Sundback. Só nos anos 1930 chegou às roupas.'],
+  [1927,'A General Electric lançou a geladeira doméstica com motor em cima. Antes, o gelo vinha em blocos, entregue de carroça.'],
+  [1938,'László Bíró patenteou a caneta esferográfica. Na Argentina, onde se refugiou, caneta até hoje se chama "birome".'],
+  [1941,'George de Mestral voltou de um passeio cheio de carrapichos no cachorro. Olhou no microscópio e inventou o velcro.'],
+  [1947,'Chegou às lojas o primeiro forno de micro-ondas: pesava 340 kg e custava o preço de um carro.'],
+  [1918,'O relógio de pulso, antes considerado coisa de mulher, virou padrão depois que soldados o usaram nas trincheiras.'],
+  [1950,'A caneta, o rádio de pilha e a geladeira: uma pessoa nascida em 1940 viu chegar em casa quase tudo que hoje parece óbvio.'],
+ ],
+};
+let C={tema:'Construção',i:0};
+document.getElementById('ctemas').innerHTML=Object.keys(CONQ).map(t=>`<button class="${t===C.tema?'on':''}" onclick="cSet('${t.replace(/'/g,"\\'")}')">${t}</button>`).join('');
+function cSet(t){C.tema=t;C.i=0;document.querySelectorAll('#ctemas button').forEach(b=>b.classList.toggle('on',b.textContent===t));cRender();}
+function cNav(d){const L=CONQ[C.tema].length;C.i=(C.i+d+L)%L;cRender();}
+function cRender(){const [ano,txt]=CONQ[C.tema][C.i];const y=new Date().getFullYear();const lab=ano<0?`${-ano} a.C.`:ano;const ha=ano>0?` · há ${y-ano} anos`:` · há cerca de ${Math.round((y-ano)/1000)} mil anos`;
+  document.getElementById('ccard').innerHTML=`<p class="ev" style="margin:0">${C.tema} · ${C.i+1} de ${CONQ[C.tema].length}</p><p style="font-size:1.6rem;font-weight:700;margin:4px 0">${lab}<span class="ev" style="font-weight:400">${ha}</span></p><p style="font-size:1.15rem;margin:0">${txt}</p>`;}
+cRender();
+function novaCuriosidade(){ document.getElementById('curiosidade').innerHTML='<p style="font-size:1.15rem;margin:0">💡 '+CURIOS[Math.floor(Math.random()*CURIOS.length)]+'</p>'; }
+
+/* ================= FILOSOFIA (3 níveis, uma ideia por tela, pergunta aberta no fim) ================= */
+const FILO={
+  'Básico':[
+    ['O que é filosofia?','É a arte de fazer boas perguntas sobre a vida: o que é bom, o que é justo, o que é verdadeiro. Todo mundo filosofa um pouco quando para para pensar.','Qual pergunta sobre a vida você mais gostaria de responder?'],
+    ['Sócrates e a pergunta','Sócrates não dava respostas prontas. Ele perguntava até a pessoa perceber o que realmente pensava. Dizia: “Só sei que nada sei.”','Sobre o que você mudou de opinião ao longo da vida?'],
+    ['O que faz uma vida boa?','Para Aristóteles, a vida boa vem de fazer bem o que fazemos e ter bons amigos. Não é sorte: é hábito.','Qual hábito seu mais lhe traz alegria?'],
+    ['Epicuro e os prazeres simples','Epicuro dizia que a felicidade está nas coisas simples: pão, água, amigos, uma conversa. O excesso traz mais preocupação do que prazer.','Qual prazer simples você teve hoje?'],
+  ],
+  'Intermediário':[
+    ['Os estoicos','Marco Aurélio, Sêneca e Epicteto ensinavam a separar o que depende de nós (nossas atitudes) do que não depende (o tempo, os outros). Paz vem de cuidar só da primeira parte.','O que hoje não depende de você e que você poderia soltar?'],
+    ['Descartes: “Penso, logo existo”','Descartes duvidou de tudo para descobrir do que não podia duvidar. Concluiu: se estou pensando, alguém está aqui pensando. Esse alguém sou eu.','Do que você tem certeza absoluta?'],
+    ['Kant e o dever','Kant propôs uma regra: aja só de um modo que você aceitaria que todos agissem. É a honestidade levada a sério.','Que regra você seguiu a vida toda e ensinaria a um neto?'],
+    ['Montaigne e o cotidiano','Montaigne escrevia sobre si mesmo, seus gatos, suas dores e dúvidas. Mostrou que pensar sobre a própria vida comum já é filosofia.','Que pequena coisa da sua rotina merece ser observada com mais atenção?'],
+  ],
+  'Avançado':[
+    ['O problema do barco de Teseu','Se você troca todas as tábuas de um barco, uma por uma, ele continua sendo o mesmo barco? E nós, que trocamos quase todas as células, continuamos os mesmos?','O que em você permaneceu igual desde a juventude?'],
+    ['Liberdade e destino','Somos livres ou tudo já está determinado? Os estoicos diziam: o destino conduz quem aceita e arrasta quem resiste. Spinoza achava que liberdade é entender as causas.','Você sente que escolheu sua vida ou que a vida o escolheu?'],
+    ['O sentido da vida (Frankl)','Viktor Frankl, sobrevivente de campos de concentração, concluiu que quem encontra um sentido — uma pessoa, uma tarefa — suporta quase tudo.','O que dá sentido aos seus dias hoje?'],
+    ['Hannah Arendt e a banalidade do mal','Arendt observou que grandes males podem vir de pessoas comuns que simplesmente deixam de pensar. Pensar é um ato moral.','Quando pensar por conta própria fez diferença na sua vida?'],
+  ],
+};
+let filoN='Básico', filoI=0;
+document.getElementById('filoniveis').innerHTML=Object.keys(FILO).map(n=>`<button class="${n===filoN?'on':''}" onclick="filoSet('${n}')">${n}</button>`).join('');
+function filoSet(n){filoN=n;filoI=0;document.querySelectorAll('#filoniveis button').forEach(b=>b.classList.toggle('on',b.textContent===n));filoRender();}
+function filoNav(d){const L=FILO[filoN].length;filoI=(filoI+d+L)%L;filoRender();}
+function filoRender(){const f=FILO[filoN][filoI];document.getElementById('filocard').innerHTML=`<p class="ev" style="margin:0">${filoN} · ${filoI+1} de ${FILO[filoN].length}</p><h3 style="margin:6px 0">${f[0]}</h3><p style="font-size:1.1rem">${f[1]}</p><p style="background:#FFF3D6;border-radius:12px;padding:12px;font-size:1.05rem"><b>Para pensar:</b> ${f[2]}</p>`;}
+filoRender();
+
+/* ================= TRAÇOS DOS PINTORES (animação SVG da técnica; desenhos originais) ================= */
+const PINT={
+  'Van Gogh':{txt:'Pinceladas curtas, grossas e curvas, que giram como redemoinhos. A tinta fica em relevo na tela.',cor:['#2C5FA8','#E8A317','#F6E7C1'],gera:()=>{let s='';for(let i=0;i<60;i++){const x=40+Math.random()*320,y=30+Math.random()*200,r=10+Math.random()*18;s+=`<path d="M${x} ${y} q${r} ${-r} ${r*2} 0 t${r*2} 0" stroke-width="7"/>`;}return s;}},
+  'Monet':{txt:'Toques rápidos e leves, lado a lado, sem contornos. De perto são manchas; de longe, luz na água.',cor:['#8ED1C2','#2C5FA8','#F0A868'],gera:()=>{let s='';for(let i=0;i<120;i++){const x=20+Math.random()*360,y=20+Math.random()*220;s+=`<path d="M${x} ${y} l14 3" stroke-width="6" stroke-linecap="round"/>`;}return s;}},
+  'Seurat':{txt:'Milhares de pontinhos de cores puras. É o olho de quem vê que mistura as cores.',cor:['#E8A317','#2C5FA8','#2E7D4F','#7A2E2E'],gera:()=>{let s='';for(let i=0;i<400;i++){const x=20+Math.random()*360,y=20+Math.random()*220;s+=`<path d="M${x} ${y} l0.1 0" stroke-width="5" stroke-linecap="round"/>`;}return s;}},
+  'Mondrian':{txt:'Linhas retas pretas, ângulos de 90 graus e retângulos de cores primárias. Ordem e equilíbrio.',cor:['#1E2B2A'],gera:()=>{let s='';[80,200,300].forEach(x=>s+=`<path d="M${x} 20 V240" stroke-width="8"/>`);[90,170].forEach(y=>s+=`<path d="M20 ${y} H380" stroke-width="8"/>`);return s+`<rect x="24" y="24" width="52" height="62" fill="#E8A317" opacity="0"><animate attributeName="opacity" to="1" dur="1s" begin="3s" fill="freeze"/></rect><rect x="204" y="94" width="92" height="72" fill="#2C5FA8" opacity="0"><animate attributeName="opacity" to="1" dur="1s" begin="3.5s" fill="freeze"/></rect>`;}},
+  'Pollock':{txt:'Tinta gotejada e lançada sobre a tela no chão, com o corpo inteiro em movimento.',cor:['#1E2B2A','#7A2E2E','#E8A317'],gera:()=>{let s='';for(let i=0;i<14;i++){let x=Math.random()*400,y=Math.random()*260,d=`M${x} ${y}`;for(let j=0;j<8;j++){x+= (Math.random()-.5)*160;y+=(Math.random()-.5)*160;d+=` Q${x+(Math.random()-.5)*80} ${y+(Math.random()-.5)*80} ${x} ${y}`;}s+=`<path d="${d}" stroke-width="${1+Math.random()*4}"/>`;}return s;}},
+  'Tarsila do Amaral':{txt:'Formas arredondadas, cheias, e cores fortes do Brasil: verde, azul, amarelo, rosa.',cor:['#2E7D4F','#2C5FA8','#E8A317','#E07A9A'],gera:()=>{let s='';for(let i=0;i<9;i++){const x=60+Math.random()*280,y=60+Math.random()*140,r=25+Math.random()*40;s+=`<path d="M${x-r} ${y} a${r} ${r*0.7} 0 1 0 ${r*2} 0 a${r} ${r*0.7} 0 1 0 ${-r*2} 0" stroke-width="14" stroke-linejoin="round"/>`;}return s;}},
+};
+let pintor='Van Gogh';
+document.getElementById('pintorlist').innerHTML=Object.keys(PINT).map(p=>`<button class="${p===pintor?'on':''}" onclick="setPintor('${p}')">${p}</button>`).join('');
+function setPintor(p){pintor=p;document.querySelectorAll('#pintorlist button').forEach(b=>b.classList.toggle('on',b.textContent===p));pintar();}
+function pintar(){
+  const P=PINT[pintor], svg=document.getElementById('tela');
+  document.getElementById('pintortxt').textContent=P.txt;
+  svg.innerHTML=`<g fill="none">${P.gera()}</g>`;
+  const paths=[...svg.querySelectorAll('path')];
+  paths.forEach((p,i)=>{ p.setAttribute('stroke',P.cor[i%P.cor.length]); const L=p.getTotalLength()||1; p.style.strokeDasharray=L; p.style.strokeDashoffset=L; p.style.transition=`stroke-dashoffset ${Math.min(1.2,L/300+0.3)}s ease-out ${i*(3/paths.length)}s`; });
+  requestAnimationFrame(()=>requestAnimationFrame(()=>paths.forEach(p=>p.style.strokeDashoffset=0)));
+}
+pintar();
+
+/* ================= DAMAS (brasileiras, 8x8) =================
+   Peças: 'w' branca, 'W' dama branca, 'b' preta, 'B' dama preta. Humano = brancas (sobe: linha diminui). */
+let D={b:[],turn:'w',modo:'app',nivel:3,sel:null,hist:[],fim:false};
+function dNovo(){
+  D.b=Array(64).fill(null);
+  for(let r=0;r<8;r++)for(let c=0;c<8;c++){ if((r+c)%2===1){ if(r<3)D.b[r*8+c]='b'; if(r>4)D.b[r*8+c]='w'; } }
+  D.turn='w';D.sel=null;D.hist=[];D.fim=false;dRender();dStatus('Você joga com as brancas. Toque em uma peça.');
+}
+function dModo(m){D.modo=m;document.querySelectorAll('#dmodos button').forEach((b,i)=>b.classList.toggle('on',['app','dois','longe'][i]===m));document.getElementById('dniveis').style.display=m==='app'?'flex':'none';document.getElementById('dlonge').style.display=m==='longe'?'block':'none';dNovo();}
+function dNivel(n){D.nivel=n;document.querySelectorAll('#dniveis button').forEach((b,i)=>b.classList.toggle('on',[1,3,5][i]===n));}
+function dStatus(t){document.getElementById('dstatus').textContent=t;}
+const cor=p=>p&&p.toLowerCase(); const rei=p=>p&&p===p.toUpperCase();
+const inB=(r,c)=>r>=0&&r<8&&c>=0&&c<8;
+/* gera sequências completas de captura a partir de (r,c) */
+function caps(b,r,c,p,capt){
+  const res=[];const me=cor(p);
+  for(const [dr,dc] of [[1,1],[1,-1],[-1,1],[-1,-1]]){
+    if(!rei(p)){
+      const er=r+dr,ec=c+dc,lr=r+2*dr,lc=c+2*dc;
+      if(inB(lr,lc)&&b[er*8+ec]&&cor(b[er*8+ec])!==me&&!capt.includes(er*8+ec)&&!b[lr*8+lc]){
+        const nb=b.slice();nb[r*8+c]=null;nb[lr*8+lc]=p;
+        const more=caps(nb,lr,lc,p,[...capt,er*8+ec]);
+        if(more.length)more.forEach(m=>res.push({to:m.to,caps:m.caps}));else res.push({to:lr*8+lc,caps:[...capt,er*8+ec]});
+      }
+    }else{
+      let rr=r+dr,cc=c+dc;
+      while(inB(rr,cc)&&!b[rr*8+cc]){rr+=dr;cc+=dc;}
+      if(inB(rr,cc)&&cor(b[rr*8+cc])!==me&&!capt.includes(rr*8+cc)){
+        const e=rr*8+cc;let lr=rr+dr,lc=cc+dc;
+        while(inB(lr,lc)&&!b[lr*8+lc]){
+          const nb=b.slice();nb[r*8+c]=null;nb[lr*8+lc]=p;
+          const more=caps(nb,lr,lc,p,[...capt,e]);
+          if(more.length)more.forEach(m=>res.push({to:m.to,caps:m.caps}));else res.push({to:lr*8+lc,caps:[...capt,e]});
+          lr+=dr;lc+=dc;
+        }
+      }
+    }
+  }
+  return res;
+}
+function moves(b,side){
+  let all=[],hasCap=false;
+  for(let i=0;i<64;i++){const p=b[i];if(!p||cor(p)!==side)continue;const r=i>>3,c=i&7;
+    const cs=caps(b,r,c,p,[]);if(cs.length){hasCap=true;cs.forEach(m=>all.push({from:i,to:m.to,caps:m.caps}));}
+  }
+  if(hasCap)return all;
+  for(let i=0;i<64;i++){const p=b[i];if(!p||cor(p)!==side)continue;const r=i>>3,c=i&7;
+    const dirs=rei(p)?[[1,1],[1,-1],[-1,1],[-1,-1]]:(side==='w'?[[-1,1],[-1,-1]]:[[1,1],[1,-1]]);
+    for(const [dr,dc] of dirs){let rr=r+dr,cc=c+dc;while(inB(rr,cc)&&!b[rr*8+cc]){all.push({from:i,to:rr*8+cc,caps:[]});if(!rei(p))break;rr+=dr;cc+=dc;}}
+  }
+  return all;
+}
+function apply(b,m){const nb=b.slice();let p=nb[m.from];nb[m.from]=null;m.caps.forEach(i=>nb[i]=null);
+  const r=m.to>>3;if(p==='w'&&r===0)p='W';if(p==='b'&&r===7)p='B';nb[m.to]=p;return nb;}
+function evalB(b){let s=0;for(const p of b){if(!p)continue;const v=rei(p)?3:1;s+=cor(p)==='w'?-v:v;}return s;} /* positivo favorece as pretas (app) */
+function minimax(b,side,depth,a,be){
+  const ms=moves(b,side);if(!ms.length)return side==='b'?-99:99; if(depth===0)return evalB(b);
+  if(side==='b'){let best=-Infinity;for(const m of ms){best=Math.max(best,minimax(apply(b,m),'w',depth-1,a,be));a=Math.max(a,best);if(be<=a)break;}return best;}
+  else{let best=Infinity;for(const m of ms){best=Math.min(best,minimax(apply(b,m),'b',depth-1,a,be));be=Math.min(be,best);if(be<=a)break;}return best;}
+}
+function appMove(){
+  const ms=moves(D.b,'b');if(!ms.length){D.fim=true;dStatus('Você venceu! Parabéns.');return;}
+  let m;
+  if(D.nivel===1&&Math.random()<0.5)m=ms[Math.floor(Math.random()*ms.length)];
+  else{let best=-Infinity;for(const x of ms){const v=minimax(apply(D.b,x),'w',D.nivel-1,-Infinity,Infinity)+Math.random()*0.1;if(v>best){best=v;m=x;}}}
+  D.b=apply(D.b,m);D.turn='w';dRender();
+  if(!moves(D.b,'w').length){D.fim=true;dStatus('O app venceu desta vez. Que tal outra partida?');}else dStatus(m.caps.length?'O app capturou. Sua vez.':'Sua vez.');
+}
+function dRender(){
+  const bd=document.getElementById('dboard');const legal=D.sel!==null?moves(D.b,D.turn).filter(m=>m.from===D.sel):[];
+  bd.style.transform=(D.modo==='dois'&&D.turn==='b')?'rotate(180deg)':'none';
+  let h='';
+  for(let i=0;i<64;i++){const r=i>>3,c=i&7,dark=(r+c)%2===1,p=D.b[i];const dest=legal.find(m=>m.to===i);
+    h+=`<button onclick="dTap(${i})" aria-label="casa ${i}" style="aspect-ratio:1;border:0;padding:0;background:${dark?(dest?'#E8A317':'#5B7A62'):'#F6EFDD'};display:flex;align-items:center;justify-content:center;outline:${D.sel===i?'4px solid #E8A317':'none'};outline-offset:-4px">`;
+    if(p)h+=`<span style="width:78%;height:78%;border-radius:50%;background:${cor(p)==='w'?'#FBF7EE':'#1E2B2A'};border:3px solid ${cor(p)==='w'?'#8A7B5A':'#000'};display:flex;align-items:center;justify-content:center;color:${cor(p)==='w'?'#8A7B5A':'#E8A317'};font-weight:700;font-size:1.1rem">${rei(p)?'♛':''}</span>`;
+    h+='</button>';}
+  bd.innerHTML=h;
+}
+function dTap(i){
+  if(D.fim)return; if(D.modo==='app'&&D.turn!=='w')return;
+  const p=D.b[i];
+  if(p&&cor(p)===D.turn){D.sel=i;const ms=moves(D.b,D.turn).filter(m=>m.from===i);dStatus(ms.length?'Toque na casa amarela para mover.':'Essa peça não pode mover agora'+(moves(D.b,D.turn).some(m=>m.caps.length)?' — há uma captura obrigatória.':'.'));dRender();return;}
+  if(D.sel===null)return;
+  const m=moves(D.b,D.turn).find(m=>m.from===D.sel&&m.to===i);if(!m)return;
+  D.hist.push({b:D.b,turn:D.turn});D.b=apply(D.b,m);D.sel=null;D.turn=D.turn==='w'?'b':'w';dRender();
+  if(!moves(D.b,D.turn).length){D.fim=true;dStatus((D.turn==='w'?'Pretas':'Brancas')+' venceram!');return;}
+  if(D.modo==='app'){dStatus('O app está pensando…');setTimeout(appMove,400);}
+  else dStatus((D.turn==='w'?'Vez das brancas':'Vez das pretas')+(m.caps.length?' — houve captura.':'.'));
+}
+function dDesfazer(){if(!D.hist.length)return;const h=D.hist.pop();D.b=h.b;D.turn=h.turn;D.sel=null;D.fim=false;dRender();dStatus('Jogada desfeita. '+(D.turn==='w'?'Vez das brancas.':'Vez das pretas.'));}
+function dConvite(){const t=encodeURIComponent('Vamos jogar damas no Mente Ativa? Abra o app e me ligue por aqui. '+location.href);window.open('https://wa.me/?text='+t,'_blank');}
+dNovo();
+
+/* ================= XADREZ (regras via chess.js; adversário minimax) ================= */
+let X={g:null,modo:'app',nivel:2,sel:null};
+const XG={p:'♟',n:'♞',b:'♝',r:'♜',q:'♛',k:'♚'};
+const XV={p:1,n:3,b:3,r:5,q:9,k:0};
+function xStatus(t){document.getElementById('xstatus').textContent=t;}
+function xNovo(){ if(typeof Chess==='undefined'){xStatus('O xadrez precisa de internet para carregar as regras. Tente novamente.');return;} X.g=new Chess();X.sel=null;xRender();xStatus('Você joga com as brancas. Toque em uma peça.'); }
+function xModo(m){X.modo=m;document.querySelectorAll('#xmodos button').forEach((b,i)=>b.classList.toggle('on',['app','dois'][i]===m));document.getElementById('xniveis').style.display=m==='app'?'flex':'none';xNovo();}
+function xNivel(n){X.nivel=n;document.querySelectorAll('#xniveis button').forEach((b,i)=>b.classList.toggle('on',[1,2,3][i]===n));}
+function xEval(g){ if(g.in_checkmate())return g.turn()==='w'?999:-999; let s=0;g.board().forEach(row=>row.forEach(q=>{if(q)s+=q.color==='b'?XV[q.type]:-XV[q.type];}));return s; } // positivo favorece pretas
+function xMinimax(g,depth,a,b){
+  if(depth===0||g.game_over())return xEval(g);
+  const ms=g.moves();
+  if(g.turn()==='b'){let best=-Infinity;for(const m of ms){g.move(m);best=Math.max(best,xMinimax(g,depth-1,a,b));g.undo();a=Math.max(a,best);if(b<=a)break;}return best;}
+  else{let best=Infinity;for(const m of ms){g.move(m);best=Math.min(best,xMinimax(g,depth-1,a,b));g.undo();b=Math.min(b,best);if(b<=a)break;}return best;}
+}
+function xApp(){
+  const g=X.g,ms=g.moves();if(!ms.length)return xFim();
+  let m;
+  if(X.nivel===1&&Math.random()<0.4)m=ms[Math.floor(Math.random()*ms.length)];
+  else{let best=-Infinity;for(const x of ms){g.move(x);const v=xMinimax(g,X.nivel-1,-Infinity,Infinity)+Math.random()*0.2;g.undo();if(v>best){best=v;m=x;}}}
+  g.move(m);xRender();if(g.game_over())return xFim();xStatus(g.in_check()?'Xeque! Proteja seu rei.':'Sua vez.');
+}
+function xFim(){const g=X.g;xStatus(g.in_checkmate()?(g.turn()==='w'?'Xeque-mate. O app venceu desta vez.':'Xeque-mate! Você venceu!'):'Empate.');}
+function xRender(){
+  const g=X.g,bd=document.getElementById('xboard');const legal=X.sel?g.moves({square:X.sel,verbose:true}):[];
+  bd.style.transform=(X.modo==='dois'&&g.turn()==='b')?'rotate(180deg)':'none';
+  let h='';
+  for(let r=8;r>=1;r--)for(const f of 'abcdefgh'){const sq=f+r,q=g.get(sq),dark=('abcdefgh'.indexOf(f)+r)%2===0,dest=legal.some(m=>m.to===sq);
+    h+=`<button onclick="xTap('${sq}')" aria-label="${sq}" style="aspect-ratio:1;border:0;padding:0;font-size:2rem;line-height:1;background:${dest?'#E8A317':(dark?'#5B7A62':'#F6EFDD')};outline:${X.sel===sq?'4px solid #E8A317':'none'};outline-offset:-4px;color:${q&&q.color==='w'?'#fff':'#1E2B2A'};text-shadow:${q&&q.color==='w'?'0 0 3px #000':'none'};transform:${(X.modo==='dois'&&g.turn()==='b')?'rotate(180deg)':'none'}">${q?XG[q.type]:''}</button>`;}
+  bd.innerHTML=h;
+}
+function xTap(sq){
+  const g=X.g;if(!g||g.game_over())return;if(X.modo==='app'&&g.turn()!=='w')return;
+  const q=g.get(sq);
+  if(q&&q.color===g.turn()){X.sel=sq;xRender();xStatus(g.moves({square:sq}).length?'Toque na casa amarela para mover.':'Essa peça não pode mover agora.');return;}
+  if(!X.sel)return;
+  const m=g.move({from:X.sel,to:sq,promotion:'q'});if(!m)return;
+  X.sel=null;xRender();
+  if(g.game_over())return xFim();
+  if(X.modo==='app'){xStatus('O app está pensando…');setTimeout(xApp,400);}else xStatus((g.turn()==='w'?'Vez das brancas':'Vez das pretas')+(g.in_check()?' — xeque!':'.'));
+}
+function xDesfazer(){const g=X.g;if(!g)return;g.undo();if(X.modo==='app'&&g.turn()==='b')g.undo();X.sel=null;xRender();xStatus('Jogada desfeita.');}
+xNovo();
+
+/* ================= PACIÊNCIA (Klondike, 1 carta, toque-para-mover) ================= */
+let P={};const NAI=['♠','♥','♦','♣'],VER=s=>s===1||s===2,VAL=['','A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+function pNovo(){
+  const d=[];for(let s=0;s<4;s++)for(let r=1;r<=13;r++)d.push({r,s,up:false});d.sort(()=>Math.random()-.5);
+  P={stock:[],waste:[],f:[[],[],[],[]],t:[[],[],[],[],[],[],[]],moves:0,t0:Date.now(),times:[],last:Date.now()};
+  for(let c=0;c<7;c++)for(let i=0;i<=c;i++){const k=d.pop();k.up=(i===c);P.t[c].push(k);}
+  P.stock=d;pRender();
+}
+function pMark(){const n=Date.now();P.times.push(n-P.last);P.last=n;P.moves++;}
+function pCard(k,small){ if(!k)return `<div style="aspect-ratio:2/3;border:2px dashed rgba(255,255,255,.5);border-radius:8px"></div>`;
+  if(!k.up)return `<div style="aspect-ratio:2/3;background:#2C5FA8;border-radius:8px;border:2px solid #fff"></div>`;
+  return `<div style="aspect-ratio:2/3;background:#fff;border-radius:8px;border:2px solid #333;color:${VER(k.s)?'#C0392B':'#111'};font-weight:700;font-size:${small?'.95rem':'1.15rem'};padding:3px 4px;line-height:1.1">${VAL[k.r]}<br>${NAI[k.s]}</div>`; }
+function pRender(){
+  const top=document.getElementById('ptopo');
+  top.innerHTML=`<button onclick="pStock()" style="border:0;padding:0;background:none">${P.stock.length?pCard({up:false}):'<div style="aspect-ratio:2/3;border:2px solid #fff;border-radius:8px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.6rem">↻</div>'}</button>
+    <button onclick="pTapWaste()" style="border:0;padding:0;background:none">${pCard(P.waste[P.waste.length-1])}</button><div></div>`+
+    P.f.map(f=>`<div>${pCard(f[f.length-1])}</div>`).join('');
+  const mesa=document.getElementById('pmesa');
+  mesa.innerHTML=P.t.map((col,c)=>`<div style="display:flex;flex-direction:column">${col.length?col.map((k,i)=>`<button onclick="pTap(${c},${i})" style="border:0;padding:0;background:none;margin-top:${i?'-58%':'0'};position:relative">${pCard(k,true)}</button>`).join(''):`<button onclick="pTap(${c},-1)" style="border:0;padding:0;background:none">${pCard(null)}</button>`}</div>`).join('');
+  const done=P.f.reduce((a,f)=>a+f.length,0);
+  const avg=P.times.length?Math.round(P.times.reduce((a,b)=>a+b,0)/P.times.length/1000):0;
+  document.getElementById('pinfo').textContent=done===52?`Parabéns, você completou em ${Math.round((Date.now()-P.t0)/60000)} min!`:`Cartas na casa: ${done} de 52 · jogadas: ${P.moves} · ${avg}s por jogada`;
+  if(done===52){toast('Paciência completa! Muito bem.');state.done.add('mente');prog();}
+}
+function pStock(){ if(P.stock.length){const k=P.stock.pop();k.up=true;P.waste.push(k);} else {P.stock=P.waste.reverse().map(k=>(k.up=false,k));P.waste=[];} pMark();pRender(); }
+function pFits(k,col){ const t=col[col.length-1]; if(!t)return k.r===13; return t.up&&VER(t.s)!==VER(k.s)&&t.r===k.r+1; }
+function pToF(k){ const f=P.f[k.s]; return f.length===k.r-1; }
+function pMoveRun(run,fromArr){ // tenta fundação (só carta única) depois mesa
+  const k=run[0];
+  if(run.length===1&&pToF(k)){P.f[k.s].push(fromArr.pop());return true;}
+  for(let c=0;c<7;c++){ if(P.t[c]!==fromArr&&pFits(k,P.t[c])){P.t[c].push(...fromArr.splice(fromArr.length-run.length,run.length));return true;} }
+  return false;
+}
+function pTapWaste(){ const k=P.waste[P.waste.length-1];if(!k)return; if(pMoveRun([k],P.waste)){pMark();}else toast('Essa carta não tem lugar agora. Vire outra.'); pRender(); }
+function pTap(c,i){
+  const col=P.t[c]; if(i<0||!col.length)return;
+  const k=col[i]; if(!k.up)return;
+  const run=col.slice(i);
+  if(pMoveRun(run,col)){ if(col.length&&!col[col.length-1].up)col[col.length-1].up=true; pMark(); }
+  else toast('Essa carta não tem lugar agora.');
+  pRender();
+}
+pNovo();
+
+/* ================= PIN DO(A) FILHO(A) RESPONSÁVEL ================= */
+/* Protege o que muda a prescrição (nível de exercício). O idoso nunca precisa da senha. No Android: guardada com hash no aparelho; recuperação pelo médico. */
+state.pin=null;let PIN={buf:'',cb:null,modo:'entrar'};
+document.getElementById('pinpad').innerHTML=[1,2,3,4,5,6,7,8,9,'⌫',0,'OK'].map(k=>`<button class="tile" style="aspect-ratio:3/2;font-size:1.6rem;background:${typeof k==='number'?'#2C5FA8':'#5B6B68'}" onclick="pinTecla('${k}')">${k}</button>`).join('');
+function pinAbrir(cb){PIN.cb=cb;PIN.buf='';PIN.modo=state.pin?'entrar':'criar';
+  document.getElementById('pintit').textContent=PIN.modo==='criar'?'Criar senha da família':'Senha da família';
+  document.getElementById('pinsub').textContent=PIN.modo==='criar'?'Primeira vez: o(a) filho(a) responsável escolhe 4 números.':'Digite os 4 números.';
+  pinDots();document.getElementById('pin').style.display='flex';}
+function pinFechar(){document.getElementById('pin').style.display='none';}
+function pinDots(){document.getElementById('pindots').textContent=(('●'.repeat(PIN.buf.length))+'····').slice(0,4);}
+function pinTecla(k){
+  if(k==='⌫'){PIN.buf=PIN.buf.slice(0,-1);pinDots();return;}
+  if(k==='OK'){ if(PIN.buf.length!==4)return toast('São 4 números.');
+    if(PIN.modo==='criar'){state.pin=PIN.buf;toast('Senha criada. Guarde-a: só o(a) filho(a) responsável usa.');pinFechar();PIN.cb&&PIN.cb();return;}
+    if(PIN.buf===state.pin){pinFechar();PIN.cb&&PIN.cb();}else{toast('Senha incorreta.');PIN.buf='';pinDots();}return;}
+  if(PIN.buf.length<4){PIN.buf+=k;pinDots();}
+}
+
+/* ================= VOZ: ler em voz alta e ouvir resposta (nativo do navegador/Android) ================= */
+function falar(t){ if(!('speechSynthesis' in window)){toast('Este aparelho não tem leitura em voz alta.');return;}
+  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/\s+/g,' ').slice(0,4000));u.lang='pt-BR';u.rate=0.9;
+  const v=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.toLowerCase().startsWith('pt'));if(v)u.voice=v;speechSynthesis.speak(u); }
+function ouvirResposta(){
+  const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R){toast('Este navegador não reconhece voz. No Android funciona.');return;}
+  const r=new R();r.lang='pt-BR';r.maxAlternatives=3;toast('Pode falar: "sim" ou "ainda não"');
+  r.onresult=e=>{const t=[...e.results[0]].map(a=>a.transcript.toLowerCase()).join(' ');
+    if(/\bsim\b|consegui|fiz|claro/.test(t))agResp(true);else if(/n[ãa]o|ainda/.test(t))agResp(false);else toast('Não entendi. Toque em Sim ou Ainda não.');};
+  r.onerror=()=>toast('Não consegui ouvir. Tente de novo.');r.start();
+}
+
+/* ================= FAMÍLIA: recados e resumo do dia ================= */
+state.recados=[];
+function famResumo(){
+  const feitas=[...state.done].map(k=>({mover:'movi o corpo',mente:'joguei',gosto:'fiz algo que gosto',gente:'conversei com alguém'}[k])).filter(Boolean);
+  const t=`Oi! Hoje eu ${feitas.length?feitas.join(', '):'ainda estou começando'}${L.fim&&Object.keys(L.fim).length?`; já li ${Object.keys(L.fim).length} capítulo(s) do meu livro`:''}. Recado do app Mente Ativa.`;
+  window.open('https://wa.me/?text='+enc(t),'_blank');
+}
+function recSalvar(){const q=document.getElementById('rec-quem').value.trim(),t=document.getElementById('rec-txt').value.trim();if(!t&&!state.audioTmp)return toast('Escreva ou grave o recado.');
+  state.recados.unshift({quem:q||'Família',txt:t,audio:state.audioTmp||null,quando:Date.now()});state.audioTmp=null;document.getElementById('rec-txt').value='';recMostrar();toast('Recado guardado. Aparece na tela inicial.');}
+let mediaRec=null;
+async function recGravar(){
+  const b=document.getElementById('recgrav');
+  if(mediaRec&&mediaRec.state==='recording'){mediaRec.stop();b.textContent='🎤 Gravar áudio';return;}
+  try{const st=await navigator.mediaDevices.getUserMedia({audio:true});mediaRec=new MediaRecorder(st);const ch=[];
+    mediaRec.ondataavailable=e=>ch.push(e.data);mediaRec.onstop=()=>{state.audioTmp=URL.createObjectURL(new Blob(ch,{type:'audio/webm'}));st.getTracks().forEach(t=>t.stop());toast('Áudio gravado. Toque em Guardar recado.');};
+    mediaRec.start();b.textContent='⏹ Parar gravação';}catch(e){toast('Sem acesso ao microfone.');}
+}
+function recMostrar(){const el=document.getElementById('recado');const r=state.recados[0];if(!r){el.style.display='none';return;}el.style.display='block';
+  el.innerHTML=`<h2 style="margin-top:0">💌 Recado de ${r.quem}</h2>${r.txt?`<p style="font-size:1.2rem;margin:0 0 8px">${r.txt}</p>`:''}${r.audio?`<audio controls src="${r.audio}" style="width:100%"></audio>`:''}
+  <div class="row" style="margin-top:8px">${r.txt?`<button class="btn sec" onclick="falar('Recado de ${r.quem}: ${r.txt.replace(/'/g,'')}')">🔊 Ouvir</button>`:''}<button class="btn" onclick="window.open('https://wa.me/?text='+enc('Recebi seu recado, obrigado(a)! Um abraço.'),'_blank')">Responder: obrigado(a)!</button></div>`;}
+
+/* ================= COZINHA: receita da semana ================= */
+const RECEITAS=[
+ {n:'Bolo de fubá',ing:'3 ovos, 2 xícaras de leite, 1 xícara de óleo, 2 xícaras de açúcar, 1 e ½ xícara de fubá, 1 xícara de farinha de trigo, 1 colher (sopa) de fermento, erva-doce a gosto',p:[
+  ['Ligar o forno','Ligue o forno a 180 °C e unte uma forma com manteiga e fubá.',0],['Bater os líquidos','No liquidificador, bata ovos, leite, óleo e açúcar por 2 minutos.',120],
+  ['Juntar os secos','Numa tigela, misture fubá, farinha e erva-doce. Despeje o líquido e mexa até ficar liso. Por último, o fermento, mexendo devagar.',0],['Assar','Coloque na forma e asse por 40 minutos. Espete um palito: se sair limpo, está pronto.',2400],['Esfriar e servir','Deixe esfriar 10 minutos antes de desenformar. Sirva com café.',600]]},
+ {n:'Arroz doce',ing:'1 xícara de arroz, 3 xícaras de água, 1 litro de leite, 1 xícara de açúcar, 1 canela em pau, canela em pó',p:[
+  ['Cozinhar o arroz','Cozinhe o arroz na água com a canela em pau até secar, cerca de 15 minutos.',900],['Acrescentar o leite','Junte o leite e o açúcar. Cozinhe em fogo baixo, mexendo de vez em quando, até engrossar: uns 25 minutos.',1500],['Servir','Coloque em tigelas e polvilhe canela em pó. Bom quente ou gelado.',0]]},
+ {n:'Pão de queijo de liquidificador',ing:'1 ovo, ½ xícara de leite, ¼ xícara de óleo, 1 xícara de polvilho azedo, 1 xícara de queijo minas meia-cura ralado, sal',p:[
+  ['Ligar o forno','Forno a 200 °C. Unte forminhas de empada ou de muffin.',0],['Bater','Bata tudo no liquidificador até ficar homogêneo.',60],['Assar','Encha as forminhas até ¾ e asse por 25 minutos, até dourar.',1500]]},
+ {n:'Canjica cremosa',ing:'500 g de canjica branca (milho para canjica), 1 litro de leite, 1 lata de leite condensado, cravo, canela em pau, coco ralado',p:[
+  ['Deixar de molho','Deixe a canjica de molho na água de um dia para o outro.',0],['Cozinhar','Escorra e cozinhe em água nova, na panela de pressão, por 40 minutos após pegar pressão.',2400],['Adoçar','Junte leite, leite condensado, cravo, canela e coco. Cozinhe em fogo baixo por 20 minutos, mexendo.',1200]]},
+ {n:'Sopa de legumes com macarrão',ing:'2 batatas, 2 cenouras, 1 chuchu, 1 cebola, 2 dentes de alho, 1 xícara de macarrão pequeno, azeite, sal, salsinha',p:[
+  ['Picar','Descasque e pique os legumes em cubos. Pique a cebola e o alho.',0],['Refogar','Refogue cebola e alho no azeite por 3 minutos.',180],['Cozinhar','Junte os legumes, cubra com água e cozinhe por 20 minutos.',1200],['Macarrão','Acrescente o macarrão e cozinhe por mais 8 minutos. Acerte o sal, salpique salsinha.',480]]},
+ {n:'Brigadeiro de panela',ing:'1 lata de leite condensado, 2 colheres (sopa) de chocolate em pó, 1 colher (sopa) de manteiga, chocolate granulado',p:[
+  ['Misturar','Numa panela, misture leite condensado, chocolate em pó e manteiga.',0],['Cozinhar mexendo','Fogo baixo, mexendo sempre, por uns 10 minutos, até desgrudar do fundo.',600],['Esfriar e enrolar','Despeje num prato untado, deixe esfriar 20 minutos, enrole bolinhas e passe no granulado. Chame alguém para ajudar a enrolar.',1200]]},
+];
+let RC={r:0,i:0,timer:null};
+const SEMANA_N=Math.floor((Date.now()-new Date(new Date().getFullYear(),0,1))/604800000);RC.r=SEMANA_N%RECEITAS.length; // receita da semana
+document.getElementById('rlista').innerHTML=RECEITAS.map((r,i)=>`<button class="${i===RC.r?'on':''}" onclick="RC.r=${i};RC.i=0;document.querySelectorAll('#rlista button').forEach((b,j)=>b.classList.toggle('on',j===${i}));rRender()">${r.n}${i===SEMANA_N%RECEITAS.length?' · da semana':''}</button>`).join('');
+function rRender(){const r=RECEITAS[RC.r],p=r.p[RC.i];clearInterval(RC.timer);
+  document.getElementById('rcard').innerHTML=`<h3 style="margin:0">${r.n}</h3>${RC.i===0?`<p class="ev"><b>Ingredientes:</b> ${r.ing}</p>`:''}<p class="ev" style="margin:8px 0 0">Passo ${RC.i+1} de ${r.p.length}</p><h3 style="margin:4px 0">${p[0]}</h3><p style="font-size:1.15rem">${p[1]}</p>${p[2]?`<div class="stage" id="rclock" style="aspect-ratio:auto;min-height:80px;font-size:2.4rem">${Math.round(p[2]/60)} min</div>`:''}
+  <div class="row"><button class="btn sec" onclick="falar('${(p[0]+'. '+p[1]).replace(/'/g,'')}')">🔊 Ouvir</button></div>`;
+  document.getElementById('rbtn').style.display=p[2]?'inline-block':'none';document.getElementById('rbtn').textContent='Relógio';}
+function rNav(d){const L=RECEITAS[RC.r].p.length;RC.i=(RC.i+d+L)%L;rRender();if(RC.i===L-1){state.done.add('gosto');prog();}}
+function rTimer(){clearInterval(RC.timer);let rest=RECEITAS[RC.r].p[RC.i][2];const c=document.getElementById('rclock');if(!c)return;
+  RC.timer=setInterval(()=>{rest--;c.textContent=Math.floor(rest/60)+':'+String(rest%60).padStart(2,'0');if(rest<=0){clearInterval(RC.timer);c.textContent='Pronto!';toast('Tempo terminou!');falar('O tempo terminou. '+RECEITAS[RC.r].p[RC.i][0]);}},1000);}
+rRender();
+
+/* ================= MINHA HISTÓRIA ================= */
+const PROFS=['Lavrador(a)','Professor(a)','Dona de casa','Comerciante','Motorista','Pedreiro','Costureira','Enfermeira','Bancário(a)','Mecânico','Militar','Funcionário público'];
+const MORA=['Sozinho(a)','Com o cônjuge','Com filhos/netos','Em residência para idosos'];
+state.hist={nome:'',prof:'',cidade:'',bem:'',mora:''};
+document.getElementById('h-prof').innerHTML=PROFS.map(p=>`<button onclick="hChip('h-prof','${p}')">${p}</button>`).join('');
+document.getElementById('h-mora').innerHTML=MORA.map(p=>`<button onclick="hChip('h-mora','${p}')">${p}</button>`).join('');
+function hChip(id,v){document.querySelectorAll('#'+id+' button').forEach(b=>b.classList.toggle('on',b.textContent===v));if(id==='h-prof')document.getElementById('h-prof-txt').value=v;else state.hist.mora=v;}
+function hSalvar(){
+  state.hist.nome=document.getElementById('h-nome').value.trim();state.hist.prof=document.getElementById('h-prof-txt').value.trim();
+  state.hist.cidade=document.getElementById('h-cidade').value.trim();state.hist.bem=document.getElementById('h-bem').value.trim();
+  hAplicar();toast('Guardado. O app vai usar isso para escolher o que mostrar.');go('hoje');
+}
+function hAplicar(){
+  const h=state.hist,p=(h.prof+' '+h.bem).toLowerCase();
+  if(h.nome){const g=document.getElementById('greet');g.textContent=g.textContent.replace(/,.*$/,'')+', '+h.nome;}
+  // identidade dirige o conteúdo
+  if(/lavr|fazend|agric|roça|plant|horta|jardim/.test(p)){C.tema='Fazendas e máquinas';N.cat='planta';state.likes.add('plantas');}
+  else if(/mec[âa]n|motor|carro|caminh|oficina/.test(p)){C.tema='Automóveis e transporte';state.likes.add('carros');}
+  else if(/pedreir|constru|engenh|arquit/.test(p)){C.tema='Construção';}
+  else if(/enferm|m[ée]dic|sa[úu]de|farm/.test(p)){C.tema='Medicina';}
+  else if(/profess|escola|leitur|livro/.test(p)){C.tema='Artes e tintas';state.likes.add('livros');}
+  else if(/cost|cozinh|dona de casa|bord/.test(p)){C.tema='Objetos do dia a dia';state.likes.add('artes');}
+  else if(/cant|m[úu]sic|viol[ãa]o/.test(p)){C.tema='Artes e tintas';state.likes.add('musica');}
+  document.querySelectorAll('#ctemas button').forEach(b=>b.classList.toggle('on',b.textContent===C.tema));C.i=0;cRender();
+  if(typeof nCats==='function'&&N.dados.length){nCats();nLista();}
+  renderInt();
+  document.getElementById('hist-convite').style.display=h.nome||h.prof?'none':'block';
+}
+document.getElementById('hist-convite').innerHTML=`<p style="margin:0 0 8px;font-size:1.1rem">Vamos nos conhecer? Conte quem você é e o app escolhe o que mostrar.</p><button class="btn" onclick="go('historia-minha')">Contar minha história</button>`;
+document.getElementById('hist-convite').style.display='block';
+
+/* ================= FOTOS DA FAMÍLIA ================= */
+state.fotos=[];
+function fAdd(files){[...files].forEach(f=>state.fotos.push({url:URL.createObjectURL(f),legenda:'',quem:''}));fLista();fotoDia();}
+function fLista(){document.getElementById('flista').innerHTML=state.fotos.map((f,i)=>`<div class="card" style="padding:12px"><div class="stage" style="background:#000 center/contain no-repeat url('${f.url}');aspect-ratio:4/3"></div>
+  <input class="hin" style="margin-top:8px" placeholder="Quem está na foto?" value="${f.quem}" onchange="state.fotos[${i}].quem=this.value;fotoDia()">
+  <input class="hin" style="margin-top:6px" placeholder="Quando e onde foi? (ex.: Natal de 1985, na casa da vó)" value="${f.legenda}" onchange="state.fotos[${i}].legenda=this.value;fotoDia()"></div>`).join('')||'<p class="ev">Nenhuma foto ainda.</p>';}
+function fotoDia(){
+  const el=document.getElementById('fotodia');if(!state.fotos.length){el.style.display='none';return;}
+  const f=state.fotos[Math.floor(Date.now()/86400000)%state.fotos.length];el.style.display='block';
+  el.innerHTML=`<h2 style="margin-top:0">Lembrança do dia</h2><div class="stage" style="background:#000 center/contain no-repeat url('${f.url}');aspect-ratio:4/3"></div>
+  <p style="font-size:1.15rem;margin:10px 0 6px">Quem está aqui? Quando foi isso? Pense um pouco antes de ver a resposta.</p>
+  <div class="row"><button class="btn" onclick="this.parentNode.nextElementSibling.style.display='block';this.style.display='none'">Ver a resposta</button><button class="btn blue" onclick="toast('No app Android: envia para a TV (Google Cast).')">📺 Ver na TV</button></div>
+  <p style="display:none;font-size:1.15rem;background:#FFF3D6;border-radius:12px;padding:12px">${f.quem||'(sem nome)'} — ${f.legenda||'(sem data)'}<br><span class="ev">Conte para alguém o que lembra desse dia.</span></p>`;
+}
+
+/* ================= MOVER O CORPO (Otago + dual-task Cognicise) ================= */
+const ROTINA=[
+  {t:'Aquecer: ombros e pescoço',d:'Sentado. Gire os ombros para trás devagar, 10 vezes. Depois olhe para um lado e para o outro, sem forçar.',s:60,sit:true},
+  {t:'Sentar e levantar',d:'Da cadeira, levante-se e sente-se devagar, sem usar as mãos se conseguir. Repita quantas vezes der em 1 minuto. Anote quantas fez.',s:60},
+  {t:'Marcha no lugar contando de trás para frente',d:'Em pé, segurando na cadeira. Marche no lugar e conte em voz alta de 3 em 3 de trás para frente: 100, 97, 94… Errar faz parte — é o exercício do cérebro junto com o corpo.',s:90,dual:true},
+  {t:'Ponta dos pés',d:'Segurando na cadeira, suba na ponta dos pés e desça devagar. 10 a 15 vezes.',s:60},
+  {t:'Equilíbrio: um pé na frente do outro',d:'Segurando na cadeira, coloque um pé bem à frente do outro, como numa linha, e fique parado. Troque o pé. Se for fácil, solte uma mão.',s:60},
+  {t:'Marcha dizendo nomes de frutas',d:'Marche no lugar e diga uma fruta a cada passo, sem repetir. Depois, animais. Depois, cidades.',s:90,dual:true},
+  {t:'Sentado: esticar as pernas',d:'Sentado, estique uma perna à frente, segure 3 segundos, desça. 10 vezes cada perna.',s:60,sit:true},
+  {t:'Respirar e sorrir',d:'Sentado. Inspire pelo nariz contando 4, solte pela boca contando 6. Cinco vezes. Pronto: você cuidou do corpo e da cabeça hoje.',s:45,sit:true},
+];
+let E={i:0,timer:null,rest:0};
+var exRender=function(){const x=ROTINA[E.i];document.getElementById('excard').innerHTML=`<p class="ev" style="margin:0">${E.i+1} de ${ROTINA.length}${x.sit?' · sentado':' · em pé, com apoio'}${x.dual?' · corpo + cabeça':''}</p><h3 style="margin:4px 0">${x.t}</h3><p style="font-size:1.1rem">${x.d}</p><div class="stage" id="exclock" style="aspect-ratio:auto;min-height:90px;font-size:2.6rem">${x.s}s</div>`;document.getElementById('exbtn').textContent='Começar';clearInterval(E.timer);}
+var exNav=function(d){E.i=(E.i+d+ROTINA.length)%ROTINA.length;exRender();};
+var exStart=function(){clearInterval(E.timer);E.rest=ROTINA[E.i].s;const c=document.getElementById('exclock');c.textContent=E.rest+'s';document.getElementById('exbtn').textContent='Contando…';
+  E.timer=setInterval(()=>{E.rest--;c.textContent=E.rest+'s';if(E.rest<=0){clearInterval(E.timer);c.textContent='Feito!';toast('Muito bem!');if(E.i===ROTINA.length-1){state.done.add('mover');const t=document.getElementById('t-mover');if(t)t.style.background='#DDF0E3';prog();document.getElementById('exbtn').textContent='Concluído';}else{document.getElementById('exbtn').textContent='Próximo';document.getElementById('exbtn').onclick=()=>{exNav(1);document.getElementById('exbtn').onclick=exStart;};}}},1000);}
+exRender();
+
+/* ================= MOVIMENTO STUDIO (rig.js + exercicios.js) =================
+   Usa POOL/ESQUEMA do Studio: seg-qua-sex = força (MMSS + MMII) + equilíbrio; ter-qui-sáb = aeróbico + equilíbrio; dom = caminhada leve.
+   Um exercício por tela, boneco animado pelo RIG, dose do nível (Vivifrail A–D), erro comum, voz. */
+const MS_OK=(typeof EX!=='undefined'&&Array.isArray(EX)&&EX.length&&typeof RIG!=='undefined'&&typeof DOSE!=='undefined');
+const MS_POOL={A:{MMSS:['S03','S09','S10','S02','S04','S13'],MMII:['I01','I02','I11','I07','I06'],EQ:['I17','I15']},
+  B:{MMSS:['S03','S02','S04','S06','S11','S10','S13','S09','S05','S12','S14','S07'],MMII:['I01','I02','I03','I04','I05','I06','I07','I08','I11'],EQ:['I17','I15','I12','I14','I16']},
+  C:{MMSS:['S03','S02','S06','S11','S12','S04','S05','S07','S13','S14','S10','S09','S01','S08'],MMII:['I01','I08','I09','I02','I03','I04','I05','I06','I07','I11'],EQ:['I15','I14','I12','I13','I16','I17']},
+  D:{MMSS:['S01','S02','S03','S06','S11','S12','S07','S08','S04','S05','S13','S14','S15','S10','S09'],MMII:['I01','I08','I09','I10','I03','I04','I05','I06','I02','I07','I11'],EQ:['I15','I14','I13','I16','I12','I17']}};
+const MS_N={A:[2,2],B:[3,3],C:[4,4],D:[5,5]};           // força: nº MMSS, nº MMII por sessão
+const MS_AERO={A:10,B:25,C:40,D:45};                    // minutos aeróbicos por sessão
+let MS={nivel:'C',sessao:[],i:0,anim:null,erro:false,tipoDia:'forca'};
+const msById=id=>EX.find(e=>e.id===id);
+function msSessao(){
+  if(!MS_OK)return;
+  const dow=(new Date().getDay()+6)%7; // 0=segunda
+  const w=Math.floor((Date.now()-new Date(new Date().getFullYear(),0,1))/604800000), P=MS_POOL[MS.nivel], k=w*3+Math.floor(dow/2);
+  const pick=(arr,n)=>Array.from({length:Math.min(n,arr.length)},(_,i)=>msById(arr[(k*n+i)%arr.length])).filter(Boolean);
+  MS.tipoDia=dow===6?'domingo':(dow%2===0?'forca':'aero');
+  if(MS.tipoDia==='forca')MS.sessao=[...pick(P.MMII,MS_N[MS.nivel][1]),...pick(P.MMSS,MS_N[MS.nivel][0]),...pick(P.EQ,1)];
+  else MS.sessao=[...pick(P.EQ,2)];
+  MS.i=0;
+}
+function msDose(ex){const t=ex.tipo==='equilibrio'?'equilibrio':ex.tipo==='potencia'?'potencia':'forca';let d=(DOSE[t]&&DOSE[t][MS.nivel])||'';if(/^Não indicado/i.test(d))d=(DOSE.forca[MS.nivel]||'')+' (versão de força, com apoio)';return d;}
+function msRender(){
+  const card=document.getElementById('excard');if(MS.anim&&MS.anim.parar)MS.anim.parar();clearInterval(E.timer);
+  const cab=MS.tipoDia==='forca'?'Hoje: força e equilíbrio':MS.tipoDia==='aero'?`Hoje: caminhar ${MS_AERO[MS.nivel]} min e equilíbrio`:'Hoje: caminhada leve de 30 min ou Tai Chi';
+  if(!MS.sessao.length){card.innerHTML=`<h3 style="margin:0">${cab}</h3><p style="font-size:1.15rem">Saia para caminhar em ritmo que dê para conversar. Se chover, ande dentro de casa por cômodos. Depois, beba água.</p>`;document.getElementById('exerrobtn').style.display='none';return;}
+  const ex=MS.sessao[MS.i];
+  card.innerHTML=`<p class="ev" style="margin:0">${cab} · exercício ${MS.i+1} de ${MS.sessao.length} · nível ${MS.nivel}</p>
+    <h3 style="margin:4px 0">${ex.nome}</h3>
+    <div id="msfig" style="background:#FBF7EE;border-radius:16px;overflow:hidden"></div>
+    <p style="font-size:1.15rem;margin:10px 0 4px">${(ex.exec||[]).map((t,i)=>`<b>${i+1}.</b> ${t}`).join('<br>')}</p>
+    ${ex.postura&&ex.postura[0]?`<p class="ev" style="margin:0">Postura: ${ex.postura[0]}</p>`:''}
+    ${ex.cuidados&&ex.cuidados[0]?`<p class="ev" style="margin:0">⚠ ${ex.cuidados[0]}</p>`:''}
+    <p style="background:#FFF3D6;border-radius:12px;padding:10px;margin:8px 0 0"><b>Quanto:</b> ${msDose(ex)}</p>
+    ${MS.tipoDia==='aero'?`<p class="ev">Antes ou depois: caminhar ${MS_AERO[MS.nivel]} minutos.</p>`:''}
+    <div class="stage" id="exclock" style="aspect-ratio:auto;min-height:80px;font-size:2.4rem;margin-top:8px">60s</div>`;
+  try{MS.anim=RIG.animar(document.getElementById('msfig'),ex,{erro:false,guias:true,velocidade:0.8});}catch(e){document.getElementById('msfig').innerHTML=(RIG.quadrosEstaticos(ex)||[''])[0];}
+  document.getElementById('msfig').querySelectorAll('svg').forEach(v=>{v.style.width='100%';v.style.maxHeight='320px';v.style.display='block';});
+  document.getElementById('exerrobtn').style.display=ex.erro?'inline-block':'none';document.getElementById('exerrobtn').textContent='Mostrar erro comum';MS.erro=false;
+  document.getElementById('exbtn').textContent='Começar';document.getElementById('exbtn').onclick=exStart;
+}
+function exErro(){const ex=MS.sessao[MS.i];if(!ex||!ex.erro)return;MS.erro=!MS.erro;if(MS.anim&&MS.anim.parar)MS.anim.parar();
+  const fig=document.getElementById('msfig');try{MS.anim=RIG.animar(fig,ex,{erro:MS.erro,guias:!MS.erro,velocidade:0.8});}catch(e){}
+  fig.querySelectorAll('svg').forEach(v=>{v.style.width='100%';v.style.maxHeight='320px';v.style.display='block';});
+  document.getElementById('exerrobtn').textContent=MS.erro?'Mostrar o jeito certo':'Mostrar erro comum';
+  if(MS.erro)toast('Errado: '+(ex.erro.rotulo||ex.erros[0]));}
+if(!MS_OK){const ev=document.querySelector('#s-exercicio p.ev:last-of-type');if(ev)ev.innerHTML='<b>Rotina simples (8 passos).</b> O Movimento Studio com o boneco animado e a área da família (senha) só aparecem quando o app é aberto a partir da pasta extraída do <code>mente_ativa.zip</code>, com <code>exercicios/rig.js</code> e <code>exercicios/exercicios.js</code> ao lado.';}
+if(MS_OK){
+  if(typeof PARAR_GERAL!=='undefined')document.getElementById('exseg').innerHTML='<p style="margin:0"><b>Pare e avise alguém se sentir:</b> '+PARAR_GERAL.slice(0,4).join('; ').toLowerCase()+'. Fique perto de uma cadeira ou parede para se apoiar.</p>';
+  msSessao();
+  document.getElementById('exnivel').style.display='block';
+  const nivTxt=n=>NIVEIS&&NIVEIS[n]?`${NIVEIS[n].nome} · ${NIVEIS[n].criterio}`:n;
+  document.getElementById('exniveis').innerHTML=Object.keys(MS_POOL).map(n=>`<button class="${n===MS.nivel?'on':''}" onclick="MS.nivel='${n}';document.querySelectorAll('#exniveis button').forEach(b=>b.classList.toggle('on',b.textContent==='${n}'));document.getElementById('exnivtxt').textContent=nivTxt('${n}');msSessao();msRender()">${n}</button>`).join('');
+  document.getElementById('exnivtxt').textContent=nivTxt(MS.nivel);
+  exRender=msRender;
+  exNav=function(d){if(!MS.sessao.length)return;MS.i=(MS.i+d+MS.sessao.length)%MS.sessao.length;msRender();};
+  exStart=function(){clearInterval(E.timer);E.rest=60;const c=document.getElementById('exclock');if(!c)return;document.getElementById('exbtn').textContent='Contando…';
+    E.timer=setInterval(()=>{E.rest--;c.textContent=E.rest+'s';if(E.rest<=0){clearInterval(E.timer);c.textContent='Feito!';toast('Muito bem!');
+      if(MS.i>=MS.sessao.length-1){state.done.add('mover');const t=document.getElementById('t-mover');if(t)t.style.background='#DDF0E3';prog();document.getElementById('exbtn').textContent='Concluído';falar('Sessão concluída. Muito bem!');}
+      else{document.getElementById('exbtn').textContent='Próximo';document.getElementById('exbtn').onclick=()=>exNav(1);}}},1000);};
+  msRender();
+  const ev=document.querySelector('#s-exercicio p.ev:last-of-type');if(ev)ev.textContent='Exercícios do Movimento Studio (rig vetorial próprio) — Otago, Vivifrail, LiFE, FaME, NIA/Go4Life, OMS 2020; níveis A–D por SPPB/velocidade de marcha (Vivifrail). Critérios de parada: ACSM.';
+}
+
+/* ================= MEU LIVRO (capítulos liberados 3x por semana) =================
+   Regras: o capítulo N+1 só é oferecido 3 dias depois de "Finalizei" no capítulo N.
+   Capítulos anteriores ficam sempre disponíveis para reler. No app Android, guardar L em SQLite. */
+let L={caps:[],titulo:'O Alienista — Machado de Assis',liberado:0,atual:0,fim:{},fonte:22,carregado:false};
+const DIAS=3;
+fetch('livros/o-alienista.txt').then(r=>{if(!r.ok)throw 0;return r.text();}).then(t=>{
+  // divide o texto pelos títulos de capítulo (CAPÍTULO I, II, ... ou "Capítulo 1")
+  const partes=t.split(/\n(?=\s*CAP[ÍI]TULO\s+[IVXLC\d]+)/i).map(x=>x.trim()).filter(x=>x.length>200);
+  L.caps=partes.map(x=>{const nl=x.indexOf('\n');return {titulo:x.slice(0,nl).trim(),texto:x.slice(nl).trim()};});
+  L.carregado=L.caps.length>1;lRender();
+}).catch(()=>lRender());
+function lFonte(d){L.fonte=Math.max(16,Math.min(34,L.fonte+d));document.getElementById('ltexto').style.fontSize=L.fonte+'px';}
+function lProximoEm(){const f=L.fim[L.liberado];if(!f)return 0;return Math.max(0,DIAS-Math.floor((Date.now()-f)/86400000));}
+function lRender(){
+  const st=document.getElementById('lstatus'),tx=document.getElementById('ltexto'),ac=document.getElementById('lacoes'),rl=document.getElementById('lreler');
+  if(!L.carregado){st.innerHTML=`<p style="margin:0"><b>${L.titulo}</b></p><p style="margin:6px 0 0">Para ler aqui, salve o texto completo como <code>livros/o-alienista.txt</code> (baixe em dominiopublico.gov.br ou pt.wikisource.org e cole em um arquivo de texto). O app divide sozinho pelos títulos "CAPÍTULO I, II…".</p>`;tx.textContent='';ac.innerHTML='';rl.innerHTML='';return;}
+  // libera capítulo seguinte se já passaram 3 dias do último "Finalizei"
+  if(L.fim[L.liberado]&&lProximoEm()===0&&L.liberado<L.caps.length-1){L.liberado++;L.atual=L.liberado;}
+  const c=L.caps[L.atual],termo=!!L.fim[L.atual];
+  st.innerHTML=`<p style="margin:0"><b>${L.titulo}</b></p><p style="margin:4px 0 0">${c.titulo} · ${L.atual+1} de ${L.caps.length}${termo?' · ✓ lido':''}</p>`;
+  tx.style.fontSize=L.fonte+'px';tx.textContent=c.texto;
+  if(L.atual===L.liberado&&!termo)ac.innerHTML=`<button class="btn" onclick="lFinalizei()">Finalizei este capítulo</button>`;
+  else if(L.atual===L.liberado&&termo){const d=lProximoEm();ac.innerHTML=L.atual===L.caps.length-1?`<p class="ev">Você terminou o livro! Parabéns. Quer conversar com alguém sobre a história?</p>`:`<p class="ev">Muito bem. O próximo capítulo chega em ${d} dia${d>1?'s':''}.</p>`;}
+  else ac.innerHTML=`<button class="btn sec" onclick="L.atual=L.liberado;lRender()">Voltar ao capítulo atual</button>`;
+  rl.innerHTML=L.liberado>0?`<div class="card"><p style="margin:0 0 8px;font-size:1.1rem">Gostaria de reler os capítulos anteriores?</p><div class="row">${L.caps.slice(0,L.liberado).map((x,i)=>`<button class="btn sec" style="min-height:48px;padding:8px 14px;font-size:.95rem" onclick="L.atual=${i};lRender();window.scrollTo(0,0)">${x.titulo.replace(/CAP[ÍI]TULO/i,'Cap.')}</button>`).join('')}</div></div>`:'';
+}
+function lFinalizei(){L.fim[L.atual]=Date.now();state.done.add('gosto');prog();toast('Muito bem! Você leu mais um capítulo.');lRender();}
+
+/* ================= MEU TIME ================= */
+const TIMES={
+  futebol:['Vasco da Gama','Flamengo','Fluminense','Botafogo','Corinthians','Palmeiras','São Paulo','Santos','Cruzeiro','Atlético-MG','América-MG','Grêmio','Internacional','Bahia','Vitória','Sport','Fortaleza','Ceará','Athletico-PR','Coritiba','Goiás','Uberlândia Esporte','Seleção Brasileira'],
+  volei:['Praia Clube','Minas Tênis Clube','Sada Cruzeiro','Sesc RJ Flamengo','Osasco','Barueri','Vôlei Renata (Campinas)','Sesi Bauru','Pinheiros','Suzano','Seleção Brasileira de Vôlei']
+};
+const JOGOS_FAMOSOS={
+  'Vasco da Gama':['Vasco campeão da Libertadores 1998 jogo completo','Vasco x Manchester United 2000 Mundial de Clubes','Vasco campeão brasileiro 1997 Romário Edmundo','Vasco 1974 campeão brasileiro Roberto Dinamite'],
+  'Flamengo':['Flamengo x Liverpool 1981 Mundial jogo completo','Flamengo campeão Libertadores 1981 Zico','Flamengo x Vasco 1997 Romário','Flamengo campeão Libertadores 2019 River Plate'],
+  'Corinthians':['Corinthians campeão Mundial 2000 jogo completo','Corinthians x Chelsea 2012 Mundial','Corinthians campeão paulista 1977 Basílio','Corinthians campeão brasileiro 1990'],
+  'Palmeiras':['Palmeiras campeão Libertadores 1999 jogo completo','Palmeiras Academia 1972 jogo','Palmeiras x Corinthians 1993 Evair','Palmeiras campeão Libertadores 2020'],
+  'São Paulo':['São Paulo x Barcelona 1992 Mundial jogo completo','São Paulo x Milan 1993 Mundial','São Paulo Telê Santana Raí','São Paulo x Liverpool 2005 Mundial'],
+  'Santos':['Santos Pelé jogo completo 1962 Benfica','Santos Pelé 1963 Milan Mundial','Santos Neymar 2011 Libertadores','Santos Pelé gols'],
+  'Cruzeiro':['Cruzeiro campeão Libertadores 1976 jogo completo','Cruzeiro Tostão 1966 Taça Brasil Santos','Cruzeiro campeão Libertadores 1997','Cruzeiro tríplice coroa 2003'],
+  'Atlético-MG':['Atlético-MG campeão Libertadores 2013 Ronaldinho jogo completo','Atlético-MG campeão brasileiro 1971','Atlético-MG Reinaldo gols','Atlético-MG x Flamengo 2014 Copa do Brasil'],
+  'Grêmio':['Grêmio campeão Mundial 1983 Hamburgo jogo completo','Grêmio Libertadores 1983 Renato','Grêmio Libertadores 1995 Jardel','Grêmio Libertadores 2017'],
+  'Internacional':['Internacional x Barcelona 2006 Mundial jogo completo','Internacional Libertadores 2006','Internacional campeão brasileiro 1976 Falcão','Internacional Libertadores 2010'],
+  'Seleção Brasileira':['Brasil x Itália 1970 final Copa do Mundo jogo completo','Brasil x Itália 1994 final Copa','Brasil x Alemanha 2002 final Copa','Brasil 1982 Zico Sócrates jogo completo','Brasil x Suécia 1958 final'],
+  'Praia Clube':['Praia Clube campeão Superliga 2018 jogo completo','Praia Clube Mundial de Clubes vôlei','Praia Clube x Minas final Superliga'],
+  'Seleção Brasileira de Vôlei':['Brasil vôlei ouro Olimpíada 1992 Barcelona','Brasil x Rússia final vôlei 2004','Brasil vôlei feminino ouro 2008 Pequim','Brasil vôlei feminino ouro 2012 Londres']
+};
+let T={esporte:'futebol',time:null};
+const enc=encodeURIComponent;
+const yt=q=>`https://www.youtube.com/results?search_query=${enc(q)}`;
+const gnews=q=>`https://news.google.com/search?q=${enc(q)}&hl=pt-BR&gl=BR&ceid=BR:pt-BR`;
+function tEsporte(e){T.esporte=e;T.time=null;document.querySelectorAll('#tesporte button').forEach((b,i)=>b.classList.toggle('on',['futebol','volei'][i]===e));tRender();}
+function tSet(n){T.time=n;tRender();sugestoesSemana();}
+function tRender(){
+  const esc=document.getElementById('tescolha'),c=document.getElementById('tconteudo');
+  if(!T.time){esc.innerHTML=`<div class="card"><p style="margin:0 0 8px;font-size:1.15rem">Qual é o seu time?</p><div class="row">${TIMES[T.esporte].map(n=>`<button class="btn sec" onclick="tSet('${n.replace(/'/g,"\\'")}')">${n}</button>`).join('')}</div></div>`;c.innerHTML='';return;}
+  esc.innerHTML=`<div class="card tone" style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:1.2rem"><b>${T.time}</b></span><button class="btn sec" onclick="T.time=null;tRender()">Trocar</button></div>`;
+  const q=T.esporte==='volei'?T.time+' vôlei':T.time;
+  const jogos=JOGOS_FAMOSOS[T.time]||[T.time+' jogo histórico completo',T.time+' melhores momentos campeão',T.time+' ídolos gols'];
+  c.innerHTML=`<div class="card"><h3 style="margin:0 0 6px">Notícias de hoje</h3>
+    <a class="link" href="${trUrl(gnews(q))}" target="_blank"><b>Notícias do ${T.time} no Google Notícias</b><span>atualizado a cada hora</span></a>
+    ${T.esporte==='futebol'?`<a class="link" href="https://ge.globo.com/futebol/" target="_blank"><b>ge — futebol</b><span>Globo Esporte</span></a>`:`<a class="link" href="https://ge.globo.com/volei/" target="_blank"><b>ge — vôlei</b><span>Globo Esporte</span></a>`}
+    <a class="link" href="${yt(T.time+' TV oficial')}" target="_blank"><b>Canal oficial do ${T.time} no YouTube</b><span>busca pelo canal do clube</span></a></div>
+  <div class="card"><h3 style="margin:0 0 6px">Jogos antigos e famosos</h3>${jogos.map(j=>`<a class="link" href="${yt(j)}" target="_blank"><b>${j}</b><span>YouTube</span></a>`).join('')}</div>
+  <div class="card"><h3 style="margin:0 0 6px">Para relembrar e conversar</h3><p style="margin:0">Quem era o seu ídolo nesse time? Com quem você assistia aos jogos? Qual foi o jogo mais emocionante que viu?</p></div>`;
+}
+tRender();
+
+/* ================= MÚSICA E FILMES ================= */
+const ESTILOS={
+  'MPB':['Chico Buarque show completo','Elis Regina ao vivo','Caetano Veloso Gilberto Gil show','Milton Nascimento Clube da Esquina'],
+  'Sertanejo raiz':['Tonico e Tinoco','Chitãozinho e Xororó show anos 80','Sérgio Reis show completo','Tião Carreiro e Pardinho'],
+  'Samba':['Cartola ao vivo','Beth Carvalho show completo','Zeca Pagodinho ao vivo','Clara Nunes'],
+  'Bossa nova':['Tom Jobim ao vivo','João Gilberto show completo','Vinicius de Moraes Toquinho','Nara Leão'],
+  'Forró':['Luiz Gonzaga show completo','Dominguinhos ao vivo','Trio Nordestino','Elba Ramalho show'],
+  'Jovem Guarda e rock':['Roberto Carlos especial','Jovem Guarda Erasmo Carlos Wanderléa','Rita Lee show','Legião Urbana ao vivo'],
+  'Música clássica':['Villa-Lobos Bachianas Brasileiras','Beethoven Sinfonia 9 orquestra completa','Vivaldi As Quatro Estações','Chopin noturnos'],
+  'Bolero e tango':['Bolero Nelson Gonçalves','Altemar Dutra','Carlos Gardel tango','Astor Piazzolla Libertango'],
+  'Gospel e religiosa':['Padre Marcelo Rossi músicas','Aline Barros ao vivo','Harpa Cristã hinos','Padre Fábio de Melo'],
+  'Jazz e blues':['Louis Armstrong ao vivo','Ella Fitzgerald','Frank Sinatra show completo','Nat King Cole'],
+};
+const FILMES_MUSICA=[
+  ['Perfume de Mulher (1992)','a cena do tango com Al Pacino'],['Cantando na Chuva (1952)','Gene Kelly, o musical clássico'],['A Noviça Rebelde (1965)','Julie Andrews, canções para cantar junto'],
+  ['Dirty Dancing (1987)','dança e romance nos anos 60'],['Grease (1978)','músicas dos anos 50'],['Dança Comigo? (2004)','Richard Gere aprende a dançar de salão'],
+  ['Buena Vista Social Club (1999)','músicos cubanos idosos, documentário'],['Orfeu Negro (1959)','carnaval carioca e bossa nova'],['Amadeus (1984)','a vida de Mozart'],
+  ['Dois Filhos de Francisco (2005)','Zezé Di Camargo e Luciano'],['Elis (2016)','a vida de Elis Regina'],['Tango (1998)','o filme de Carlos Saura'],['O Rei do Show (2017)','musical moderno para ver em família'],
+];
+const FILMES_AARP=[
+  ['Hamnet (2025)','Melhor filme — Movies for Grownups 2026'],['Sentimental Value (2025)','Melhor filme intergeracional 2026'],['My Mom Jayne (2025)','Melhor documentário 2026'],
+  ['Springsteen: Deliver Me from Nowhere (2025)','Melhor filme de época 2026'],['Um Completo Desconhecido (2024)','Melhor filme 2025 — a vida de Bob Dylan'],['Thelma (2024)','Melhor filme intergeracional 2025 — avó de 93 anos'],
+  ['Conclave (2024)','Indicado 2025'],['O Exótico Hotel Marigold (2012)','Premiado 2013'],['Quartet (2012)','Estreia de Dustin Hoffman na direção, premiado 2013'],
+];
+let M={estilo:'MPB'};
+const jw=q=>`https://www.justwatch.com/br/busca?q=${enc(q)}`;
+document.getElementById('mestilos').innerHTML=Object.keys(ESTILOS).map(e=>`<button class="${e===M.estilo?'on':''}" onclick="mSet('${e}')">${e}</button>`).join('');
+function mSet(e){M.estilo=e;document.querySelectorAll('#mestilos button').forEach(b=>b.classList.toggle('on',b.textContent===e));mRender();sugestoesSemana();}
+function mRender(){document.getElementById('mconteudo').innerHTML=`<div class="card">${ESTILOS[M.estilo].map(q=>`<a class="link" href="${yt(q)}" target="_blank"><b>${q}</b><span>YouTube</span></a>`).join('')}<a class="link" href="${yt(M.estilo+' playlist as melhores')}" target="_blank"><b>Playlist: o melhor de ${M.estilo}</b><span>YouTube</span></a></div>`;}
+mRender();
+
+/* ================= SUGESTÕES DA SEMANA (rotação determinística por semana do ano) ================= */
+/* Filmes de domínio público ou de exibição gratuita consolidada no YouTube — abrem como busca "filme completo" (link não inventado). */
+const FILMES_YT=[
+  ['O Garoto (1921)','Chaplin — comédia muda, domínio público'],['Luzes da Cidade (1931)','Chaplin — romance mudo'],['O Grande Ditador (1940)','Chaplin — comédia'],
+  ['A General (1926)','Buster Keaton — comédia de trem, domínio público'],['Sherlock Jr. (1924)','Buster Keaton — comédia curta'],
+  ['Metrópolis (1927)','ficção científica muda, domínio público'],['Nosferatu (1922)','clássico mudo alemão, domínio público'],
+  ['Jejum de Amor (1940)','Cary Grant — comédia rápida, domínio público'],['Charada (1963)','Audrey Hepburn e Cary Grant, domínio público'],
+  ['O Homem que Sabia Demais (1934)','Hitchcock, domínio público'],['Os 39 Degraus (1935)','Hitchcock, domínio público'],
+  ['A Paixão de Joana d\'Arc (1928)','Dreyer — drama mudo, domínio público'],['Limite (1931)','Mário Peixoto — clássico brasileiro'],
+];
+const SEM=()=>{const d=new Date(),o=new Date(d.getFullYear(),0,1);return Math.floor((d-o)/604800000);};
+const ytWeekTop=q=>`https://www.youtube.com/results?search_query=${enc(q)}&sp=CAMSAggD`; // ordenado por visualizações, enviados esta semana
+function sugestoesSemana(){
+  const w=SEM();const pick=(arr,n,off)=>Array.from({length:n},(_,i)=>arr[(w*n+i+off)%arr.length]);
+  const est=M.estilo, time=T.time||(T.esporte==='volei'?'Praia Clube':'Vasco da Gama');
+  const filmes=pick(FILMES_YT,2,0), musicas=pick(ESTILOS[est],2,1);
+  document.getElementById('semana-sug').innerHTML=`<h2 style="margin-top:0">Sugestões desta semana</h2>
+    <p class="ev" style="margin:0 0 6px">🎬 Filmes de qualidade, gratuitos no YouTube</p>
+    ${filmes.map(f=>`<a class="link" href="${yt(f[0]+' filme completo dublado')}" target="_blank"><b>${f[0]}</b><span>${f[1]}</span></a>`).join('')}
+    <p class="ev" style="margin:10px 0 6px">🎵 Do seu estilo: ${est}</p>
+    ${musicas.map(q=>`<a class="link" href="${yt(q)}" target="_blank"><b>${q}</b><span>YouTube</span></a>`).join('')}
+    <p class="ev" style="margin:10px 0 6px">⚽ Futebol da semana — o mais visto</p>
+    <a class="link" href="${ytWeekTop(time+' gols melhores momentos')}" target="_blank"><b>${time}: o vídeo mais visto da semana</b><span>YouTube, ordenado por visualizações, últimos 7 dias</span></a>
+    <a class="link" href="${ytWeekTop('Brasileirão gols da rodada')}" target="_blank"><b>Gols da rodada mais vistos</b><span>YouTube, últimos 7 dias</span></a>
+    <p class="ev" style="margin:8px 0 0">Muda toda segunda-feira. Toque em "Meu time" ou "Música e filmes" para trocar suas preferências.</p>`;
+}
+sugestoesSemana();
+const filmeLink=(f,d)=>`<div class="link"><b>${f}</b><span>${d}</span><div class="row" style="margin:6px 0 0"><a class="btn sec" style="text-decoration:none;font-size:.95rem;min-height:44px;padding:8px 14px" href="${yt(f+' trailer cena')}" target="_blank">▶ Ver cenas</a><a class="btn sec" style="text-decoration:none;font-size:.95rem;min-height:44px;padding:8px 14px" href="${jw(f.replace(/\s*\(\d{4}\)/,''))}" target="_blank">Onde assistir</a></div></div>`;
+document.getElementById('mfilmes').innerHTML=FILMES_MUSICA.map(x=>filmeLink(x[0],x[1])).join('');
+document.getElementById('maarp').innerHTML=FILMES_AARP.map(x=>filmeLink(x[0],x[1])).join('');
+
+/* ================= NATUREZA (lê natureza/natureza.json gerado por enriquecer.py) ================= */
+let N={dados:[],cat:'planta',item:null,foto:0};
+const NCAT={planta:'🌳 Plantas e árvores',cachorro:'🐶 Cães',gato:'🐱 Gatos',gado:'🐄 Gado',cavalo:'🐎 Cavalos',ave:'🐦 Aves'};
+fetch('natureza/natureza.json').then(r=>r.json()).then(d=>{N.dados=d;nCats();nLista();}).catch(()=>{
+  document.getElementById('nlista').innerHTML='<div class="card"><p style="margin:0">O banco de plantas e animais ainda não foi gerado. No computador, rode <code>python natureza/enriquecer.py</code> e abra o app por um servidor local (ex.: <code>python -m http.server</code>).</p></div>';});
+function nCats(){document.getElementById('ncats').innerHTML=Object.keys(NCAT).map(c=>`<button class="btn ${N.cat===c?'':'sec'}" style="padding:10px 14px;min-height:48px;font-size:.95rem" onclick="N.cat='${c}';nCats();nLista()">${NCAT[c]}</button>`).join('');}
+function nLista(){
+  const q=(document.getElementById('nbusca').value||'').toLowerCase();
+  document.getElementById('nficha').style.display='none';document.getElementById('nlista').style.display='block';
+  const itens=N.dados.filter(x=>x.categoria===N.cat&&(!q||x.nome_popular.toLowerCase().includes(q)||(x.nome_cientifico||'').toLowerCase().includes(q)));
+  document.getElementById('nlista').innerHTML=itens.slice(0,80).map(x=>`<button class="big" onclick="nAbrir('${x.categoria}','${x.nome_popular.replace(/'/g,"\\'")}')"><span class="ic" style="width:64px;height:64px;border-radius:12px;background:#DCE6DD center/cover url('${(x.fotos[0]||{}).url||(x.wiki||{}).imagem_principal||''}')"></span><span>${x.nome_popular}<small><i>${x.nome_cientifico}</i> · ${x.grupo}</small></span></button>`).join('')||'<p class="ev">Nada encontrado com esse nome.</p>';
+}
+function nAbrir(c,n){N.item=N.dados.find(x=>x.categoria===c&&x.nome_popular===n);N.foto=0;nFicha();}
+function nFicha(){
+  const x=N.item,f=x.fotos[N.foto];
+  document.getElementById('nlista').style.display='none';const el=document.getElementById('nficha');el.style.display='block';
+  el.innerHTML=`<button class="btn sec" onclick="nLista()">← Voltar</button>
+  <div class="card" style="padding:12px">
+    <div class="stage" style="background:#000 center/contain no-repeat url('${f?f.url:''}');aspect-ratio:4/3"></div>
+    <div class="row" style="justify-content:space-between;align-items:center;margin-top:8px">
+      <button class="btn sec" onclick="N.foto=(N.foto-1+N.item.fotos.length)%N.item.fotos.length;nFicha()">‹</button>
+      <span class="ev" style="margin:0">Foto ${N.foto+1} de ${x.fotos.length}</span>
+      <button class="btn sec" onclick="N.foto=(N.foto+1)%N.item.fotos.length;nFicha()">›</button>
+    </div>
+    <p class="ev" style="margin:4px 0 0">${f?f.atribuicao:''}</p>
+    <div class="row" style="justify-content:center"><button class="btn blue" onclick="sel=null;toast('No app Android este botão envia a foto para a TV (Google Cast).')">📺 Ver na TV</button></div>
+  </div>
+  <div class="card">
+    <h3 style="margin:0">${x.nome_popular}</h3>
+    <p class="ev" style="margin:2px 0 10px"><i>${x.nome_cientifico}</i> · ${x.grupo}</p>
+    <p><b>Onde se encontra:</b> ${x.onde}</p>
+    <p style="font-size:1.05rem">${x.wiki?x.wiki.texto:'Texto ainda não disponível.'}</p>
+    <p class="ev">${x.wiki?`Texto: <a href="${x.wiki.url}" target="_blank">Wikipédia</a> (${x.wiki.licenca_texto})`:''}${x.gbif&&x.gbif.familia?` · Família: ${x.gbif.familia}`:''}</p>
+  </div>`;
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>

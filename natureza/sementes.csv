@@ -1,0 +1,596 @@
+categoria,grupo,nome_popular,nome_cientifico,onde
+planta,árvore nativa,Ipê-amarelo,Handroanthus albus,Mata Atlântica; Cerrado
+planta,árvore nativa,Ipê-amarelo-do-cerrado,Handroanthus ochraceus,Cerrado
+planta,árvore nativa,Ipê-roxo,Handroanthus impetiginosus,Mata Atlântica; Cerrado; Caatinga
+planta,árvore nativa,Ipê-rosa,Handroanthus heptaphyllus,Mata Atlântica
+planta,árvore nativa,Ipê-branco,Tabebuia roseoalba,Cerrado; Pantanal
+planta,árvore nativa,Pau-brasil,Paubrasilia echinata,Mata Atlântica
+planta,árvore nativa,Jatobá,Hymenaea courbaril,Amazônia; Cerrado; Mata Atlântica
+planta,árvore nativa,Jequitibá-rosa,Cariniana legalis,Mata Atlântica
+planta,árvore nativa,Jequitibá-branco,Cariniana estrellensis,Mata Atlântica; Cerrado
+planta,árvore nativa,Peroba-rosa,Aspidosperma polyneuron,Mata Atlântica
+planta,árvore nativa,Cedro-rosa,Cedrela fissilis,Mata Atlântica; Amazônia
+planta,árvore nativa,Mogno-brasileiro,Swietenia macrophylla,Amazônia
+planta,árvore nativa,Castanheira-do-pará,Bertholletia excelsa,Amazônia
+planta,árvore nativa,Seringueira,Hevea brasiliensis,Amazônia
+planta,árvore nativa,Sumaúma,Ceiba pentandra,Amazônia
+planta,árvore nativa,Paineira-rosa,Ceiba speciosa,Mata Atlântica; Cerrado
+planta,árvore nativa,Barriguda,Ceiba glaziovii,Caatinga
+planta,árvore nativa,Araucária,Araucaria angustifolia,Mata Atlântica (Sul)
+planta,árvore nativa,Pau-ferro,Libidibia ferrea,Mata Atlântica; Caatinga
+planta,árvore nativa,Sibipiruna,Cenostigma pluviosum,Mata Atlântica
+planta,árvore nativa,Pau-mulato,Calycophyllum spruceanum,Amazônia
+planta,árvore nativa,Angico-vermelho,Anadenanthera colubrina,Cerrado; Caatinga; Mata Atlântica
+planta,árvore nativa,Angico-branco,Anadenanthera peregrina,Cerrado
+planta,árvore nativa,Aroeira-do-sertão,Myracrodruon urundeuva,Caatinga; Cerrado
+planta,árvore nativa,Aroeira-pimenteira,Schinus terebinthifolia,Mata Atlântica
+planta,árvore nativa,Gonçalo-alves,Astronium fraxinifolium,Cerrado
+planta,árvore nativa,Pequi,Caryocar brasiliense,Cerrado
+planta,árvore nativa,Baru,Dipteryx alata,Cerrado
+planta,árvore nativa,Cumaru,Dipteryx odorata,Amazônia
+planta,árvore nativa,Buriti,Mauritia flexuosa,Cerrado; Amazônia (veredas)
+planta,árvore nativa,Açaizeiro,Euterpe oleracea,Amazônia
+planta,árvore nativa,Juçara,Euterpe edulis,Mata Atlântica
+planta,árvore nativa,Babaçu,Attalea speciosa,Amazônia; Cerrado (MA/PI/TO)
+planta,árvore nativa,Carnaúba,Copernicia prunifera,Caatinga (CE/PI/RN)
+planta,árvore nativa,Macaúba,Acrocomia aculeata,Cerrado; Mata Atlântica
+planta,árvore nativa,Guariroba,Syagrus oleracea,Cerrado
+planta,árvore nativa,Jerivá,Syagrus romanzoffiana,Mata Atlântica
+planta,árvore nativa,Butiá,Butia capitata,Cerrado; Pampa
+planta,árvore nativa,Pupunha,Bactris gasipaes,Amazônia
+planta,árvore nativa,Tucumã,Astrocaryum aculeatum,Amazônia
+planta,árvore nativa,Bacaba,Oenocarpus bacaba,Amazônia
+planta,árvore nativa,Cajueiro,Anacardium occidentale,Caatinga; Cerrado; litoral NE
+planta,árvore nativa,Cajuí,Anacardium humile,Cerrado
+planta,árvore nativa,Goiabeira,Psidium guajava,Todo o Brasil
+planta,árvore nativa,Araçá,Psidium cattleyanum,Mata Atlântica
+planta,árvore nativa,Jabuticabeira,Plinia cauliflora,Mata Atlântica
+planta,árvore nativa,Pitangueira,Eugenia uniflora,Mata Atlântica
+planta,árvore nativa,Grumixama,Eugenia brasiliensis,Mata Atlântica
+planta,árvore nativa,Uvaia,Eugenia pyriformis,Mata Atlântica
+planta,árvore nativa,Cambuci,Campomanesia phaea,Mata Atlântica (SP)
+planta,árvore nativa,Gabiroba,Campomanesia xanthocarpa,Mata Atlântica; Cerrado
+planta,árvore nativa,Cagaita,Eugenia dysenterica,Cerrado
+planta,árvore nativa,Mangaba,Hancornia speciosa,Cerrado; litoral NE
+planta,árvore nativa,Cupuaçu,Theobroma grandiflorum,Amazônia
+planta,árvore nativa,Cacaueiro,Theobroma cacao,Amazônia; sul da Bahia
+planta,árvore nativa,Guaraná,Paullinia cupana,Amazônia
+planta,árvore nativa,Bacuri,Platonia insignis,Amazônia
+planta,árvore nativa,Umbuzeiro,Spondias tuberosa,Caatinga
+planta,árvore nativa,Cajazeira,Spondias mombin,Amazônia; Mata Atlântica
+planta,árvore nativa,Seriguela,Spondias purpurea,Nordeste (cultivada)
+planta,árvore nativa,Juazeiro,Sarcomphalus joazeiro,Caatinga
+planta,árvore nativa,Mandacaru,Cereus jamacaru,Caatinga
+planta,árvore nativa,Xique-xique,Xiquexique gounellei,Caatinga
+planta,árvore nativa,Facheiro,Pilosocereus pachycladus,Caatinga
+planta,árvore nativa,Coroa-de-frade,Melocactus zehntneri,Caatinga
+planta,árvore nativa,Catingueira,Cenostigma pyramidale,Caatinga
+planta,árvore nativa,Jurema-preta,Mimosa tenuiflora,Caatinga
+planta,árvore nativa,Baraúna,Schinopsis brasiliensis,Caatinga
+planta,árvore nativa,Umburana-de-cheiro,Amburana cearensis,Caatinga; Cerrado
+planta,árvore nativa,Pau-d'arco,Handroanthus serratifolius,Amazônia; Cerrado; Caatinga
+planta,árvore nativa,Mulungu,Erythrina verna,Mata Atlântica; Caatinga
+planta,árvore nativa,Eritrina-candelabro,Erythrina speciosa,Mata Atlântica
+planta,árvore nativa,Pau-de-tucano,Vochysia tucanorum,Cerrado
+planta,árvore nativa,Pau-terra,Qualea grandiflora,Cerrado
+planta,árvore nativa,Lobeira,Solanum lycocarpum,Cerrado
+planta,árvore nativa,Barbatimão,Stryphnodendron adstringens,Cerrado
+planta,árvore nativa,Sucupira-preta,Bowdichia virgilioides,Cerrado
+planta,árvore nativa,Copaíba,Copaifera langsdorffii,Cerrado; Mata Atlântica
+planta,árvore nativa,Tamboril,Enterolobium contortisiliquum,Mata Atlântica; Cerrado
+planta,árvore nativa,Guapuruvu,Schizolobium parahyba,Mata Atlântica
+planta,árvore nativa,Embaúba,Cecropia pachystachya,Mata Atlântica; Cerrado
+planta,árvore nativa,Figueira-branca,Ficus guaranitica,Mata Atlântica
+planta,árvore nativa,Figueira-mata-pau,Ficus adhatodifolia,Mata Atlântica
+planta,árvore nativa,Pau-jacaré,Piptadenia gonoacantha,Mata Atlântica
+planta,árvore nativa,Canela-sassafrás,Ocotea odorifera,Mata Atlântica
+planta,árvore nativa,Imbuia,Ocotea porosa,Mata Atlântica (Sul)
+planta,árvore nativa,Canjerana,Cabralea canjerana,Mata Atlântica
+planta,árvore nativa,Garapa,Apuleia leiocarpa,Mata Atlântica
+planta,árvore nativa,Jacarandá-da-bahia,Dalbergia nigra,Mata Atlântica
+planta,árvore nativa,Jacarandá-mimoso,Jacaranda mimosifolia,Cultivada (exótica sul-americana)
+planta,árvore nativa,Caroba,Jacaranda cuspidifolia,Cerrado
+planta,árvore nativa,Quaresmeira,Tibouchina granulosa,Mata Atlântica
+planta,árvore nativa,Manacá-da-serra,Tibouchina mutabilis,Mata Atlântica
+planta,árvore nativa,Pau-formiga,Triplaris americana,Amazônia; Pantanal
+planta,árvore nativa,Cambará,Vochysia divergens,Pantanal
+planta,árvore nativa,Piúva,Handroanthus heptaphyllus,Pantanal
+planta,árvore nativa,Carandá,Copernicia alba,Pantanal
+planta,árvore nativa,Acuri,Attalea phalerata,Pantanal
+planta,árvore nativa,Aroeira-salsa,Schinus molle,Pampa; Sul
+planta,árvore nativa,Corticeira-do-banhado,Erythrina crista-galli,Pampa
+planta,árvore nativa,Espinilho,Vachellia caven,Pampa
+planta,árvore nativa,Guabiju,Myrcianthes pungens,Pampa; Sul
+planta,árvore nativa,Erva-mate,Ilex paraguariensis,Mata Atlântica (Sul)
+planta,árvore nativa,Bracatinga,Mimosa scabrella,Mata Atlântica (Sul)
+planta,árvore nativa,Pau-rosa,Aniba rosiodora,Amazônia
+planta,árvore nativa,Andiroba,Carapa guianensis,Amazônia
+planta,árvore nativa,Jenipapeiro,Genipa americana,Amazônia; Mata Atlântica
+planta,árvore nativa,Sapucaia,Lecythis pisonis,Mata Atlântica
+planta,árvore nativa,Pau-santo,Kielmeyera coriacea,Cerrado
+planta,árvore nativa,Faveira,Parkia platycephala,Cerrado; Caatinga
+planta,árvore nativa,Jacarandá-do-cerrado,Machaerium opacum,Cerrado
+planta,árvore nativa,Mamica-de-porca,Zanthoxylum rhoifolium,Mata Atlântica; Cerrado
+planta,árvore nativa,Pau-pombo,Tapirira guianensis,Todo o Brasil
+planta,árvore nativa,Guanandi,Calophyllum brasiliense,Mata Atlântica; Amazônia
+planta,árvore nativa,Palmito-guariroba,Syagrus oleracea,Cerrado
+planta,árvore nativa,Ingá,Inga edulis,Amazônia; Mata Atlântica
+planta,árvore nativa,Ingá-feijão,Inga marginata,Mata Atlântica
+planta,árvore nativa,Pindaíba,Xylopia aromatica,Cerrado
+planta,árvore nativa,Marolo,Annona crassiflora,Cerrado
+planta,árvore nativa,Araticum,Annona montana,Mata Atlântica
+planta,árvore nativa,Pau-de-balsa,Ochroma pyramidale,Amazônia
+planta,árvore nativa,Louro-pardo,Cordia trichotoma,Mata Atlântica; Cerrado
+planta,árvore nativa,Cuité,Crescentia cujete,Amazônia; Nordeste
+planta,árvore nativa,Oiti,Moquilea tomentosa,Mata Atlântica (NE)
+planta,árvore nativa,Chichá,Sterculia striata,Cerrado; Mata Atlântica
+planta,árvore nativa,Monjoleiro,Senegalia polyphylla,Mata Atlântica; Cerrado
+planta,árvore exótica cultivada,Mangueira,Mangifera indica,Todo o Brasil
+planta,árvore exótica cultivada,Abacateiro,Persea americana,Todo o Brasil
+planta,árvore exótica cultivada,Jaqueira,Artocarpus heterophyllus,Mata Atlântica (cultivada)
+planta,árvore exótica cultivada,Fruta-pão,Artocarpus altilis,Norte; Nordeste
+planta,árvore exótica cultivada,Laranjeira,Citrus × sinensis,Todo o Brasil
+planta,árvore exótica cultivada,Limoeiro-taiti,Citrus × latifolia,Todo o Brasil
+planta,árvore exótica cultivada,Tangerineira,Citrus reticulata,Todo o Brasil
+planta,árvore exótica cultivada,Bananeira,Musa × paradisiaca,Todo o Brasil
+planta,árvore exótica cultivada,Mamoeiro,Carica papaya,Todo o Brasil
+planta,árvore exótica cultivada,Coqueiro,Cocos nucifera,Litoral
+planta,árvore exótica cultivada,Cafeeiro,Coffea arabica,Sudeste; Bahia
+planta,árvore exótica cultivada,Ameixeira-amarela,Eriobotrya japonica,Sudeste; Sul
+planta,árvore exótica cultivada,Amoreira,Morus nigra,Todo o Brasil
+planta,árvore exótica cultivada,Romãzeira,Punica granatum,Todo o Brasil
+planta,árvore exótica cultivada,Figueira-comum,Ficus carica,Sudeste; Sul
+planta,árvore exótica cultivada,Pessegueiro,Prunus persica,Sul; Sudeste
+planta,árvore exótica cultivada,Macieira,Malus domestica,Sul
+planta,árvore exótica cultivada,Videira,Vitis vinifera,Sul; Sudeste; Vale do São Francisco
+planta,árvore exótica cultivada,Carambola,Averrhoa carambola,Todo o Brasil
+planta,árvore exótica cultivada,Acerola,Malpighia emarginata,Todo o Brasil
+planta,árvore exótica cultivada,Lichia,Litchi chinensis,Sudeste
+planta,árvore exótica cultivada,Tamarindeiro,Tamarindus indica,Nordeste; Norte
+planta,árvore exótica cultivada,Nespereira,Eriobotrya japonica,Sudeste; Sul
+planta,árvore exótica cultivada,Nogueira-pecã,Carya illinoinensis,Sul
+planta,árvore exótica cultivada,Oliveira,Olea europaea,Sul; Serra da Mantiqueira
+planta,árvore exótica cultivada,Eucalipto,Eucalyptus grandis,Todo o Brasil (plantios)
+planta,árvore exótica cultivada,Pinus,Pinus elliottii,Sul; Sudeste (plantios)
+planta,árvore exótica cultivada,Flamboyant,Delonix regia,Todo o Brasil (ornamental)
+planta,árvore exótica cultivada,Chuva-de-ouro,Cassia fistula,Todo o Brasil (ornamental)
+planta,árvore exótica cultivada,Cássia-imperial,Cassia fistula,Todo o Brasil (ornamental)
+planta,árvore exótica cultivada,Magnólia,Magnolia grandiflora,Sul; Sudeste
+planta,árvore exótica cultivada,Pata-de-vaca,Bauhinia variegata,Todo o Brasil (ornamental)
+planta,árvore exótica cultivada,Ligustro,Ligustrum lucidum,Sudeste; Sul (ornamental)
+planta,árvore exótica cultivada,Leucena,Leucaena leucocephala,Todo o Brasil (invasora)
+planta,árvore exótica cultivada,Algaroba,Prosopis juliflora,Caatinga (introduzida)
+planta,árvore exótica cultivada,Nim,Azadirachta indica,Nordeste; Centro-Oeste
+planta,árvore exótica cultivada,Cinamomo,Melia azedarach,Sul; Sudeste
+planta,árvore exótica cultivada,Plátano,Platanus × acerifolia,Sul
+planta,árvore exótica cultivada,Cipreste,Cupressus sempervirens,Sul; Sudeste
+planta,árvore exótica cultivada,Tuia,Thuja occidentalis,Sul; Sudeste
+planta,árvore exótica cultivada,Palmeira-imperial,Roystonea oleracea,Todo o Brasil (ornamental)
+planta,árvore exótica cultivada,Palmeira-real,Archontophoenix cunninghamiana,Sudeste; Sul (ornamental)
+planta,árvore exótica cultivada,Tamareira,Phoenix dactylifera,Nordeste; ornamental
+planta,árvore exótica cultivada,Palmeira-leque,Livistona chinensis,Ornamental
+planta,árvore exótica cultivada,Palmeira-rabo-de-peixe,Caryota urens,Ornamental
+planta,árvore exótica cultivada,Cerejeira-japonesa,Prunus serrulata,Sul; Sudeste
+planta,árvore exótica cultivada,Resedá,Lagerstroemia indica,Todo o Brasil (ornamental)
+planta,árvore exótica cultivada,Tipuana,Tipuana tipu,Sudeste; Sul (arborização)
+planta,árvore exótica cultivada,Oiti-da-praia,Moquilea tomentosa,Arborização urbana
+planta,árvore exótica cultivada,Ficus-benjamina,Ficus benjamina,Arborização urbana
+planta,árvore exótica cultivada,Espatódea,Spathodea campanulata,Todo o Brasil (ornamental)
+planta,árvore exótica cultivada,Acácia-mimosa,Acacia podalyriifolia,Sul; Sudeste
+planta,árvore exótica cultivada,Grevílea,Grevillea robusta,Sudeste; Sul
+planta,árvore exótica cultivada,Castanheira-portuguesa,Castanea sativa,Sul
+planta,árvore exótica cultivada,Salgueiro-chorão,Salix babylonica,Sul; Sudeste
+planta,árvore exótica cultivada,Álamo,Populus nigra,Sul
+planta,arbusto e flor,Hibisco,Hibiscus rosa-sinensis,Todo o Brasil
+planta,arbusto e flor,Primavera,Bougainvillea spectabilis,Todo o Brasil
+planta,arbusto e flor,Azaleia,Rhododendron simsii,Sul; Sudeste
+planta,arbusto e flor,Roseira,Rosa × hybrida,Todo o Brasil
+planta,arbusto e flor,Jasmim-manga,Plumeria rubra,Todo o Brasil
+planta,arbusto e flor,Ixora,Ixora coccinea,Todo o Brasil
+planta,arbusto e flor,Lantana,Lantana camara,Todo o Brasil (nativa)
+planta,arbusto e flor,Manacá-de-cheiro,Brunfelsia uniflora,Mata Atlântica
+planta,arbusto e flor,Dama-da-noite,Cestrum nocturnum,Todo o Brasil
+planta,arbusto e flor,Gardênia,Gardenia jasminoides,Sudeste; Sul
+planta,arbusto e flor,Camélia,Camellia japonica,Sul; Sudeste
+planta,arbusto e flor,Hortênsia,Hydrangea macrophylla,Serra Gaúcha; Sudeste
+planta,arbusto e flor,Buxinho,Buxus sempervirens,Todo o Brasil (jardins)
+planta,arbusto e flor,Murta,Murraya paniculata,Todo o Brasil
+planta,arbusto e flor,Alamanda,Allamanda cathartica,Todo o Brasil (nativa)
+planta,arbusto e flor,Brinco-de-princesa,Fuchsia magellanica,Sul; Sudeste
+planta,arbusto e flor,Onze-horas,Portulaca grandiflora,Todo o Brasil
+planta,arbusto e flor,Maria-sem-vergonha,Impatiens walleriana,Todo o Brasil
+planta,arbusto e flor,Beijinho,Impatiens hawkeri,Todo o Brasil
+planta,arbusto e flor,Gerânio,Pelargonium × hortorum,Sul; Sudeste
+planta,arbusto e flor,Girassol,Helianthus annuus,Todo o Brasil
+planta,arbusto e flor,Margarida,Leucanthemum vulgare,Sul; Sudeste
+planta,arbusto e flor,Crisântemo,Chrysanthemum × morifolium,Todo o Brasil
+planta,arbusto e flor,Cravo,Dianthus caryophyllus,Sul; Sudeste
+planta,arbusto e flor,Petúnia,Petunia × atkinsiana,Todo o Brasil
+planta,arbusto e flor,Amor-perfeito,Viola × wittrockiana,Sul; Sudeste
+planta,arbusto e flor,Lírio,Lilium longiflorum,Sul; Sudeste
+planta,arbusto e flor,Copo-de-leite,Zantedeschia aethiopica,Sul; Sudeste
+planta,arbusto e flor,Antúrio,Anthurium andraeanum,Todo o Brasil
+planta,arbusto e flor,Orquídea-cattleya,Cattleya labiata,Mata Atlântica
+planta,arbusto e flor,Orquídea-phalaenopsis,Phalaenopsis amabilis,Cultivada
+planta,arbusto e flor,Orquídea-chuva-de-ouro,Oncidium flexuosum,Mata Atlântica
+planta,arbusto e flor,Orquídea-vanda,Vanda coerulea,Cultivada
+planta,arbusto e flor,Orquídea-dendróbio,Dendrobium nobile,Cultivada
+planta,arbusto e flor,Bromélia-imperial,Alcantarea imperialis,Mata Atlântica
+planta,arbusto e flor,Bromélia-guzmânia,Guzmania lingulata,Amazônia; Mata Atlântica
+planta,arbusto e flor,Gravatá,Bromelia antiacantha,Mata Atlântica; Pampa
+planta,arbusto e flor,Helicônia,Heliconia rostrata,Amazônia; Mata Atlântica
+planta,arbusto e flor,Bananeira-de-jardim,Heliconia psittacorum,Amazônia; Mata Atlântica
+planta,arbusto e flor,Estrelícia,Strelitzia reginae,Todo o Brasil
+planta,arbusto e flor,Agapanto,Agapanthus africanus,Sul; Sudeste
+planta,arbusto e flor,Lavanda,Lavandula angustifolia,Sul; Sudeste
+planta,arbusto e flor,Alecrim,Salvia rosmarinus,Todo o Brasil
+planta,arbusto e flor,Manjericão,Ocimum basilicum,Todo o Brasil
+planta,arbusto e flor,Hortelã,Mentha spicata,Todo o Brasil
+planta,arbusto e flor,Boldo-do-chile,Peumus boldus,Cultivado
+planta,arbusto e flor,Boldo-brasileiro,Plectranthus barbatus,Todo o Brasil
+planta,arbusto e flor,Erva-cidreira,Melissa officinalis,Todo o Brasil
+planta,arbusto e flor,Capim-limão,Cymbopogon citratus,Todo o Brasil
+planta,arbusto e flor,Camomila,Matricaria chamomilla,Sul; Sudeste
+planta,arbusto e flor,Guaco,Mikania glomerata,Mata Atlântica
+planta,arbusto e flor,Babosa,Aloe vera,Todo o Brasil
+planta,arbusto e flor,Arruda,Ruta graveolens,Todo o Brasil
+planta,arbusto e flor,Pimenteira,Capsicum baccatum,Todo o Brasil
+planta,arbusto e flor,Espada-de-são-jorge,Dracaena trifasciata,Todo o Brasil
+planta,arbusto e flor,Comigo-ninguém-pode,Dieffenbachia seguine,Todo o Brasil
+planta,arbusto e flor,Jiboia,Epipremnum aureum,Todo o Brasil
+planta,arbusto e flor,Costela-de-adão,Monstera deliciosa,Todo o Brasil
+planta,arbusto e flor,Samambaia,Nephrolepis exaltata,Todo o Brasil
+planta,arbusto e flor,Avenca,Adiantum raddianum,Mata Atlântica
+planta,arbusto e flor,Zamioculca,Zamioculcas zamiifolia,Cultivada
+planta,arbusto e flor,Lírio-da-paz,Spathiphyllum wallisii,Todo o Brasil
+planta,arbusto e flor,Violeta-africana,Streptocarpus ionanthus,Cultivada
+planta,arbusto e flor,Begônia,Begonia × semperflorens-cultorum,Todo o Brasil
+planta,arbusto e flor,Suculenta-rabo-de-burro,Sedum morganianum,Cultivada
+planta,arbusto e flor,Cacto-dedo-de-moça,Echinocereus pentalophus,Cultivada
+planta,arbusto e flor,Flor-de-maio,Schlumbergera truncata,Mata Atlântica
+planta,arbusto e flor,Cacto-figo-da-índia,Opuntia ficus-indica,Nordeste
+planta,arbusto e flor,Palma-forrageira,Opuntia cochenillifera,Caatinga
+planta,arbusto e flor,Dracena,Dracaena marginata,Cultivada
+planta,arbusto e flor,Pleomele,Dracaena reflexa,Cultivada
+planta,arbusto e flor,Iúca,Yucca gigantea,Cultivada
+planta,arbusto e flor,Agave,Agave americana,Nordeste; cultivada
+planta,arbusto e flor,Sisal,Agave sisalana,Bahia
+planta,arbusto e flor,Mandioca,Manihot esculenta,Todo o Brasil
+planta,arbusto e flor,Milho,Zea mays,Todo o Brasil
+planta,arbusto e flor,Feijão,Phaseolus vulgaris,Todo o Brasil
+planta,arbusto e flor,Arroz,Oryza sativa,Sul; Centro-Oeste
+planta,arbusto e flor,Cana-de-açúcar,Saccharum officinarum,Sudeste; Nordeste
+planta,arbusto e flor,Soja,Glycine max,Centro-Oeste; Sul
+planta,arbusto e flor,Algodoeiro,Gossypium hirsutum,Centro-Oeste; Nordeste
+planta,arbusto e flor,Abacaxizeiro,Ananas comosus,Todo o Brasil
+planta,arbusto e flor,Maracujazeiro,Passiflora edulis,Todo o Brasil
+planta,arbusto e flor,Chuchuzeiro,Sicyos edulis,Todo o Brasil
+planta,arbusto e flor,Aboboreira,Cucurbita moschata,Todo o Brasil
+planta,arbusto e flor,Melancia,Citrullus lanatus,Todo o Brasil
+planta,arbusto e flor,Tomateiro,Solanum lycopersicum,Todo o Brasil
+planta,arbusto e flor,Quiabeiro,Abelmoschus esculentus,Todo o Brasil
+planta,arbusto e flor,Couve,Brassica oleracea,Todo o Brasil
+planta,arbusto e flor,Alface,Lactuca sativa,Todo o Brasil
+planta,arbusto e flor,Cebolinha,Allium fistulosum,Todo o Brasil
+planta,arbusto e flor,Coentro,Coriandrum sativum,Todo o Brasil
+planta,arbusto e flor,Salsinha,Petroselinum crispum,Todo o Brasil
+planta,arbusto e flor,Ora-pro-nóbis,Pereskia aculeata,Mata Atlântica; MG
+planta,arbusto e flor,Taioba,Xanthosoma taioba,Mata Atlântica
+planta,arbusto e flor,Vitória-régia,Victoria amazonica,Amazônia
+planta,arbusto e flor,Aguapé,Pontederia crassipes,Todo o Brasil (aquática)
+planta,arbusto e flor,Nenúfar,Nymphaea caerulea,Cultivada
+planta,arbusto e flor,Papiro,Cyperus papyrus,Cultivada
+planta,arbusto e flor,Taboa,Typha domingensis,Todo o Brasil (brejos)
+planta,arbusto e flor,Bambu-gigante,Dendrocalamus giganteus,Sudeste; Sul
+planta,arbusto e flor,Bambu-mossô,Phyllostachys edulis,Sul
+planta,arbusto e flor,Taquara,Merostachys riedeliana,Mata Atlântica
+planta,arbusto e flor,Capim-gordura,Melinis minutiflora,Cerrado (invasora)
+planta,arbusto e flor,Braquiária,Urochloa decumbens,Todo o Brasil (pastagens)
+planta,arbusto e flor,Capim-elefante,Cenchrus purpureus,Todo o Brasil
+planta,arbusto e flor,Grama-esmeralda,Zoysia japonica,Todo o Brasil
+planta,arbusto e flor,Grama-batatais,Paspalum notatum,Todo o Brasil (nativa)
+planta,arbusto e flor,Canela-de-ema,Vellozia squamata,Cerrado (campos rupestres)
+planta,arbusto e flor,Sempre-viva,Comanthera elegans,Cerrado (Serra do Espinhaço)
+planta,arbusto e flor,Arnica-do-campo,Lychnophora ericoides,Cerrado (campos rupestres)
+planta,arbusto e flor,Chapéu-de-couro,Echinodorus grandiflorus,Cerrado; Pantanal
+planta,arbusto e flor,Carqueja,Baccharis trimera,Sul; Sudeste
+planta,arbusto e flor,Macela,Achyrocline satureioides,Sul
+planta,arbusto e flor,Dente-de-leão,Taraxacum officinale,Sul; Sudeste
+planta,arbusto e flor,Trevo-branco,Trifolium repens,Sul
+planta,arbusto e flor,Picão-preto,Bidens pilosa,Todo o Brasil
+planta,arbusto e flor,Mentruz,Lepidium virginicum,Todo o Brasil
+planta,arbusto e flor,Tansagem,Plantago major,Todo o Brasil
+planta,arbusto e flor,Bico-de-papagaio,Euphorbia pulcherrima,Todo o Brasil
+planta,arbusto e flor,Coroa-de-cristo,Euphorbia milii,Todo o Brasil
+planta,arbusto e flor,Cróton,Codiaeum variegatum,Todo o Brasil
+planta,arbusto e flor,Acalifa,Acalypha wilkesiana,Todo o Brasil
+planta,arbusto e flor,Pingo-de-ouro,Duranta erecta,Todo o Brasil
+planta,arbusto e flor,Clúsia,Clusia fluminensis,Mata Atlântica (restinga)
+planta,arbusto e flor,Cambará-de-cheiro,Lantana camara,Todo o Brasil
+planta,arbusto e flor,Jasmim-estrela,Trachelospermum jasminoides,Sul; Sudeste
+planta,arbusto e flor,Tumbérgia-azul,Thunbergia grandiflora,Todo o Brasil
+planta,arbusto e flor,Cipó-de-são-joão,Pyrostegia venusta,Todo o Brasil (nativa)
+planta,arbusto e flor,Sete-léguas,Podranea ricasoliana,Sul; Sudeste
+planta,arbusto e flor,Unha-de-gato,Dolichandra unguis-cati,Todo o Brasil (nativa)
+planta,arbusto e flor,Glicínia,Wisteria sinensis,Sul; Sudeste
+planta,arbusto e flor,Trepadeira-hera,Hedera helix,Sul; Sudeste
+planta,arbusto e flor,Bico-de-tucano,Heliconia rostrata,Amazônia
+planta,arbusto e flor,Calathea,Goeppertia orbifolia,Amazônia; Mata Atlântica
+planta,arbusto e flor,Maranta,Maranta leuconeura,Mata Atlântica
+planta,arbusto e flor,Filodendro-brasil,Philodendron hederaceum,Mata Atlântica
+planta,arbusto e flor,Imbé,Philodendron bipinnatifidum,Mata Atlântica
+planta,arbusto e flor,Pacová,Philodendron martianum,Mata Atlântica
+planta,arbusto e flor,Chapéu-de-sol,Terminalia catappa,Litoral (introduzida)
+planta,arbusto e flor,Amendoeira-da-praia,Terminalia catappa,Litoral
+planta,arbusto e flor,Mangue-vermelho,Rhizophora mangle,Manguezais
+planta,arbusto e flor,Salsa-da-praia,Ipomoea pes-caprae,Restinga
+planta,arbusto e flor,Pinheiro-de-natal,Araucaria columnaris,Ornamental
+planta,arbusto e flor,Cica,Cycas revoluta,Ornamental
+planta,arbusto e flor,Pau-d'água,Dracaena fragrans,Ornamental
+planta,arbusto e flor,Palmeira-ráfis,Rhapis excelsa,Ornamental
+planta,arbusto e flor,Areca-bambu,Dypsis lutescens,Ornamental
+planta,arbusto e flor,Palmeira-fênix,Phoenix roebelenii,Ornamental
+planta,arbusto e flor,Lírio-do-brejo,Hedychium coronarium,Todo o Brasil (brejos)
+planta,arbusto e flor,Gengibre,Zingiber officinale,Todo o Brasil
+planta,arbusto e flor,Açafrão-da-terra,Curcuma longa,Todo o Brasil
+planta,arbusto e flor,Urucum,Bixa orellana,Amazônia; Nordeste
+planta,arbusto e flor,Jambu,Acmella oleracea,Amazônia
+planta,arbusto e flor,Cipó-alho,Mansoa alliacea,Amazônia
+planta,arbusto e flor,Erva-de-santa-maria,Dysphania ambrosioides,Todo o Brasil
+planta,arbusto e flor,Losna,Artemisia absinthium,Sul; Sudeste
+planta,arbusto e flor,Poejo,Mentha pulegium,Sul; Sudeste
+planta,arbusto e flor,Melão-de-são-caetano,Momordica charantia,Todo o Brasil
+planta,arbusto e flor,Erva-doce,Foeniculum vulgare,Todo o Brasil
+planta,arbusto e flor,Estévia,Stevia rebaudiana,Sul
+planta,arbusto e flor,Cidreira-de-arbusto,Lippia alba,Todo o Brasil
+planta,arbusto e flor,Malva,Malva sylvestris,Sul; Sudeste
+planta,arbusto e flor,Calêndula,Calendula officinalis,Sul; Sudeste
+planta,arbusto e flor,Trapoeraba,Tradescantia pallida,Todo o Brasil
+planta,arbusto e flor,Beldroega,Portulaca oleracea,Todo o Brasil
+planta,arbusto e flor,Serralha,Sonchus oleraceus,Todo o Brasil
+planta,arbusto e flor,Vinca,Catharanthus roseus,Todo o Brasil
+planta,arbusto e flor,Cravo-de-defunto,Tagetes erecta,Todo o Brasil
+planta,arbusto e flor,Zínia,Zinnia elegans,Todo o Brasil
+planta,arbusto e flor,Celósia,Celosia argentea,Todo o Brasil
+planta,arbusto e flor,Boca-de-leão,Antirrhinum majus,Sul; Sudeste
+planta,arbusto e flor,Papoula-da-califórnia,Eschscholzia californica,Sul
+planta,arbusto e flor,Tulipa,Tulipa gesneriana,Sul (Holambra)
+planta,arbusto e flor,Narciso,Narcissus pseudonarcissus,Sul
+planta,arbusto e flor,Dália,Dahlia pinnata,Sul; Sudeste
+planta,arbusto e flor,Gérbera,Gerbera jamesonii,Todo o Brasil
+planta,arbusto e flor,Áster,Symphyotrichum novi-belgii,Sul; Sudeste
+planta,arbusto e flor,Lisianto,Eustoma grandiflorum,Sudeste
+planta,arbusto e flor,Amarílis,Hippeastrum hybridum,Todo o Brasil
+planta,arbusto e flor,Clívia,Clivia miniata,Sul; Sudeste
+planta,arbusto e flor,Espirradeira,Nerium oleander,Todo o Brasil (tóxica)
+planta,arbusto e flor,Chapéu-de-napoleão,Cascabela thevetia,Todo o Brasil (tóxica)
+planta,arbusto e flor,Mamona,Ricinus communis,Todo o Brasil (tóxica)
+planta,arbusto e flor,Trombeta,Brugmansia suaveolens,Todo o Brasil (tóxica)
+cachorro,raça,Vira-lata (SRD),Canis familiaris,Todo o Brasil
+cachorro,raça,Labrador Retriever,Canis familiaris,Todo o Brasil
+cachorro,raça,Golden Retriever,Canis familiaris,Todo o Brasil
+cachorro,raça,Pastor Alemão,Canis familiaris,Todo o Brasil
+cachorro,raça,Poodle,Canis familiaris,Todo o Brasil
+cachorro,raça,Shih Tzu,Canis familiaris,Todo o Brasil
+cachorro,raça,Yorkshire Terrier,Canis familiaris,Todo o Brasil
+cachorro,raça,Pinscher,Canis familiaris,Todo o Brasil
+cachorro,raça,Lhasa Apso,Canis familiaris,Todo o Brasil
+cachorro,raça,Maltês,Canis familiaris,Todo o Brasil
+cachorro,raça,Spitz Alemão (Lulu da Pomerânia),Canis familiaris,Todo o Brasil
+cachorro,raça,Buldogue Francês,Canis familiaris,Todo o Brasil
+cachorro,raça,Buldogue Inglês,Canis familiaris,Todo o Brasil
+cachorro,raça,Pug,Canis familiaris,Todo o Brasil
+cachorro,raça,Dachshund (Salsicha),Canis familiaris,Todo o Brasil
+cachorro,raça,Beagle,Canis familiaris,Todo o Brasil
+cachorro,raça,Border Collie,Canis familiaris,Todo o Brasil
+cachorro,raça,Rottweiler,Canis familiaris,Todo o Brasil
+cachorro,raça,Boxer,Canis familiaris,Todo o Brasil
+cachorro,raça,Dobermann,Canis familiaris,Todo o Brasil
+cachorro,raça,Pit Bull (American Pit Bull Terrier),Canis familiaris,Todo o Brasil
+cachorro,raça,American Bully,Canis familiaris,Todo o Brasil
+cachorro,raça,Husky Siberiano,Canis familiaris,Sul; Sudeste
+cachorro,raça,Akita,Canis familiaris,Todo o Brasil
+cachorro,raça,Shiba Inu,Canis familiaris,Todo o Brasil
+cachorro,raça,Chow Chow,Canis familiaris,Todo o Brasil
+cachorro,raça,Cocker Spaniel Inglês,Canis familiaris,Todo o Brasil
+cachorro,raça,Schnauzer,Canis familiaris,Todo o Brasil
+cachorro,raça,Chihuahua,Canis familiaris,Todo o Brasil
+cachorro,raça,Bichon Frisé,Canis familiaris,Todo o Brasil
+cachorro,raça,Cavalier King Charles Spaniel,Canis familiaris,Todo o Brasil
+cachorro,raça,Jack Russell Terrier,Canis familiaris,Todo o Brasil
+cachorro,raça,Fox Paulistinha (Terrier Brasileiro),Canis familiaris,Brasil (raça nacional)
+cachorro,raça,Fila Brasileiro,Canis familiaris,Brasil (raça nacional)
+cachorro,raça,Dogue Alemão,Canis familiaris,Todo o Brasil
+cachorro,raça,São Bernardo,Canis familiaris,Sul
+cachorro,raça,Bernese (Boiadeiro de Berna),Canis familiaris,Sul; Sudeste
+cachorro,raça,Pastor Belga Malinois,Canis familiaris,Todo o Brasil
+cachorro,raça,Pastor de Shetland,Canis familiaris,Todo o Brasil
+cachorro,raça,Collie,Canis familiaris,Todo o Brasil
+cachorro,raça,Weimaraner,Canis familiaris,Todo o Brasil
+cachorro,raça,Dálmata,Canis familiaris,Todo o Brasil
+cachorro,raça,Basset Hound,Canis familiaris,Todo o Brasil
+cachorro,raça,Bull Terrier,Canis familiaris,Todo o Brasil
+cachorro,raça,Staffordshire Bull Terrier,Canis familiaris,Todo o Brasil
+cachorro,raça,Cane Corso,Canis familiaris,Todo o Brasil
+cachorro,raça,Mastiff Inglês,Canis familiaris,Todo o Brasil
+cachorro,raça,Galgo (Greyhound),Canis familiaris,Todo o Brasil
+cachorro,raça,Whippet,Canis familiaris,Todo o Brasil
+cachorro,raça,Cão de Crista Chinês,Canis familiaris,Todo o Brasil
+cachorro,raça,Pequinês,Canis familiaris,Todo o Brasil
+cachorro,raça,Boston Terrier,Canis familiaris,Todo o Brasil
+cachorro,raça,Pastor Australiano,Canis familiaris,Todo o Brasil
+cachorro,raça,Samoieda,Canis familiaris,Sul; Sudeste
+cachorro,raça,Cão Pelado Peruano,Canis familiaris,Raro
+cachorro,raça,Veadeiro Pampeano,Canis familiaris,Sul (raça nacional)
+cachorro,raça,Rastreador Brasileiro,Canis familiaris,Brasil (raça nacional)
+cachorro,raça,Buldogue Campeiro,Canis familiaris,Sul (raça nacional)
+cachorro,raça,Ovelheiro Gaúcho,Canis familiaris,Sul (raça nacional)
+gato,raça,Gato sem raça definida (SRD),Felis catus,Todo o Brasil
+gato,raça,Persa,Felis catus,Todo o Brasil
+gato,raça,Siamês,Felis catus,Todo o Brasil
+gato,raça,Maine Coon,Felis catus,Todo o Brasil
+gato,raça,Ragdoll,Felis catus,Todo o Brasil
+gato,raça,British Shorthair,Felis catus,Todo o Brasil
+gato,raça,Bengal,Felis catus,Todo o Brasil
+gato,raça,Sphynx,Felis catus,Todo o Brasil
+gato,raça,Scottish Fold,Felis catus,Todo o Brasil
+gato,raça,Angorá Turco,Felis catus,Todo o Brasil
+gato,raça,Abissínio,Felis catus,Todo o Brasil
+gato,raça,Birmanês (Sagrado da Birmânia),Felis catus,Todo o Brasil
+gato,raça,Burmês,Felis catus,Todo o Brasil
+gato,raça,Exótico de pelo curto,Felis catus,Todo o Brasil
+gato,raça,Himalaio,Felis catus,Todo o Brasil
+gato,raça,Norueguês da Floresta,Felis catus,Sul; Sudeste
+gato,raça,Siberiano,Felis catus,Sul; Sudeste
+gato,raça,Azul Russo,Felis catus,Todo o Brasil
+gato,raça,Devon Rex,Felis catus,Todo o Brasil
+gato,raça,Cornish Rex,Felis catus,Todo o Brasil
+gato,raça,Savannah,Felis catus,Raro
+gato,raça,Bombaim,Felis catus,Todo o Brasil
+gato,raça,Oriental de pelo curto,Felis catus,Todo o Brasil
+gato,raça,Pelo Curto Brasileiro,Felis catus,Brasil (raça nacional)
+gato,raça,Chartreux,Felis catus,Todo o Brasil
+gato,raça,Munchkin,Felis catus,Todo o Brasil
+gato,raça,American Shorthair,Felis catus,Todo o Brasil
+gato,raça,Tonquinês,Felis catus,Todo o Brasil
+gado,raça bovina,Nelore,Bos indicus,Todo o Brasil (corte)
+gado,raça bovina,Gir,Bos indicus,Minas Gerais; Nordeste (leite)
+gado,raça bovina,Girolando,Bos taurus × Bos indicus,Todo o Brasil (leite)
+gado,raça bovina,Guzerá,Bos indicus,Nordeste; Sudeste
+gado,raça bovina,Brahman,Bos indicus,Centro-Oeste
+gado,raça bovina,Tabapuã,Bos indicus,Sudeste; Centro-Oeste
+gado,raça bovina,Sindi,Bos indicus,Nordeste
+gado,raça bovina,Indubrasil,Bos indicus,Minas Gerais (Triângulo)
+gado,raça bovina,Holandesa,Bos taurus,Sul; Sudeste (leite)
+gado,raça bovina,Jersey,Bos taurus,Sul; Sudeste (leite)
+gado,raça bovina,Pardo-Suíço,Bos taurus,Sul; Sudeste
+gado,raça bovina,Angus,Bos taurus,Sul; Centro-Oeste (corte)
+gado,raça bovina,Hereford,Bos taurus,Sul
+gado,raça bovina,Simental,Bos taurus,Sul; Sudeste
+gado,raça bovina,Charolês,Bos taurus,Sul
+gado,raça bovina,Limousin,Bos taurus,Sul; Sudeste
+gado,raça bovina,Senepol,Bos taurus,Centro-Oeste
+gado,raça bovina,Brangus,Bos taurus × Bos indicus,Sul; Centro-Oeste
+gado,raça bovina,Canchim,Bos taurus × Bos indicus,Sudeste (raça nacional)
+gado,raça bovina,Caracu,Bos taurus,Sudeste (raça nacional)
+gado,raça bovina,Curraleiro Pé-Duro,Bos taurus,Nordeste; Goiás (raça nacional)
+gado,raça bovina,Pantaneiro,Bos taurus,Pantanal (raça nacional)
+gado,raça bovina,Crioulo Lageano,Bos taurus,Santa Catarina (raça nacional)
+gado,raça bovina,Mocho Nacional,Bos taurus,Sudeste (raça nacional)
+gado,raça bovina,Devon,Bos taurus,Sul
+gado,raça bovina,Búfalo Murrah,Bubalus bubalis,Norte; Sudeste
+gado,raça bovina,Búfalo Mediterrâneo,Bubalus bubalis,Todo o Brasil
+gado,outros ruminantes,Ovelha Santa Inês,Ovis aries,Nordeste
+gado,outros ruminantes,Ovelha Dorper,Ovis aries,Nordeste; Centro-Oeste
+gado,outros ruminantes,Ovelha Crioula,Ovis aries,Sul
+gado,outros ruminantes,Cabra Anglo-Nubiana,Capra hircus,Nordeste
+gado,outros ruminantes,Cabra Saanen,Capra hircus,Sudeste; Sul
+gado,outros ruminantes,Cabra Boer,Capra hircus,Nordeste
+cavalo,raça,Mangalarga Marchador,Equus caballus,Minas Gerais (raça nacional)
+cavalo,raça,Mangalarga Paulista,Equus caballus,São Paulo (raça nacional)
+cavalo,raça,Campolina,Equus caballus,Minas Gerais (raça nacional)
+cavalo,raça,Crioulo,Equus caballus,Rio Grande do Sul
+cavalo,raça,Quarto de Milha,Equus caballus,Todo o Brasil
+cavalo,raça,Brasileiro de Hipismo,Equus caballus,Sudeste (raça nacional)
+cavalo,raça,Pantaneiro,Equus caballus,Pantanal (raça nacional)
+cavalo,raça,Puro Sangue Inglês,Equus caballus,Sudeste (corridas)
+cavalo,raça,Árabe,Equus caballus,Todo o Brasil
+cavalo,raça,Lusitano,Equus caballus,Sudeste; Sul
+cavalo,raça,Andaluz (Pura Raça Espanhola),Equus caballus,Sudeste; Sul
+cavalo,raça,Appaloosa,Equus caballus,Todo o Brasil
+cavalo,raça,Paint Horse,Equus caballus,Todo o Brasil
+cavalo,raça,Percheron,Equus caballus,Sul; Sudeste
+cavalo,raça,Bretão,Equus caballus,Sul; Sudeste
+cavalo,raça,Pônei Brasileiro,Equus caballus,Brasil (raça nacional)
+cavalo,raça,Piquira,Equus caballus,Minas Gerais; Bahia
+cavalo,raça,Nordestino,Equus caballus,Nordeste (raça nacional)
+cavalo,raça,Lavradeiro,Equus caballus,Roraima
+cavalo,raça,Marajoara,Equus caballus,Ilha de Marajó
+cavalo,raça,Campeiro,Equus caballus,Santa Catarina
+cavalo,raça,Baixadeiro,Equus caballus,Maranhão
+cavalo,raça,Frísio,Equus caballus,Sul; Sudeste
+cavalo,raça,Haflinger,Equus caballus,Sul
+cavalo,raça,Paso Fino,Equus caballus,Sudeste
+cavalo,raça,Jumento Pêga,Equus asinus,Minas Gerais (raça nacional)
+cavalo,raça,Jumento Nordestino,Equus asinus,Nordeste
+cavalo,raça,Muar (Burro/Mula),Equus asinus × Equus caballus,Todo o Brasil
+ave,ave silvestre,Sabiá-laranjeira,Turdus rufiventris,Todo o Brasil (ave-símbolo)
+ave,ave silvestre,Bem-te-vi,Pitangus sulphuratus,Todo o Brasil
+ave,ave silvestre,João-de-barro,Furnarius rufus,Sul; Sudeste; Centro-Oeste
+ave,ave silvestre,Tucano-toco,Ramphastos toco,Cerrado; Pantanal; Amazônia
+ave,ave silvestre,Tucano-de-bico-verde,Ramphastos dicolorus,Mata Atlântica
+ave,ave silvestre,Arara-canindé,Ara ararauna,Cerrado; Pantanal; Amazônia
+ave,ave silvestre,Arara-vermelha,Ara chloropterus,Cerrado; Amazônia
+ave,ave silvestre,Arara-azul,Anodorhynchus hyacinthinus,Pantanal; Cerrado
+ave,ave silvestre,Papagaio-verdadeiro,Amazona aestiva,Cerrado; Pantanal
+ave,ave silvestre,Maritaca,Pionus maximiliani,Mata Atlântica; Cerrado
+ave,ave silvestre,Periquito-rei,Eupsittula aurea,Cerrado
+ave,ave silvestre,Jandaia,Aratinga jandaya,Nordeste; Norte
+ave,ave silvestre,Beija-flor-tesoura,Eupetomena macroura,Todo o Brasil
+ave,ave silvestre,Beija-flor-de-peito-azul,Amazilia lactea,Sudeste
+ave,ave silvestre,Canário-da-terra,Sicalis flaveola,Todo o Brasil
+ave,ave silvestre,Tico-tico,Zonotrichia capensis,Todo o Brasil
+ave,ave silvestre,Pardal,Passer domesticus,Cidades (introduzido)
+ave,ave silvestre,Rolinha-roxa,Columbina talpacoti,Todo o Brasil
+ave,ave silvestre,Pomba-asa-branca,Patagioenas picazuro,Todo o Brasil
+ave,ave silvestre,Garça-branca-grande,Ardea alba,Todo o Brasil
+ave,ave silvestre,Tuiuiú,Jabiru mycteria,Pantanal (ave-símbolo)
+ave,ave silvestre,Seriema,Cariama cristata,Cerrado
+ave,ave silvestre,Ema,Rhea americana,Cerrado; Pampa; Pantanal
+ave,ave silvestre,Anu-preto,Crotophaga ani,Todo o Brasil
+ave,ave silvestre,Anu-branco,Guira guira,Todo o Brasil
+ave,ave silvestre,Gavião-carijó,Rupornis magnirostris,Todo o Brasil
+ave,ave silvestre,Carcará,Caracara plancus,Todo o Brasil
+ave,ave silvestre,Coruja-buraqueira,Athene cunicularia,Todo o Brasil
+ave,ave silvestre,Corujinha-do-mato,Megascops choliba,Todo o Brasil
+ave,ave silvestre,Urubu-de-cabeça-preta,Coragyps atratus,Todo o Brasil
+ave,ave silvestre,Quero-quero,Vanellus chilensis,Todo o Brasil
+ave,ave silvestre,Pica-pau-do-campo,Colaptes campestris,Cerrado; Pampa
+ave,ave silvestre,Pica-pau-de-banda-branca,Dryocopus lineatus,Todo o Brasil
+ave,ave silvestre,Saíra-sete-cores,Tangara seledon,Mata Atlântica
+ave,ave silvestre,Sanhaço-cinzento,Thraupis sayaca,Todo o Brasil
+ave,ave silvestre,Sanhaço-do-coqueiro,Thraupis palmarum,Todo o Brasil
+ave,ave silvestre,Cardeal,Paroaria coronata,Sul; Pantanal
+ave,ave silvestre,Galo-da-campina,Paroaria dominicana,Caatinga
+ave,ave silvestre,Curió,Sporophila angolensis,Todo o Brasil
+ave,ave silvestre,Bicudo,Sporophila maximiliani,Cerrado (raro)
+ave,ave silvestre,Azulão,Cyanoloxia brissonii,Todo o Brasil
+ave,ave silvestre,Pintassilgo,Spinus magellanicus,Sul; Sudeste
+ave,ave silvestre,Corrupião,Icterus jamacaii,Caatinga
+ave,ave silvestre,Gralha-azul,Cyanocorax caeruleus,Mata Atlântica (Sul, ave-símbolo do PR)
+ave,ave silvestre,Jacu,Penelope obscura,Mata Atlântica
+ave,ave silvestre,Mutum-de-penacho,Crax fasciolata,Cerrado; Pantanal
+ave,ave silvestre,Jacutinga,Aburria jacutinga,Mata Atlântica (ameaçada)
+ave,ave silvestre,Martim-pescador-grande,Megaceryle torquata,Todo o Brasil
+ave,ave silvestre,Socó-boi,Tigrisoma lineatum,Todo o Brasil (brejos)
+ave,ave silvestre,Biguá,Nannopterum brasilianum,Todo o Brasil
+ave,ave silvestre,Colhereiro,Platalea ajaja,Pantanal; litoral
+ave,ave silvestre,Guará,Eudocimus ruber,Litoral Norte; Maranhão
+ave,ave silvestre,Flamingo-chileno,Phoenicopterus chilensis,Rio Grande do Sul
+ave,ave silvestre,Harpia,Harpia harpyja,Amazônia; Mata Atlântica
+ave,ave silvestre,Uirapuru-verdadeiro,Cyphorhinus arada,Amazônia
+ave,ave silvestre,Sabiá-do-campo,Mimus saturninus,Cerrado; Sudeste
+ave,ave silvestre,Andorinha-doméstica-grande,Progne chalybea,Todo o Brasil
+ave,ave silvestre,Suiriri,Tyrannus melancholicus,Todo o Brasil
+ave,ave silvestre,Lavadeira-mascarada,Fluvicola nengeta,Nordeste; Sudeste
+ave,ave silvestre,Alma-de-gato,Piaya cayana,Todo o Brasil
+ave,ave silvestre,Tesourinha,Tyrannus savana,Todo o Brasil
+ave,ave silvestre,Sabiá-poca,Turdus amaurochalinus,Todo o Brasil
+ave,ave silvestre,Trinca-ferro,Saltator similis,Mata Atlântica; Cerrado
+ave,ave silvestre,Coleiro,Sporophila caerulescens,Todo o Brasil
+ave,ave silvestre,Tuim,Forpus xanthopterygius,Todo o Brasil
+ave,ave silvestre,Periquitão-maracanã,Psittacara leucophthalmus,Todo o Brasil
+ave,ave doméstica,Galinha caipira,Gallus gallus domesticus,Todo o Brasil
+ave,ave doméstica,Galo Índio,Gallus gallus domesticus,Todo o Brasil
+ave,ave doméstica,Galinha-d'angola,Numida meleagris,Todo o Brasil
+ave,ave doméstica,Pato-doméstico,Anas platyrhynchos domesticus,Todo o Brasil
+ave,ave doméstica,Pato-do-mato (Marreco),Cairina moschata,Todo o Brasil
+ave,ave doméstica,Ganso,Anser anser domesticus,Sul; Sudeste
+ave,ave doméstica,Peru,Meleagris gallopavo,Todo o Brasil
+ave,ave doméstica,Pavão,Pavo cristatus,Sítios e parques
+ave,ave doméstica,Codorna,Coturnix japonica,Todo o Brasil
+ave,ave doméstica,Canário-belga,Serinus canaria domestica,Todo o Brasil
+ave,ave doméstica,Periquito-australiano,Melopsittacus undulatus,Todo o Brasil
+ave,ave doméstica,Calopsita,Nymphicus hollandicus,Todo o Brasil
+ave,ave doméstica,Agapornis,Agapornis roseicollis,Todo o Brasil
+ave,ave doméstica,Pombo-correio,Columba livia domestica,Todo o Brasil
