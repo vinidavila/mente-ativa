@@ -1,0 +1,539 @@
+{
+ "Arroz, pães e raízes": [
+  [
+   "🍚 Arroz branco cozido",
+   "4 colheres de sopa",
+   "128 kcal · 2 g proteína",
+   100,
+   "carboidrato"
+  ],
+  [
+   "🍚 Arroz integral cozido",
+   "4 colheres de sopa",
+   "124 kcal · 3 g proteína",
+   100,
+   "carboidrato"
+  ],
+  [
+   "🍝 Macarrão cozido",
+   "1 pegador",
+   "174 kcal · 6 g proteína",
+   110,
+   "carboidrato"
+  ],
+  [
+   "🥔 Batata inglesa cozida",
+   "1 unidade média",
+   "47 kcal · 1 g proteína",
+   90,
+   "carboidrato"
+  ],
+  [
+   "🍠 Batata-doce cozida",
+   "1 fatia grossa",
+   "69 kcal · 1 g proteína",
+   90,
+   "carboidrato"
+  ],
+  [
+   "🥖 Mandioca cozida",
+   "2 pedaços",
+   "112 kcal · 1 g proteína",
+   90,
+   "carboidrato"
+  ],
+  [
+   "🍠 Inhame cozido",
+   "2 pedaços",
+   "87 kcal · 2 g proteína",
+   90,
+   "carboidrato"
+  ],
+  [
+   "🥖 Pão francês",
+   "1 unidade",
+   "150 kcal · 4 g proteína",
+   50,
+   "carboidrato"
+  ],
+  [
+   "🍞 Pão de forma integral",
+   "2 fatias",
+   "126 kcal · 5 g proteína",
+   50,
+   "carboidrato"
+  ],
+  [
+   "🥣 Aveia em flocos",
+   "3 colheres de sopa",
+   "118 kcal · 4 g proteína",
+   30,
+   "carboidrato"
+  ],
+  [
+   "🌽 Cuscuz de milho cozido",
+   "1 fatia",
+   "113 kcal · 2 g proteína",
+   100,
+   "carboidrato"
+  ],
+  [
+   "🫓 Tapioca (goma hidratada)",
+   "1 unidade média",
+   "144 kcal · 0 g proteína",
+   60,
+   "carboidrato"
+  ],
+  [
+   "🌽 Milho verde cozido",
+   "1 espiga pequena",
+   "78 kcal · 3 g proteína",
+   80,
+   "carboidrato"
+  ],
+  [
+   "🥣 Granola",
+   "3 colheres de sopa",
+   "129 kcal · 3 g proteína",
+   30,
+   "carboidrato"
+  ]
+ ],
+ "Carnes, ovos e feijões": [
+  [
+   "🫘 Feijão carioca cozido",
+   "1 concha",
+   "65 kcal · 4 g proteína",
+   86,
+   "proteina"
+  ],
+  [
+   "🫘 Feijão preto cozido",
+   "1 concha",
+   "66 kcal · 4 g proteína",
+   86,
+   "proteina"
+  ],
+  [
+   "🫘 Lentilha cozida",
+   "1 concha pequena",
+   "74 kcal · 5 g proteína",
+   80,
+   "proteina"
+  ],
+  [
+   "🫘 Grão-de-bico cozido",
+   "1 concha pequena",
+   "131 kcal · 7 g proteína",
+   80,
+   "proteina"
+  ],
+  [
+   "🍗 Peito de frango grelhado",
+   "1 filé médio",
+   "159 kcal · 32 g proteína",
+   100,
+   "proteina"
+  ],
+  [
+   "🍗 Coxa/sobrecoxa de frango assada",
+   "1 unidade",
+   "215 kcal · 27 g proteína",
+   100,
+   "proteina"
+  ],
+  [
+   "🥩 Bife bovino grelhado (contrafilé sem gordura)",
+   "1 bife médio",
+   "194 kcal · 36 g proteína",
+   100,
+   "proteina"
+  ],
+  [
+   "🥩 Carne moída refogada (patinho)",
+   "3 colheres de sopa",
+   "197 kcal · 32 g proteína",
+   90,
+   "proteina"
+  ],
+  [
+   "🥩 Carne bovina cozida (acém/músculo)",
+   "2 pedaços",
+   "215 kcal · 27 g proteína",
+   100,
+   "proteina"
+  ],
+  [
+   "🥓 Lombo suíno assado",
+   "1 fatia grossa",
+   "210 kcal · 36 g proteína",
+   100,
+   "proteina"
+  ],
+  [
+   "🐟 Filé de tilápia grelhado",
+   "1 filé",
+   "128 kcal · 26 g proteína",
+   100,
+   "proteina"
+  ],
+  [
+   "🐟 Sardinha assada",
+   "2 unidades",
+   "131 kcal · 26 g proteína",
+   80,
+   "proteina"
+  ],
+  [
+   "🐟 Salmão grelhado",
+   "1 posta",
+   "243 kcal · 26 g proteína",
+   100,
+   "proteina"
+  ],
+  [
+   "🐟 Atum em conserva (água)",
+   "½ lata",
+   "70 kcal · 15 g proteína",
+   60,
+   "proteina"
+  ],
+  [
+   "🥚 Ovo cozido",
+   "1 unidade",
+   "73 kcal · 7 g proteína",
+   50,
+   "proteina"
+  ],
+  [
+   "🍳 Ovo mexido/frito",
+   "1 unidade",
+   "132 kcal · 9 g proteína",
+   55,
+   "proteina"
+  ],
+  [
+   "🧈 Tofu",
+   "1 fatia grossa",
+   "51 kcal · 5 g proteína",
+   80,
+   "proteina"
+  ],
+  [
+   "🥤 Whey protein (pó)",
+   "1 dose",
+   "120 kcal · 24 g proteína",
+   30,
+   "proteina"
+  ]
+ ],
+ "Leite, iogurte e queijos": [
+  [
+   "🥛 Leite integral",
+   "1 copo",
+   "122 kcal · 6 g proteína",
+   200,
+   "lacteo"
+  ],
+  [
+   "🥛 Leite desnatado",
+   "1 copo",
+   "70 kcal · 7 g proteína",
+   200,
+   "lacteo"
+  ],
+  [
+   "🥛 Iogurte natural integral",
+   "1 pote",
+   "87 kcal · 7 g proteína",
+   170,
+   "lacteo"
+  ],
+  [
+   "🥛 Iogurte grego",
+   "1 pote pequeno",
+   "97 kcal · 9 g proteína",
+   100,
+   "lacteo"
+  ],
+  [
+   "🧀 Queijo minas frescal",
+   "1 fatia",
+   "79 kcal · 5 g proteína",
+   30,
+   "lacteo"
+  ],
+  [
+   "🧀 Queijo muçarela",
+   "1 fatia",
+   "99 kcal · 7 g proteína",
+   30,
+   "lacteo"
+  ],
+  [
+   "🧀 Ricota",
+   "1 fatia grossa",
+   "70 kcal · 6 g proteína",
+   50,
+   "lacteo"
+  ],
+  [
+   "🧀 Requeijão",
+   "1 colher de sopa",
+   "77 kcal · 3 g proteína",
+   30,
+   "lacteo"
+  ]
+ ],
+ "Frutas": [
+  [
+   "🍌 Banana prata",
+   "1 unidade",
+   "69 kcal · 1 g proteína",
+   70,
+   "fruta"
+  ],
+  [
+   "🍎 Maçã",
+   "1 unidade",
+   "73 kcal · 0 g proteína",
+   130,
+   "fruta"
+  ],
+  [
+   "🍈 Mamão papaia",
+   "½ unidade",
+   "60 kcal · 1 g proteína",
+   150,
+   "fruta"
+  ],
+  [
+   "🍊 Laranja pera",
+   "1 unidade",
+   "52 kcal · 1 g proteína",
+   140,
+   "fruta"
+  ],
+  [
+   "🥭 Manga",
+   "½ unidade",
+   "56 kcal · 1 g proteína",
+   110,
+   "fruta"
+  ],
+  [
+   "🍉 Melancia",
+   "1 fatia",
+   "66 kcal · 2 g proteína",
+   200,
+   "fruta"
+  ],
+  [
+   "🥑 Abacate",
+   "2 colheres de sopa",
+   "48 kcal · 1 g proteína",
+   50,
+   "fruta"
+  ],
+  [
+   "🍇 Uva",
+   "1 cacho pequeno",
+   "53 kcal · 1 g proteína",
+   100,
+   "fruta"
+  ],
+  [
+   "🍓 Morango",
+   "8 unidades",
+   "30 kcal · 1 g proteína",
+   100,
+   "fruta"
+  ],
+  [
+   "🍈 Goiaba",
+   "1 unidade",
+   "54 kcal · 1 g proteína",
+   100,
+   "fruta"
+  ],
+  [
+   "🍐 Pera",
+   "1 unidade",
+   "69 kcal · 1 g proteína",
+   130,
+   "fruta"
+  ],
+  [
+   "🥝 Kiwi",
+   "1 unidade",
+   "38 kcal · 1 g proteína",
+   75,
+   "fruta"
+  ]
+ ],
+ "Verduras e legumes": [
+  [
+   "🥗 Alface",
+   "5 folhas",
+   "4 kcal · 1 g proteína",
+   40,
+   "vegetal"
+  ],
+  [
+   "🍅 Tomate",
+   "4 fatias",
+   "12 kcal · 1 g proteína",
+   80,
+   "vegetal"
+  ],
+  [
+   "🥕 Cenoura crua",
+   "1 unidade pequena",
+   "17 kcal · 1 g proteína",
+   50,
+   "vegetal"
+  ],
+  [
+   "🥕 Cenoura cozida",
+   "3 colheres de sopa",
+   "18 kcal · 0 g proteína",
+   60,
+   "vegetal"
+  ],
+  [
+   "🥦 Brócolis cozido",
+   "4 buquês",
+   "20 kcal · 2 g proteína",
+   80,
+   "vegetal"
+  ],
+  [
+   "🥬 Couve refogada",
+   "3 colheres de sopa",
+   "54 kcal · 1 g proteína",
+   60,
+   "vegetal"
+  ],
+  [
+   "🌿 Espinafre cozido",
+   "3 colheres de sopa",
+   "14 kcal · 2 g proteína",
+   60,
+   "vegetal"
+  ],
+  [
+   "🥒 Abobrinha cozida",
+   "4 fatias",
+   "12 kcal · 1 g proteína",
+   80,
+   "vegetal"
+  ],
+  [
+   "🎃 Abóbora cabotiá cozida",
+   "3 colheres de sopa",
+   "38 kcal · 1 g proteína",
+   80,
+   "vegetal"
+  ],
+  [
+   "🍐 Chuchu cozido",
+   "3 colheres de sopa",
+   "15 kcal · 0 g proteína",
+   80,
+   "vegetal"
+  ],
+  [
+   "🟣 Beterraba cozida",
+   "3 fatias",
+   "19 kcal · 1 g proteína",
+   60,
+   "vegetal"
+  ],
+  [
+   "🫛 Vagem cozida",
+   "3 colheres de sopa",
+   "15 kcal · 1 g proteína",
+   60,
+   "vegetal"
+  ],
+  [
+   "🥒 Pepino",
+   "6 fatias",
+   "6 kcal · 1 g proteína",
+   60,
+   "vegetal"
+  ],
+  [
+   "🥬 Repolho cru",
+   "1 pires",
+   "8 kcal · 0 g proteína",
+   50,
+   "vegetal"
+  ],
+  [
+   "🫛 Quiabo cozido",
+   "3 colheres de sopa",
+   "16 kcal · 1 g proteína",
+   60,
+   "vegetal"
+  ],
+  [
+   "🍆 Berinjela cozida",
+   "4 fatias",
+   "15 kcal · 1 g proteína",
+   80,
+   "vegetal"
+  ],
+  [
+   "🫑 Pimentão cru",
+   "4 tiras",
+   "8 kcal · 0 g proteína",
+   40,
+   "vegetal"
+  ]
+ ],
+ "Azeite e castanhas": [
+  [
+   "🫒 Azeite de oliva",
+   "1 colher de sopa",
+   "71 kcal · 0 g proteína",
+   8,
+   "gordura"
+  ],
+  [
+   "🧈 Manteiga",
+   "1 colher de chá cheia",
+   "73 kcal · 0 g proteína",
+   10,
+   "gordura"
+  ],
+  [
+   "🌰 Castanha-do-pará",
+   "2 unidades",
+   "64 kcal · 1 g proteína",
+   10,
+   "gordura"
+  ],
+  [
+   "🌰 Castanha de caju",
+   "10 unidades",
+   "114 kcal · 4 g proteína",
+   20,
+   "gordura"
+  ],
+  [
+   "🥜 Amendoim torrado",
+   "1 punhado",
+   "121 kcal · 4 g proteína",
+   20,
+   "gordura"
+  ],
+  [
+   "🌱 Semente de chia",
+   "1 colher de sopa",
+   "49 kcal · 2 g proteína",
+   10,
+   "gordura"
+  ]
+ ]
+}

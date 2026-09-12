@@ -1,0 +1,11 @@
+{
+  "_comentario": "Contrato de exportação do NUT-9 (Banca Clínica) para o Mente Ativa. Salve como nutricao/orientacao.json. Campos ausentes usam o padrão do app.",
+  "origem": "Orientação individual — Dr. Vinícius D'Ávila Carvalho, consulta de 05/09/2026",
+  "agua": {"copos": 7, "txt": "7 copos por dia (1,6 litro). Se tiver falta de ar ou inchaço, siga o limite combinado na consulta."},
+  "refeicoes": [
+    {"n": "Café da manhã", "h": "7h", "prato": [["#F6E7C1", "Pão integral ou aveia", 0.35], ["#DDF0E3", "Fruta", 0.3], ["#FDE2E2", "Leite desnatado, queijo branco ou ovo", 0.35]],
+     "ex": ["Café com leite desnatado + pão integral com queijo branco + mamão"], "dica": "Sem açúcar no café; use adoçante se quiser."}
+  ],
+  "subs": {"Frutas": [["Banana", "1 unidade pequena"], ["Maçã", "1 unidade"], ["Mamão", "1 fatia média"]]},
+  "fontes": "Prescrição gerada pelo módulo nutricional (NUT-9) — metas ESPEN 2022/PROT-AGE, despensa TACO/TBCA, medidas caseiras POF."
+}
